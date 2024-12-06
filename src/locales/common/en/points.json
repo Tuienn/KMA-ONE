@@ -1,0 +1,27 @@
+{
+  "card info": {
+    "passed": "Number of subjects completed",
+    "failed": "Number of subjects failed",
+    "avg": "Average score"
+  },
+  "table": {
+    "number": "No",
+    "subject name": "Subject name",
+    "first score": "First sub-score",
+    "second score": "Second sub-score",
+    "exam score": "Exam score",
+    "final score": "Final score",
+    "letter grade": "Letter grade",
+    "credit": "Credit"
+  },
+  "table shorten": {
+    "number": "No",
+    "subject name": "Subject name",
+    "first score": "1st S",
+    "second score": "2st S",
+    "exam score": "EX",
+    "final score": "FS",
+    "letter grade": "LG",
+    "credit": "Cre"
+  }
+}

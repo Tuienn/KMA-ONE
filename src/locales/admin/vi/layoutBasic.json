@@ -1,0 +1,9 @@
+{
+  "sider": {
+    "student": "Quản lý sinh viên",
+    "score": "Quản lý điểm",
+    "course": "Quản lý môn học",
+    "schedule": "Quản lý lịch học",
+    "notification": "Quản lý thông báo"
+  }
+}

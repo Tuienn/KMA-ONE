@@ -1,0 +1,9 @@
+{
+  "sider": {
+    "student": "Manage student",
+    "score": "Manage score",
+    "course": "Manage course",
+    "schedule": "Manage schedule",
+    "notification": "Manage notif"
+  }
+}

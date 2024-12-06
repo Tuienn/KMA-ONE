@@ -1,0 +1,73 @@
+.form-animation {
+  --input-height: 40px;
+  --input-border-color-focus: #1677ff;
+  --input-border-color-error: red;
+}
+
+.form-animation .ant-form-item-row {
+  position: relative;
+}
+.form-animation .ant-form-item-label {
+  position: absolute;
+  left: 11px;
+  display: inline;
+  height: auto;
+  background-color: #fff;
+  display: inline;
+  top: calc(var(--input-height) / 2);
+  transform: translateY(-50%);
+  pointer-events: none;
+  user-select: none;
+  padding: 0 5px;
+  margin-left: -5px;
+  transition: all 0.1s;
+}
+.form-animation .ant-form-item-row .ant-form-item-label label {
+  display: inline;
+}
+.form-animation .ant-form-item-row .ant-form-item-label label::after {
+  content: "";
+  width: 0;
+  margin: 0 !important;
+}
+.form-animation .ant-form-item-explain-error {
+  position: absolute;
+}
+.form-animation .ant-form-item-row:focus-within .ant-form-item-label,
+.form-animation
+  .ant-form-item-row:has(input:not(:placeholder-shown))
+  .ant-form-item-label {
+  top: 0;
+}
+
+.form-animation .ant-form-item-row:focus-within .ant-form-item-label label {
+  color: var(--input-border-color-focus);
+  /* color: black; */
+}
+.form-animation .ant-form-item-explain-error {
+  font-size: smaller;
+}
+.form-animation
+  .ant-form-item-row:has(.ant-form-item-explain-error)
+  .ant-form-item-label
+  label {
+  color: var(--input-border-color-error);
+}
+
+.form-animation .ant-form-item-control {
+  position: static;
+}
+.form-animation
+  .ant-form-item-row
+  .ant-form-item-control
+  .ant-form-item-control-input {
+  position: static;
+}
+.form-animation
+  .ant-form-item-row
+  .ant-form-item-control
+  .ant-form-item-control-input
+  input {
+  height: var(--input-height);
+  position: static;
+}

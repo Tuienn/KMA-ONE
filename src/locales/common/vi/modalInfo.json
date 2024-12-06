@@ -1,0 +1,27 @@
+{
+  "modalInfo": {
+    "title": "Hồ sơ thông tin",
+    "title edit mode": "Cập nhật thông tin",
+    "okText": "Cập nhật",
+    "cancelText": "Trở lại",
+    "edit": "Chỉnh sửa",
+    "information title": "Thông tin cá nhân",
+    "create": "Tạo mới"
+  },
+  "information": {
+    "student code": "Mã sinh viên",
+    "name": "Họ và tên",
+    "birth": "Ngày sinh",
+    "birth placeholder": "Chọn ngày",
+    "gender": "Giới tính",
+    "gender female": "Nữ",
+    "gender male": "Nam",
+    "address": "Địa chỉ",
+    "address province": "Thành phố/Tỉnh",
+    "address district": "Quận/Huyện",
+    "address ward": "Phường/Xã",
+    "phone": "Số điện thoại",
+    "description": "Thông tin này sẽ được công khai với những tài khoản trong hệ thống",
+    "no data": "Không có dữ liệu"
+  }
+}

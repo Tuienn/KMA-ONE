@@ -1,0 +1,22 @@
+{
+  "drawer": {
+    "information": "Hồ sơ thông tin",
+    "source": "Mã nguồn",
+    "source frontend": "Link gitHub front-end",
+    "source backend": "Link gitHub back-end",
+    "source docker": "Link gitHub docker",
+    "change language": "Chuyển ngôn ngữ VI/EN",
+    "about": "Giới thiệu",
+    "logout": "Đăng xuất"
+  },
+  "sider": {
+    "schedule": "Thời khóa biểu",
+    "schedule item1": "Lịch học",
+    "schedule item2": "Danh sách lớp",
+    "schedule item3": "Lịch thi",
+    "look up points": "Tra cứu điểm",
+    "chat": "Nhắn tin",
+    "Q&A": "Q&A với AI",
+    "notification": "Thông báo"
+  }
+}

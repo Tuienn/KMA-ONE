@@ -1,0 +1,27 @@
+{
+  "card info": {
+    "passed": "Số môn đã hoàn thành",
+    "failed": "Số môn còn nợ",
+    "avg": "Điểm trung bình"
+  },
+  "table": {
+    "number": "STT",
+    "subject name": "Tên môn học",
+    "first score": "Điểm thành phần 1",
+    "second score": "Điểm thành phần 2",
+    "exam score": "Điểm thi",
+    "final score": "Điểm tổng kết",
+    "letter grade": "Điểm chữ",
+    "credit": "Số tín chỉ"
+  },
+  "table shorten": {
+    "number": "STT",
+    "subject name": "Tên môn học",
+    "first score": "DTP1",
+    "second score": "DTP2",
+    "exam score": "DT",
+    "final score": "DTK",
+    "letter grade": "DC",
+    "credit": "TC"
+  }
+}

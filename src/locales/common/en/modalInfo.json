@@ -1,0 +1,27 @@
+{
+  "modalInfo": {
+    "title": "Profile information",
+    "title edit mode": "Update profile",
+    "okText": "Update",
+    "cancelText": "Back",
+    "edit": "Edit",
+    "information title": "Profile information",
+    "create": "Create"
+  },
+  "information": {
+    "student code": "Student code",
+    "name": "Full name",
+    "birth": "Date of birth",
+    "birth placeholder": "Select date",
+    "gender": "Gender",
+    "gender female": "Female",
+    "gender male": "Male",
+    "address": "Address",
+    "address province": "Province",
+    "address district": "District",
+    "address ward": "Ward",
+    "phone": "Phone number",
+    "description": "This information will be publicly available to accounts within the system",
+    "no data": "No data"
+  }
+}

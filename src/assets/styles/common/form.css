@@ -1,0 +1,11 @@
+.ant-form-item-row .ant-form-item-label label::after {
+  content: "";
+  width: 0;
+  margin: 0 !important;
+}
+.ant-form-item-required {
+  flex-direction: row-reverse;
+}
+.ant-form-item-row .ant-form-item-label label::before {
+  margin-left: 5px;
+}

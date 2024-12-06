@@ -1,0 +1,24 @@
+{
+  "header": {
+    "title": "QUẢN LÝ SINH VIÊN",
+    "button": "Tạo sinh viên"
+  },
+  "list search": {
+    "title": "Tìm kiếm sinh viên",
+    "button search": "Tìm kiếm",
+    "button reset": "Xóa bộ lọc",
+    "list placholder": {
+      "code": "Nhập mã sinh viên",
+      "name": "Nhập tên",
+      "gender": "Chọn giới tính",
+      "gender male": "Nam",
+      "gender female": "Nữ",
+      "dob": "Nhập ngày sinh",
+      "address": "Nhập địa chỉ",
+      "phone": "Nhập SĐT",
+      "status": "Chọn trạng thái",
+      "status active": "Hoạt động",
+      "status inactive": "Không hoạt động"
+    }
+  }
+}

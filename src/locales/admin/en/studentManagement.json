@@ -1,0 +1,24 @@
+{
+  "header": {
+    "title": "STUDENT MANAGEMENT",
+    "button": "Create student"
+  },
+  "list search": {
+    "title": "Search student",
+    "button search": "Search",
+    "button reset": "Reset",
+    "list placholder": {
+      "code": "Input student code",
+      "name": "Input name",
+      "gender": "Select gender",
+      "gender male": "Male",
+      "gender female": "Female",
+      "dob": "Input date of birth",
+      "address": "Input address",
+      "phone": "Input phone number",
+      "status": "Select status",
+      "status active": "Active",
+      "status inactive": "Inactive"
+    }
+  }
+}

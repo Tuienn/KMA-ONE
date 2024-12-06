@@ -1,0 +1,65 @@
+{
+  "day": {
+    "0": "CN",
+    "1": "T2",
+    "2": "T3",
+    "3": "T4",
+    "4": "T5",
+    "5": "T6",
+    "6": "T7"
+  },
+  "month": {
+    "0": "Thg 1",
+    "1": "Thg 2",
+    "2": "Thg 3",
+    "3": "Thg 4",
+    "4": "Thg 5",
+    "5": "Thg 6",
+    "6": "Thg 7",
+    "7": "Thg 8",
+    "8": "Thg 9",
+    "9": "Thg 10",
+    "10": "Thg 11",
+    "11": "Thg 12"
+  },
+  "day full": {
+    "0": "Chủ nhật",
+    "1": "Thứ 2",
+    "2": "Thứ 3",
+    "3": "Thứ 4",
+    "4": "Thứ 5",
+    "5": "Thứ 6",
+    "6": "Thứ 7"
+  },
+  "month full": {
+    "0": "Tháng 1",
+    "1": "Tháng 2",
+    "2": "Tháng 3",
+    "3": "Tháng 4",
+    "4": "Tháng 5",
+    "5": "Tháng 6",
+    "6": "Tháng 7",
+    "7": "Tháng 8",
+    "8": "Tháng 9",
+    "9": "Tháng 10",
+    "10": "Tháng 11",
+    "11": "Tháng 12"
+  },
+  "button": {
+    "next": "Tháng sau",
+    "previous": "Tháng trước"
+  },
+  "card session": {
+    "subject name": "Tên môn học",
+    "class": "Lớp",
+    "session": "Ca học",
+    "time": "Thời gian",
+    "room": "Phòng học",
+    "teacher": "Giảng viên",
+    "see more": "Xem chi tiết lớp học"
+  },
+  "detail session": {
+    "date": "Ngày",
+    "month": "tháng"
+  }
+}

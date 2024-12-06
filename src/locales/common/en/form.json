@@ -1,0 +1,8 @@
+{
+  "form item search student": {
+    "placeholder": "Search by name or code"
+  },
+  "form item classify student": {
+    "placeholder": "Classify"
+  }
+}
