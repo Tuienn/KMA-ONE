@@ -5,6 +5,7 @@ import { getDataStorage } from "../utils/handleStorage"
 
 export const ProtectedRoute = () => {
   const token = getDataStorage("token")
+
   if (!token) {
     return <Navigate to="/login" />
   } else {

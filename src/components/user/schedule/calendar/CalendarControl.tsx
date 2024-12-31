@@ -21,10 +21,10 @@ interface Props {
 
 const CalendarControl: React.FC<Props> = ({ dateSlide, setDateSlide }) => {
   const { t } = useTranslation(["calendar", "notification"])
-  const { message } = App.useApp()
   const { start_endCalendar } = UseSchedule()
   const start = start_endCalendar[0]
   const end = start_endCalendar[start_endCalendar.length - 1]
+  const { message } = App.useApp()
 
   const months = [
     t("month.0"),
@@ -95,7 +95,7 @@ const CalendarControl: React.FC<Props> = ({ dateSlide, setDateSlide }) => {
               previous.year < start.year ||
               (previous.year === start.year && previous.month < start.month)
             ) {
-              message.warning(t("notification:calendar.over range"), 1)
+              message.error(t("notification:calendar.over range"), 1)
               return
             }
             setDateSlide(previous)
@@ -115,7 +115,7 @@ const CalendarControl: React.FC<Props> = ({ dateSlide, setDateSlide }) => {
               next.year > end.year ||
               (next.year === end.year && next.month > end.month)
             ) {
-              message.warning(t("notification:calendar.over range"), 1)
+              message.error(t("notification:calendar.over range"), 1)
               return
             }
             setDateSlide(next)

@@ -1,13 +1,19 @@
 import { lazy } from "react"
 import ScheduleProvider from "../context/ScheduleProvider"
-import FindClass from "../pages/user/schedule/ClassList/FindClass"
+
+import ChatProvider from "../context/ChatProvider"
 import ExamSchedule from "../pages/user/schedule/ExamSchedule"
 import MySchedule from "../pages/user/schedule/MySchedule"
 
-const LookUpPoints = lazy(() => import("../pages/user/points/LookUpPoints"))
+const Points = lazy(() => import("../pages/user/Points"))
 const DetailClass = lazy(
-  () => import("../pages/user/schedule/ClassList/DetailClass"),
+  () => import("../pages/user/schedule/classList/DetailClass"),
 )
+const ChatApp = lazy(() => import("../pages/user/ChatApp"))
+const FindClass = lazy(
+  () => import("../pages/user/schedule/classList/FindClass"),
+)
+const ChatAI = lazy(() => import("../pages/user/ChatAI"))
 
 const UserRoutes = [
   {
@@ -35,9 +41,23 @@ const UserRoutes = [
     element: <ExamSchedule />,
   },
   {
-    path: "/points/look-up-points",
-    name: "look-up-points",
-    element: <LookUpPoints />,
+    path: "/points",
+    name: "points",
+    element: <Points />,
+  },
+  {
+    path: "/chat-app",
+    name: "chat-app",
+    element: <ChatApp />,
+  },
+  {
+    path: "/chat-ai",
+    name: "chat-ai",
+    element: (
+      <ChatProvider>
+        <ChatAI />
+      </ChatProvider>
+    ),
   },
 ]
 

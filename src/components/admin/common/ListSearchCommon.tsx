@@ -1,6 +1,7 @@
 import { RedoOutlined, SearchOutlined } from "@ant-design/icons"
 import { Button, Card, Flex, Form } from "antd"
 import dayjs from "dayjs"
+import i18next from "i18next"
 import React from "react"
 import { UsePath, UseSearch } from "../../../context/PathProvider"
 import { formatDateToString } from "../../../utils/common"
@@ -10,19 +11,14 @@ import FormItemCommon, {
 
 interface Props {
   title: string
-  buttonSearch: string
-  buttonReset: string
   listSearch: FormItemCommonType[]
 }
 
-const ListSearchCommon: React.FC<Props> = ({
-  title,
-  buttonSearch,
-  buttonReset,
-  listSearch,
-}) => {
+const ListSearchCommon: React.FC<Props> = ({ title, listSearch }) => {
   const [form] = Form.useForm()
   const { history } = UsePath()
+
+  const currentUrl = UsePath().pathname
 
   return (
     <Card
@@ -45,16 +41,17 @@ const ListSearchCommon: React.FC<Props> = ({
             onClick={() => form.submit()}
             type="primary"
           >
-            {buttonSearch}
+            {i18next.language === "en" ? "Search" : "Tìm kiếm"}
           </Button>
           <Button
             danger
             icon={<RedoOutlined />}
             onClick={() => {
-              form.resetFields(), UseSearch(history, "/student-management", {})
+              form.resetFields()
+              UseSearch(history, currentUrl, {})
             }}
           >
-            {buttonReset}
+            {i18next.language === "en" ? "Reset" : "Làm mới"}
           </Button>
         </div>
       }
@@ -62,14 +59,13 @@ const ListSearchCommon: React.FC<Props> = ({
       <Form
         form={form}
         onFinish={(value: any) => {
-          for (let key in value) {
+          for (const key in value) {
             if (dayjs.isDayjs(value[key])) {
               value[key] = formatDateToString(value[key])
             }
           }
-          console.log(value)
 
-          UseSearch(history, "/student-management", value)
+          UseSearch(history, currentUrl, value)
         }}
       >
         <Flex gap={8} wrap>

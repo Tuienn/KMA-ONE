@@ -1,7 +1,7 @@
 {
   "header": {
     "title": "STUDENT MANAGEMENT",
-    "button": "Create student"
+    "button create": "Create student"
   },
   "list search": {
     "title": "Search student",
@@ -18,7 +18,10 @@
       "phone": "Input phone number",
       "status": "Select status",
       "status active": "Active",
-      "status inactive": "Inactive"
+      "status inactive": "Inactive",
+      "class": "Select class",
+      "batch": "Select batch",
+      "course name": "Input course name"
     }
   }
 }

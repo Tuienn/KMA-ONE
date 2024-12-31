@@ -1,0 +1,21 @@
+{
+  "header": {
+    "title": "QUẢN LÝ ĐIỂM",
+    "mode": {
+      "student list": "Danh sách điểm theo sinh viên",
+      "course list": "Danh sách điểm theo môn học"
+    }
+  },
+  "list search": {
+    "title": "Tìm kiếm điểm",
+    "button search": "Tìm kiếm",
+    "button reset": "Xóa bộ lọc",
+    "list placholder": {
+      "student name": "Nhập tên sinh viên",
+      "student code": "Nhập mã sinh viên",
+      "course name": "Nhập tên môn học",
+      "class": "Chọn lớp học",
+      "batch": "Chọn khóa học"
+    }
+  }
+}

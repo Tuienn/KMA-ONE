@@ -1,4 +1,5 @@
 import { lazy } from "react"
+import { Navigate } from "react-router-dom"
 import StudentManagement from "../pages/admin/StudentManagement"
 
 const CourseManagement = lazy(() => import("../pages/admin/CourseManagement"))
@@ -25,9 +26,13 @@ const AdminRoutes = [
     element: <ScheduleManagement />,
   },
   {
-    path: "/score-management",
+    path: "/score-management/:mode",
     name: "score-management",
     element: <ScoreManagement />,
+  },
+  {
+    path: "/score-management",
+    element: <Navigate to="/score-management/list-by-student" replace />,
   },
   {
     path: "/notification-management",

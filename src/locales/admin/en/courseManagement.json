@@ -1,0 +1,47 @@
+{
+  "header": {
+    "title": "COURSE MANAGEMENT",
+    "button create": "Create course"
+  },
+  "list search": {
+    "title": "Search course",
+    "button search": "Search",
+    "button reset": "Reset",
+    "list placholder": {
+      "name": "Input course name",
+      "credit": "Select credit",
+      "batch": "Select batch",
+      "semester": "Select semester",
+      "semester year": "Year",
+      "semester phase": "Phase",
+      "semester round": "Round"
+    }
+  },
+  "table": {
+    "name": "Course name",
+    "credit": "Credit",
+    "batch": "Batch",
+    "semester": "Semester",
+    "class": "Class"
+  },
+  "modal course": {
+    "title": "Course information",
+    "create": "Create",
+    "update": "Update",
+    "delete": "Delete",
+    "form": {
+      "course name": "Course name",
+      "placholder course name": "Input course name",
+      "credit": "Credit",
+      "placholder credit": "Select credit",
+      "semester": "Semester",
+      "placholder semester": "Select semester",
+      "class": "Class",
+      "placholder class": "Select class",
+      "batch": "Batch",
+      "placholder batch": "Select batch",
+      "teacher": "Teacher name",
+      "placholder teacher": "Input teacher name"
+    }
+  }
+}

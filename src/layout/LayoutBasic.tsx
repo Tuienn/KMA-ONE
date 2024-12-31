@@ -20,7 +20,7 @@ import {
 } from "@ant-design/icons"
 import type { MenuProps } from "antd"
 import { Avatar, Drawer, Grid, Layout, Menu, Popconfirm, Tooltip } from "antd"
-import React, { useEffect, useMemo, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Link, useNavigate } from "react-router-dom"
 import kmaone from "../assets/images/kmaone.png"
@@ -31,7 +31,7 @@ import { getAuthToken } from "../utils/handleStorage"
 
 const ModalInfo = React.lazy(() => import("../components/common/ModalInfo"))
 
-const { Content, Sider, Header, Footer } = Layout
+const { Content, Sider, Header } = Layout
 
 type MenuItem = Required<MenuProps>["items"][number]
 
@@ -80,21 +80,6 @@ const LayoutBasic: React.FC<Props> = ({ children }) => {
     // })
   }, [])
 
-  const initialModalForm = useMemo(
-    () => ({
-      background: null,
-      avatar: null,
-      name: "Nguyễn Ngọc Tuyền",
-      code: "CT060145",
-      birth: "2003/11/21",
-      gender: 0,
-      address: "Thái Bình, Huyện Vũ Thư, Xã Hồng Phong",
-      // address: null,
-      phone: "0854422289",
-    }),
-    [],
-  )
-
   // const queryStudentInfo = useQuery({
   //   queryKey: ["student", authId],
   //   queryFn: async () => apiService("get", `/student/${authId}`),
@@ -124,12 +109,20 @@ const LayoutBasic: React.FC<Props> = ({ children }) => {
       ),
     ]),
     getItem(
-      <Link to={"/points/look-up-points"}>{t("sider.look up points")}</Link>,
-      "look-up-points",
+      <Link to={"/points"}>{t("sider.look up points")}</Link>,
+      "points",
       <FileSearchOutlined />,
     ),
-    getItem(t("layoutBasic_user:sider.chat"), "chat", <WechatWorkOutlined />),
-    getItem(t("layoutBasic_user:sider.Q&A"), "Q&A", <OpenAIOutlined />),
+    getItem(
+      <Link to={"/chat-app"}>{t("sider.chat")}</Link>,
+      "chat-app",
+      <WechatWorkOutlined />,
+    ),
+    getItem(
+      <Link to={"/chat-ai"}>{t("layoutBasic_user:sider.Q&A")}</Link>,
+      "chat-ai",
+      <OpenAIOutlined />,
+    ),
     getItem(
       t("layoutBasic_user:sider.notification"),
       "notification",
@@ -141,7 +134,8 @@ const LayoutBasic: React.FC<Props> = ({ children }) => {
     getItem(
       <button
         onClick={() => {
-          setOpenModal(true), setOpenDrawer(false)
+          setOpenModal(true)
+          setOpenDrawer(false)
         }}
       >
         {t("layoutBasic_user:drawer.information")}
@@ -194,7 +188,9 @@ const LayoutBasic: React.FC<Props> = ({ children }) => {
       <LogoutOutlined />,
     ),
   ]
-  authPermission === "admin" && drawerMenu.splice(0, 1)
+  if (authPermission === "admin") {
+    drawerMenu.splice(0, 1)
+  }
 
   const adminSiderMenu: MenuItem[] = [
     getItem(
@@ -324,7 +320,8 @@ const LayoutBasic: React.FC<Props> = ({ children }) => {
         open={openModal}
         setOpen={setOpenModal}
         permission="user"
-        initialValue={initialModalForm}
+        // initialValue={initialModalForm}
+        studentId={authId}
       />
     </>
   )

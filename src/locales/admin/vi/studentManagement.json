@@ -1,7 +1,7 @@
 {
   "header": {
     "title": "QUẢN LÝ SINH VIÊN",
-    "button": "Tạo sinh viên"
+    "button create": "Tạo sinh viên"
   },
   "list search": {
     "title": "Tìm kiếm sinh viên",
@@ -18,7 +18,10 @@
       "phone": "Nhập SĐT",
       "status": "Chọn trạng thái",
       "status active": "Hoạt động",
-      "status inactive": "Không hoạt động"
+      "status inactive": "Không hoạt động",
+      "class": "Chọn lớp học",
+      "batch": "Chọn khóa học",
+      "course name": "Nhập tên môn học"
     }
   }
 }

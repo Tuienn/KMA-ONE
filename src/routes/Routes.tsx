@@ -11,7 +11,7 @@ const Login = lazy(() => import("../layout/Login"))
 const Routes = () => {
   const { authPermission } = getAuthToken()
 
-  const routesForNotAuthenticatedOnly = [
+  const routesNotAuthenticated = [
     {
       path: "/login",
       element: (
@@ -57,12 +57,12 @@ const Routes = () => {
   ]
 
   const router = createBrowserRouter([
-    ...routesForNotAuthenticatedOnly,
+    ...routesNotAuthenticated,
     ...(authPermission === "user" ? routesForUser : []),
     ...(authPermission === "admin" ? routesForAdmin : []),
     {
       path: "*",
-      element: <PageNotFound />,
+      element: authPermission ? <PageNotFound /> : <ProtectedRoute />,
     },
   ])
 

@@ -1,7 +1,18 @@
 import { CameraOutlined, EditOutlined } from "@ant-design/icons"
-import { useQuery } from "@tanstack/react-query"
-import { Avatar, Button, Form, Image, Modal, Radio } from "antd"
+import { useMutation, useQuery } from "@tanstack/react-query"
+import {
+  App,
+  Avatar,
+  Button,
+  Form,
+  Image,
+  Modal,
+  Popconfirm,
+  Radio,
+} from "antd"
 import dayjs from "dayjs"
+
+import _ from "lodash"
 import { memo, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import {
@@ -9,51 +20,138 @@ import {
   apiGetProvinces,
   apiGetWards,
 } from "../../api/apiProvince"
+import apiService from "../../api/APIService"
 import backgroundInfo from "../../assets/images/backgroundInfo.jpg"
 import { formatDateToString, getFirstLetterName } from "../../utils/common"
-import { formatOptionsAddress } from "../../utils/formatValue"
+import {
+  formatOptionsAddress,
+  formatStudentData,
+} from "../../utils/formatValue"
 import FormItemCommon from "./formItemCustom/FormItemCommon"
 
-export interface DataFormType {
-  background?: string | null
-  avatar?: string | null
-  name: string
-  code: string
-  birth: string | null
-  gender: number | null
-  address: string | null
-  phone: string | null
+export interface DataStudentType {
+  id: string | number
+  background?: string
+  avatar?: string
+  name?: string
+  code?: string
+  birth?: string
+  gender?: number
+  address?: string
+  phone?: string
+  status?: boolean | true
 }
 
 interface Props {
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   permission: "admin" | "user" | "guest"
-  initialValue?: DataFormType
-  adminCreateMode?: boolean
+  studentId?: number | string
+  handleRefetchQuery?: () => void
 }
 
 const ModalInfo: React.FC<Props> = ({
   open,
   setOpen,
   permission,
-  initialValue,
-  adminCreateMode = false,
+  studentId,
+  handleRefetchQuery,
 }) => {
   const { t } = useTranslation(["modalInfo", "notification"])
-
+  const isCreateMode = studentId ? false : true
   const isUser = permission === "user"
   const isAdmin = permission === "admin"
   const isGuest = permission === "guest"
-
-  const [dataForm, setDataForm] = useState<DataFormType>(
-    (initialValue as DataFormType) ?? {},
-  )
-
   const [editMode, setEditMode] = useState<boolean>(false)
   const [form] = Form.useForm()
   const provinceValue = Form.useWatch(["address", "province"], form)
   const districtValue = Form.useWatch(["address", "district"], form)
+  const { notification } = App.useApp()
+
+  const [dataForm, setDataForm] = useState<DataStudentType>(
+    {} as DataStudentType,
+  )
+
+  useEffect(() => {
+    if (open === true && studentId) {
+      apiService("get", `student/${studentId}`).then((res) => {
+        setDataForm(formatStudentData(res))
+
+        form.setFieldsValue({
+          ...formatStudentData(res),
+          birth: dayjs(res?.birth ?? "0000/00/00", "YYYY/MM/DD"),
+          address: {
+            province: res?.address?.split(", ")[0],
+            district: res?.address?.split(", ")[1],
+            ward: res?.address?.split(", ")[2],
+          },
+        })
+      })
+    }
+  }, [open])
+
+  const mutationDeleteStudent = useMutation({
+    mutationKey: ["DELETE", studentId],
+    mutationFn: async () => apiService("delete", `/student/${studentId}`),
+    onSuccess: () => {
+      if (handleRefetchQuery) {
+        handleRefetchQuery()
+      }
+      notification.success({
+        message: t("notification:api.title"),
+        description: t("notification:api.delete.success"),
+      })
+      setOpen(false)
+    },
+    onError: () => {
+      notification.error({
+        message: t("notification:api.title"),
+        description: t("notification:api.delete.error"),
+      })
+      setOpen(false)
+    },
+  })
+
+  const mutationUpdateStudent = useMutation({
+    mutationKey: ["PUT", studentId],
+    mutationFn: async (data: any) =>
+      apiService("put", `/student/${studentId}`, {}, data),
+    onSuccess: () => {
+      if (handleRefetchQuery) {
+        handleRefetchQuery()
+      }
+      notification.success({
+        message: t("notification:api.title"),
+        description: t("notification:api.update.success"),
+      })
+      setOpen(false)
+    },
+    onError: () =>
+      notification.error({
+        message: t("notification:api.title"),
+        description: t("notification:api.update.error"),
+      }),
+  })
+
+  const mutationCreateStudent = useMutation({
+    mutationKey: ["POST", "student"],
+    mutationFn: async (data: any) => apiService("post", "/student", {}, data),
+    onSuccess: () => {
+      if (handleRefetchQuery) {
+        handleRefetchQuery()
+      }
+      notification.success({
+        message: t("notification:api.title"),
+        description: t("notification:api.create.success"),
+      })
+      setOpen(false)
+    },
+    onError: () =>
+      notification.error({
+        message: t("notification:api.title"),
+        description: t("notification:api.create.error"),
+      }),
+  })
 
   const profileForm = [
     {
@@ -108,6 +206,7 @@ const ModalInfo: React.FC<Props> = ({
     enabled: open,
     staleTime: Infinity,
   })
+
   const queryDistricts = useQuery({
     queryKey: ["districts", provinceValue],
     queryFn: () => apiGetDistricts(provinceValue),
@@ -145,31 +244,41 @@ const ModalInfo: React.FC<Props> = ({
       district: string | undefined
       ward: string | undefined
     }) => {
-      const province = isNaN(Number(address.province))
-        ? address.province
-        : queryProvinces.data?.find(
-            (province: any) => province.id === address.province,
-          )?.name
-      const district = isNaN(Number(address.district))
-        ? address.district
-        : queryDistricts.data?.find(
-            (district: any) => district.id === address.district,
-          )?.name
-      const ward = isNaN(Number(address.ward))
-        ? address.ward
-        : queryWards.data?.find((ward: any) => ward.id === address.ward)?.name
+      const province = address.province
+        ? isNaN(Number(address.province))
+          ? address.province
+          : queryProvinces.data?.find(
+              (province: any) => province.id === address.province,
+            )?.name
+        : ""
+      const district = address.district
+        ? isNaN(Number(address.district))
+          ? address.district
+          : queryDistricts.data?.find(
+              (district: any) => district.id === address.district,
+            )?.name
+        : ""
+      const ward = address.ward
+        ? isNaN(Number(address.ward))
+          ? address.ward
+          : queryWards.data?.find((ward: any) => ward.id === address.ward)?.name
+        : ""
       return `${province}, ${district}, ${ward}`
     }
+
     const formatData = {
       ...value,
-      birth: formatDateToString(value.birth),
+      birth: value.birth && formatDateToString(value.birth),
       address: formatAddress(value.address),
     }
     setDataForm(formatData)
-    // console.log(formatData)
-
-    if (adminCreateMode) {
+    if (isCreateMode) {
+      mutationCreateStudent.mutate({
+        ...formatStudentData(formatData, false),
+        password: formatData.code, // password default is student code
+      })
     } else {
+      mutationUpdateStudent.mutate(formatStudentData(formatData, false))
     }
   }
 
@@ -187,14 +296,17 @@ const ModalInfo: React.FC<Props> = ({
       onCancel={() => {
         setOpen(false)
         setEditMode(false)
+        form.resetFields()
+        setDataForm({} as DataStudentType)
       }}
-      okText={t("modalInfo.okText")}
+      okText={t("modalInfo.update")}
       cancelText={t("modalInfo.cancelText")}
       classNames={{
         content: "!p-[15px] sm:!p-[24px]",
         body: "overflow-hidden",
       }}
       footer={null}
+      loading={_.isEmpty(dataForm) && studentId ? true : false}
     >
       <div
         className={`flex ${isUser ? "w-[200%]" : "w-full"} gap-[1px] transition-transform duration-300 ${editMode && "translate-x-[-50%]"}`}
@@ -220,7 +332,9 @@ const ModalInfo: React.FC<Props> = ({
                     className={"cursor-pointer bg-gray-400"}
                     src={dataForm.avatar}
                   >
-                    {dataForm.avatar ? "" : getFirstLetterName(dataForm.name)}
+                    {!dataForm.avatar &&
+                      !isAdmin &&
+                      getFirstLetterName(dataForm.name ?? "")}
                   </Avatar>
                   {isUser && (
                     <div
@@ -280,15 +394,6 @@ const ModalInfo: React.FC<Props> = ({
               className="border-b-2 border-t-4 py-3"
               layout="vertical"
               onFinish={handleSubmitForm}
-              initialValues={{
-                ...initialValue,
-                birth: dayjs(initialValue?.birth ?? "0000/00/00", "YYYY/MM/DD"),
-                address: {
-                  province: initialValue?.address?.split(", ")[0],
-                  district: initialValue?.address?.split(", ")[1],
-                  ward: initialValue?.address?.split(", ")[2],
-                },
-              }}
             >
               <FormItemCommon
                 type="input"
@@ -305,6 +410,7 @@ const ModalInfo: React.FC<Props> = ({
                   },
                 ]}
                 className={`${isUser && "hidden"}`}
+                placeholder={t("information.student code placeholder")}
               />
               <FormItemCommon
                 type="input"
@@ -320,6 +426,7 @@ const ModalInfo: React.FC<Props> = ({
                     message: t("notification:form.input pattern"),
                   },
                 ]}
+                placeholder={t("information.name placeholder")}
               />
               <FormItemCommon
                 type="date_picker"
@@ -386,6 +493,14 @@ const ModalInfo: React.FC<Props> = ({
                     message: t("notification:form.input pattern"),
                   },
                 ]}
+                placeholder={t("information.phone placeholder")}
+              />
+
+              <FormItemCommon
+                type="switch"
+                name={"status"}
+                label="Trạng thái"
+                placeholder={`${t("information.status active")}-${t("information.status inactive")}`}
               />
             </Form>
             {/* Footer nut bam */}
@@ -400,13 +515,37 @@ const ModalInfo: React.FC<Props> = ({
                   {t("modalInfo.cancelText")}
                 </Button>
               )}
-              {!adminCreateMode && (
-                <Button type="primary" onClick={() => form.submit()}>
-                  {t("modalInfo.okText")}
-                </Button>
+              {!isCreateMode && (
+                <div className="flex justify-end gap-3">
+                  <Popconfirm
+                    title={t("modalInfo.remove.popconfirm title")}
+                    onConfirm={() => mutationDeleteStudent.mutate()}
+                    okText={t("modalInfo.remove.popconfirm ok")}
+                    cancelText={t("modalInfo.remove.popconfirm cancel")}
+                  >
+                    <Button
+                      danger
+                      hidden={!isAdmin}
+                      loading={mutationDeleteStudent.isPending}
+                    >
+                      {t("modalInfo.remove.button")}
+                    </Button>
+                  </Popconfirm>
+                  <Button
+                    type="primary"
+                    onClick={() => form.submit()}
+                    loading={mutationUpdateStudent.isPending}
+                  >
+                    {t("modalInfo.update")}
+                  </Button>
+                </div>
               )}
-              {adminCreateMode && (
-                <Button type="primary" onClick={() => form.submit()}>
+              {isCreateMode && (
+                <Button
+                  type="primary"
+                  loading={mutationCreateStudent.isPending}
+                  onClick={() => form.submit()}
+                >
                   {t("modalInfo.create")}
                 </Button>
               )}

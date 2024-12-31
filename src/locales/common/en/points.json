@@ -1,12 +1,13 @@
 {
   "card info": {
-    "passed": "Number of subjects completed",
-    "failed": "Number of subjects failed",
+    "passed": "Completed courses ",
+    "failed": "Failed courses ",
     "avg": "Average score"
   },
   "table": {
-    "number": "No",
-    "subject name": "Subject name",
+    "student code": "Student code",
+    "student name": "Student name",
+    "course name": "Course name",
     "first score": "First sub-score",
     "second score": "Second sub-score",
     "exam score": "Exam score",
@@ -15,8 +16,9 @@
     "credit": "Credit"
   },
   "table shorten": {
-    "number": "No",
-    "subject name": "Subject name",
+    "student code": "Stu code",
+    "student name": "Stu name",
+    "course name": "Sub name",
     "first score": "1st S",
     "second score": "2st S",
     "exam score": "EX",

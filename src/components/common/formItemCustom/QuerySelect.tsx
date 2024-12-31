@@ -1,18 +1,14 @@
 import { useQuery } from "@tanstack/react-query"
 import { Form, Select, Spin } from "antd"
 
+import { DefaultOptionType } from "antd/es/select"
 import { debounce } from "lodash"
 import { useEffect, useState } from "react"
 import apiService from "../../../api/APIService"
 import { compareIgnoreCaseAndDiacritics } from "../../../utils/common"
-import {
-  FormItemCommonType,
-  OptionsSelectType,
-  QuerySettingType,
-} from "./FormItemCommon"
+import { FormItemCommonType, QuerySettingType } from "./FormItemCommon"
 
-interface QuerySelectType
-  extends Omit<FormItemCommonType, "type" | "options"> {}
+type QuerySelectType = Omit<FormItemCommonType, "type" | "options">
 
 const formatQuerySelectKeyword = (_params: any, searchValue: string) => {
   const params = { ..._params }
@@ -53,7 +49,7 @@ const QuerySelect: React.FC<QuerySelectType> = ({
     enabled: debounceParams.keyword !== undefined,
   })
 
-  let options: OptionsSelectType[] = listDataQuery.isSuccess
+  const options: DefaultOptionType[] = listDataQuery.isSuccess
     ? listDataQuery.data?.map(formatOption)
     : []
 

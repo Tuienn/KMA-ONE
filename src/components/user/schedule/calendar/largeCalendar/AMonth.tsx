@@ -18,13 +18,13 @@ const AMonth: React.FC<DateType> = ({ month, year }) => {
   return (
     <div className="grid h-[calc(100vh-213.6px)] grid-cols-7 grid-rows-6">
       {arrayCalendar.map((date: number, index: number) => (
-        <div key={index}>
+        <div key={index} className={`p-1`}>
           <div
             className={`m-auto mt-0 h-8 w-8 cursor-pointer rounded-full text-center font-medium leading-8 md:text-[17px] ${isCurrentDate(date) && "bg-second text-white"}`}
           >
             {date != 0 && date}
           </div>
-          {isCurrentDate(date) && (
+          {!isCurrentDate(date) && (
             <ul
               className="p-1::webkit-scrollbar-hidden mt-1 box-border h-[calc(100%-32px)] overflow-y-auto"
               style={{

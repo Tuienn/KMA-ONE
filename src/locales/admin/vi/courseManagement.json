@@ -1,0 +1,47 @@
+{
+  "header": {
+    "title": "QUẢN LÝ MÔN HỌC",
+    "button create": "Tạo môn học"
+  },
+  "list search": {
+    "title": "Tìm kiếm môn học",
+    "button search": "Tìm kiếm",
+    "button reset": "Xóa bộ lọc",
+    "list placholder": {
+      "name": "Nhập tên môn học",
+      "credit": "Chọn số tín chỉ",
+      "batch": "Chọn khóa học",
+      "semester": "Chọn đợt học",
+      "semester year": "Năm",
+      "semester phase": "Kì",
+      "semester round": "Đợt"
+    }
+  },
+  "table": {
+    "name": "Tên môn học",
+    "credit": "Số tín chỉ",
+    "batch": "Khóa",
+    "semester": "Đợt học",
+    "class": "Lớp học"
+  },
+  "modal course": {
+    "title": "Thông tin môn học",
+    "create": "Tạo mới",
+    "update": "Cập nhật",
+    "delete": "Xóa",
+    "form": {
+      "course name": "Tên môn học",
+      "placholder course name": "Nhập tên môn học",
+      "credit": "Số tín chỉ",
+      "placholder credit": "Chọn số tín chỉ",
+      "semester": "Đợt học",
+      "placholder semester": "Chọn đợt học",
+      "class": "Lớp học",
+      "placholder class": "Chọn lớp học",
+      "batch": "Khóa học",
+      "placholder batch": "Chọn khóa học",
+      "teacher": "Tên giảng viên",
+      "placholder teacher": "Nhập tên giảng viên"
+    }
+  }
+}

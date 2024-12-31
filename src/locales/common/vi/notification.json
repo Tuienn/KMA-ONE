@@ -17,5 +17,23 @@
     "content": "Bạn có chắc chắn muốn đăng xuất?",
     "button cancel": "Hủy",
     "button confirm": "Đăng xuất"
+  },
+  "api": {
+    "title": "KMAONE thông báo",
+    "get": {
+      "error": "Có lỗi xảy ra khi lấy dữ liệu"
+    },
+    "delete": {
+      "error": "Có lỗi xảy ra khi xóa dữ liệu",
+      "success": "Xóa dữ liệu thành công"
+    },
+    "update": {
+      "error": "Có lỗi xảy ra khi cập nhật dữ liệu",
+      "success": "Cập nhật dữ liệu thành công"
+    },
+    "create": {
+      "error": "Có lỗi xảy ra khi tạo mới dữ liệu",
+      "success": "Tạo mới dữ liệu thành công"
+    }
   }
 }

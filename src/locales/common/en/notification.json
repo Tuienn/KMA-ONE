@@ -17,5 +17,23 @@
     "content": "Are you sure you want to log out?",
     "button cancel": "Cancel",
     "button confirm": "Logout"
+  },
+  "api": {
+    "title": "KMAONE announce",
+    "get": {
+      "error": "Error when getting data"
+    },
+    "delete": {
+      "error": "Error when deleting data",
+      "success": "Delete successfully"
+    },
+    "update": {
+      "error": "Error when updating data",
+      "success": "Update successfully"
+    },
+    "create": {
+      "error": "Error when creating data",
+      "success": "Create successfully"
+    }
   }
 }

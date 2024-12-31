@@ -1,19 +1,52 @@
 import { DateType } from "../pages/user/schedule/MySchedule"
 
-export const formatOptionsSemester = (
-  semester: number,
-  language: "vi" | "en",
+export const formatOptionsSemester = (semester: number) => {
+  const [year, phase, round] = semester.toString().split("").map(Number)
+
+  return {
+    year: year,
+    phase: phase,
+    round: round,
+  }
+}
+
+export const createSemesterOptions = (
+  lng: string,
+  years: number,
+  phases: number,
+  rounds: number,
 ) => {
-  const [year, sem] = semester.toString().split("").map(Number)
-  // return (
-  //   [
-  //     {value: 10, label: `${language === 'vi' ? 'Năm học' : 'Academic year'} ${year} - ${language === 'vi' ? 'Học kỳ' : 'Semester'} ${sem}`},
-  //   ]
-  // )
+  const yearText = lng === "vi" ? "Năm" : "Year"
+  const phaseText = lng === "vi" ? "Kỳ" : "Phase"
+  const roundText = lng === "vi" ? "Đợt" : "Round"
+  return Array.from({ length: years }, (_, yearIndex) => ({
+    value: (yearIndex + 1).toString(),
+    label: yearText + ` ${yearIndex + 1}`,
+    children: Array.from({ length: phases }, (_, phaseIndex) => ({
+      value: (phaseIndex + 1).toString(),
+      label: phaseText + ` ${phaseIndex + 1}`,
+      children: Array.from({ length: rounds }, (_, roundIndex) => ({
+        value: (roundIndex + 1).toString(),
+        label: roundText + ` ${roundIndex + 1}`,
+      })),
+    })),
+  }))
+}
+
+export const getCurrenBatch = () => {
+  const date = new Date()
+  const currentYear = date.getFullYear()
+  const currentMonth = date.getMonth() + 1
+
+  return {
+    AT: currentMonth >= 6 ? currentYear - 2003 : currentYear - 2004, //AT bắt đầu AT1 từ 2003
+    CT: currentMonth >= 6 ? currentYear - 2015 : currentYear - 2016, //CT bắt đầu CT1 từ 2015
+    DT: currentMonth >= 6 ? currentYear - 2016 : currentYear - 2017, //DT bắt đầu DT1 từ 2018
+  }
 }
 
 const getDay = (day: number, month: number, year: number) => {
-  const date = new Date(`${year}-${month}-${day}`)
+  const date = new Date(`${year}/${month}/${day}`)
   return date.getDay()
 }
 const countDayOfMonth = (month: number, year: number): number => {
@@ -120,4 +153,53 @@ export const formatOptionsAddress = (dataQuery: any) => {
     label: data.name,
     value: data.id,
   }))
+}
+
+export const formatStudentData = (data: any, isGet: boolean = true) => {
+  if (!isGet) {
+    return {
+      id: data.id,
+      name: data.name,
+      studentCode: data.code,
+      dob: data.birth,
+      gender: data.gender,
+      address: data.address,
+      phoneNumber: data.phone,
+      isActive: data.status,
+      account: data.code,
+    }
+  }
+  return {
+    id: data.id,
+    name: data.name,
+    code: data.studentCode,
+    birth: data.dob,
+    gender: data.gender,
+    address: data.address,
+    phone: data.phoneNumber,
+    status: data.isActive,
+  }
+}
+
+export const formatScoreByStudentData = (data: any, isGet: boolean = true) => {
+  if (!isGet) {
+    return {
+      course: data.courseName,
+      credit: data.credit,
+      score1: data.firstScore,
+      score2: data.secondScore,
+      score3: data.examScore,
+      average: data.finalScore,
+      letterGrade: data.letterGrade,
+    }
+  }
+  return {
+    courseName: data.course,
+    credit: data.credit,
+    firstScore: data.score1,
+    secondScore: data.score2,
+    examScore: data.score3,
+    finalScore: data.average,
+    letterGrade: data.letterGrade,
+  }
 }

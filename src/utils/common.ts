@@ -1,4 +1,3 @@
-import { message, notification } from "antd"
 import { Dayjs } from "dayjs"
 import { DateType } from "../pages/user/schedule/MySchedule"
 
@@ -44,22 +43,6 @@ export const getPreviousMonthYear = (month: number, year: number) => {
     return { month: 12, year: year - 1 }
   }
   return { month: month - 1, year }
-}
-export const showMessage = (
-  type: "info" | "success" | "error" | "warning" | "loading",
-  text: string,
-) => {
-  message[type](text, 4.5)
-}
-
-export const showNotification = (
-  type: "info" | "success" | "error" | "warning",
-  text: string,
-) => {
-  notification[type]({
-    message: "KMA ONE thông báo",
-    description: text,
-  })
 }
 
 export const getSlideCalendar = (

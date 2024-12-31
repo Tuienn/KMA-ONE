@@ -1,13 +1,10 @@
-import { DatePicker, Input, Select } from "antd"
+import { Cascader, DatePicker, Input, Select, Switch } from "antd"
 import Form, { Rule } from "antd/es/form"
+import { DefaultOptionType } from "antd/es/select"
 import { Dayjs } from "dayjs"
 import { compareIgnoreCaseAndDiacritics } from "../../../utils/common"
 import QuerySelect from "./QuerySelect"
 
-export interface OptionsSelectType {
-  value: string | number
-  label: string
-}
 export interface QuerySettingType {
   initialParams?: any
   linkAPI: string
@@ -19,6 +16,9 @@ interface DateSettingType {
   minDate?: Dayjs //YYYY/MM/DD
   maxDate?: Dayjs //YYYY/MM/DD
 }
+interface CascaderSettingType {
+  isFullRender?: boolean | false
+}
 
 export interface FormItemCommonType {
   type:
@@ -28,6 +28,8 @@ export interface FormItemCommonType {
     | "search_select"
     | "range_picker"
     | "date_picker"
+    | "cascader_select"
+    | "switch"
   name: string | string[]
   placeholder?: string
   disabled?: boolean | false
@@ -36,7 +38,8 @@ export interface FormItemCommonType {
   className?: string | ""
   querySetting?: QuerySettingType
   dateSetting?: DateSettingType
-  options?: OptionsSelectType[]
+  cascaderSetting?: CascaderSettingType
+  options?: DefaultOptionType[]
   loading?: boolean | false
 }
 
@@ -50,6 +53,7 @@ const FormItemCommon: React.FC<FormItemCommonType> = ({
   disabled,
   querySetting,
   dateSetting,
+  cascaderSetting,
   options,
   loading,
 }) => {
@@ -78,7 +82,7 @@ const FormItemCommon: React.FC<FormItemCommonType> = ({
             options={options}
             disabled={disabled}
             notFoundContent={null}
-            allowClear={true}
+            allowClear
             loading={loading}
             popupMatchSelectWidth={false}
           />
@@ -95,7 +99,7 @@ const FormItemCommon: React.FC<FormItemCommonType> = ({
           <Select
             disabled={disabled}
             showSearch
-            allowClear={true}
+            allowClear
             options={options}
             placeholder={placeholder}
             filterOption={(input: string, option: any) =>
@@ -106,6 +110,48 @@ const FormItemCommon: React.FC<FormItemCommonType> = ({
           />
         </Form.Item>
       )
+
+    case "cascader_select": {
+      const displayRender = cascaderSetting?.isFullRender
+        ? undefined
+        : (labels: string[]) => labels[labels.length - 1]
+
+      return (
+        <Form.Item
+          name={name}
+          className={className}
+          rules={rules}
+          label={label}
+        >
+          <Cascader
+            placeholder={placeholder}
+            options={options}
+            allowClear
+            displayRender={displayRender}
+            disabled={disabled}
+          />
+        </Form.Item>
+      )
+    }
+    case "switch": {
+      const placeholderSwitch = placeholder ? placeholder.split("-") : ["", ""]
+      return (
+        <Form.Item
+          name={name}
+          className={className}
+          rules={rules}
+          label={label}
+          valuePropName="checked"
+        >
+          <Switch
+            checkedChildren={placeholderSwitch[0]}
+            unCheckedChildren={placeholderSwitch[1]}
+            defaultChecked
+          />
+        </Form.Item>
+      )
+    }
+
     case "input":
       return (
         <Form.Item
@@ -117,11 +163,12 @@ const FormItemCommon: React.FC<FormItemCommonType> = ({
           <Input
             placeholder={placeholder}
             disabled={disabled}
-            allowClear={true}
+            allowClear
+            spellCheck={false}
           />
         </Form.Item>
       )
-    case "range_picker":
+    case "range_picker": {
       const placeholderDate: [string, string] = placeholder
         ?.split("-")
         .slice(0, 2) as [string, string]
@@ -139,11 +186,12 @@ const FormItemCommon: React.FC<FormItemCommonType> = ({
             minDate={dateSetting?.minDate}
             maxDate={dateSetting?.maxDate}
             disabled={disabled}
-            allowClear={true}
+            allowClear
             className="w-full"
           />
         </Form.Item>
       )
+    }
     case "date_picker":
       return (
         <Form.Item
@@ -157,7 +205,7 @@ const FormItemCommon: React.FC<FormItemCommonType> = ({
             format="YYYY/MM/DD"
             placeholder={placeholder}
             disabled={disabled}
-            allowClear={true}
+            allowClear
             placement={"bottomLeft"}
             maxTagCount="responsive"
             multiple={dateSetting?.mutiple}

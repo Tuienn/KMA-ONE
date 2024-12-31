@@ -1,28 +1,35 @@
 import i18n from "i18next"
 import { initReactI18next } from "react-i18next"
+import COURSE_MANAGEMENT_EN from "../admin/en/courseManagement.json"
 import LAYOUT_BASIC_EN_ADMIN from "../admin/en/layoutBasic.json"
+import SCORE_MANAGEMENT_EN from "../admin/en/scoreManagement.json"
 import STUDENT_MANAGEMENT_EN from "../admin/en/studentManagement.json"
-import LAYOUT_BASIC_VIE_ADMIN from "../admin/vi/layoutBasic.json"
-import STUDENT_MANAGEMENT_VIE from "../admin/vi/studentManagement.json"
+import COURSE_MANAGEMENT_VI from "../admin/vi/courseManagement.json"
+import LAYOUT_BASIC_VI_ADMIN from "../admin/vi/layoutBasic.json"
+import SCORE_MANAGEMENT_VI from "../admin/vi/scoreManagement.json"
+import STUDENT_MANAGEMENT_VI from "../admin/vi/studentManagement.json"
 import CALENDAR_EN from "../common/en/calendar.json"
 import FORM_EN from "../common/en/form.json"
 import MODAL_INFO_EN from "../common/en/modalInfo.json"
 import NOTIFICATION_EN from "../common/en/notification.json"
 import POINTS_EN from "../common/en/points.json"
-import CALENDAR_VIE from "../common/vi/calendar.json"
-import FORM_VIE from "../common/vi/form.json"
-import MODAL_INFO_VIE from "../common/vi/modalInfo.json"
-import NOTIFICATION_VIE from "../common/vi/notification.json"
-import POINTS_VIE from "../common/vi/points.json"
+import CALENDAR_VI from "../common/vi/calendar.json"
+import FORM_VI from "../common/vi/form.json"
+import MODAL_INFO_VI from "../common/vi/modalInfo.json"
+import NOTIFICATION_VI from "../common/vi/notification.json"
+import POINTS_VI from "../common/vi/points.json"
+import CHAT_EN from "../user/en/chat.json"
 import CLASS_LIST_EN from "../user/en/classList.json"
 import LAYOUT_BASIC_EN_USER from "../user/en/layoutBasic.json"
-import CLASS_LIST_VIE from "../user/vi/classList.json"
-import LAYOUT_BASIC_VIE_USER from "../user/vi/layoutBasic.json"
+import CHAT_VI from "../user/vi/chat.json"
+import CLASS_LIST_VI from "../user/vi/classList.json"
+import LAYOUT_BASIC_VI_USER from "../user/vi/layoutBasic.json"
 
 let i18nLocal = localStorage.getItem("i18n")
 
 if (!i18nLocal) {
-  localStorage.setItem("i18n", "vi"), (i18nLocal = "vi")
+  localStorage.setItem("i18n", "vi")
+  i18nLocal = "vi"
 }
 
 export const locales = {
@@ -40,17 +47,23 @@ export const resources = {
     layoutBasic_admin: LAYOUT_BASIC_EN_ADMIN,
     studentManagement: STUDENT_MANAGEMENT_EN,
     classList: CLASS_LIST_EN,
+    chat: CHAT_EN,
+    courseManagement: COURSE_MANAGEMENT_EN,
+    scoreManagement: SCORE_MANAGEMENT_EN,
   },
   vi: {
-    layoutBasic_user: LAYOUT_BASIC_VIE_USER,
-    modalInfo: MODAL_INFO_VIE,
-    notification: NOTIFICATION_VIE,
-    calendar: CALENDAR_VIE,
-    form: FORM_VIE,
-    points: POINTS_VIE,
-    layoutBasic_admin: LAYOUT_BASIC_VIE_ADMIN,
-    studentManagement: STUDENT_MANAGEMENT_VIE,
-    classList: CLASS_LIST_VIE,
+    layoutBasic_user: LAYOUT_BASIC_VI_USER,
+    modalInfo: MODAL_INFO_VI,
+    notification: NOTIFICATION_VI,
+    calendar: CALENDAR_VI,
+    form: FORM_VI,
+    points: POINTS_VI,
+    layoutBasic_admin: LAYOUT_BASIC_VI_ADMIN,
+    studentManagement: STUDENT_MANAGEMENT_VI,
+    classList: CLASS_LIST_VI,
+    chat: CHAT_VI,
+    courseManagement: COURSE_MANAGEMENT_VI,
+    scoreManagement: SCORE_MANAGEMENT_VI,
   },
 }
 export const defaultNS = "LayoutBasic"
@@ -67,6 +80,10 @@ i18n.use(initReactI18next).init({
     "points",
     "layoutBasic_admin",
     "studentManagement",
+    "classList",
+    "chat",
+    "courseManagement",
+    "scoreManagement",
   ],
   fallbackLng: "vi",
   defaultNS,

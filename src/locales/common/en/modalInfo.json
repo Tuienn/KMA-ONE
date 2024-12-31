@@ -2,11 +2,17 @@
   "modalInfo": {
     "title": "Profile information",
     "title edit mode": "Update profile",
-    "okText": "Update",
+    "update": "Update",
     "cancelText": "Back",
     "edit": "Edit",
     "information title": "Profile information",
-    "create": "Create"
+    "create": "Create",
+    "remove": {
+      "button": "Remove",
+      "popconfirm title": "Are you sure you want to delete this student?",
+      "popconfirm ok": "Yes",
+      "popconfirm cancel": "No"
+    }
   },
   "information": {
     "student code": "Student code",
@@ -21,7 +27,23 @@
     "address district": "District",
     "address ward": "Ward",
     "phone": "Phone number",
+    "status": "Status",
+    "status active": "Active",
+    "status inactive": "Inactive",
     "description": "This information will be publicly available to accounts within the system",
     "no data": "No data"
+  },
+  "information shorten": {
+    "student code": "StuCode",
+    "name": "FullN",
+    "birth": "DOB",
+    "gender": "Gender",
+    "gender female": "Female",
+    "gender male": "Male",
+    "address": "Addr",
+    "phone": "PhoneN",
+    "status": "Sta",
+    "status active": "Act",
+    "status inactive": "Inact"
   }
 }

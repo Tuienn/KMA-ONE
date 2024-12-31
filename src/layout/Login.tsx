@@ -15,7 +15,6 @@ import { useNavigate } from "react-router-dom"
 import apiService from "../api/APIService"
 import bgImage from "../assets/images/background.png"
 import logoKMA from "../assets/images/logoKMA.png"
-import "../assets/styles/common/inputFormAnimation.css"
 import { saveDataStorage } from "../utils/handleStorage"
 
 const Login = () => {
@@ -35,33 +34,32 @@ const Login = () => {
   const mutationLogin = useMutation({
     mutationKey: ["POST", "login"],
     mutationFn: async (data: any) => apiService("post", "login", {}, data),
-  })
-
-  useEffect(() => {
-    if (mutationLogin.isSuccess) {
+    onSuccess: () => {
       api.success({
         message: "Đăng nhập thành công",
         duration: 1,
+        description: "Xin chào sinh viên",
         onClose: () => {
           saveDataStorage("token", {
             // authPermission: "admin",
-            authPermission: "user",
+            authPermission: "admin",
             authId: 1,
             expiredTime: new Date().getTime(),
-            authStudentCode: "CT060016",
+            authStudentCode: "CT060001",
           })
-          // Hard field
+          // // Hard field
           window.location.reload()
         },
       })
-    } else if (mutationLogin.isError) {
+    },
+    onError: () => {
       api.error({
         message: "Đăng nhập thất bại",
         description: "Lỗi hệ thống",
         duration: 1,
       })
-    }
-  }, [mutationLogin.isSuccess, mutationLogin.isError, api])
+    },
+  })
 
   return (
     <div className="h-screen w-screen">

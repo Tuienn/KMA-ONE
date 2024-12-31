@@ -3,7 +3,7 @@ import { Select } from "antd"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
 import apiService from "../../../../api/APIService"
-import GroupClassItem from "../../../../components/user/schedule/classList/GroupClassItem"
+import GroupClassItem from "../../../../components/user/schedule/classList/findClass/GroupClassItem"
 import { compareIgnoreCaseAndDiacritics } from "../../../../utils/common"
 
 const FindClass: React.FC = () => {

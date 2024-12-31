@@ -8,7 +8,7 @@ const API = axios.create({
 
 API.defaults.timeout = 20000
 API.defaults.headers.post["Content-Type"] = "application/json"
-// API.defaults.headers.common["ngrok-skip-browser-warning"] = "true"
+API.defaults.headers.common["ngrok-skip-browser-warning"] = "true"
 
 API.interceptors.response.use(
   function (response) {

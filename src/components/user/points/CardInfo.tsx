@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next"
 interface Props {
   name: string
   studentCode: string
-  className: string
+
   passed: number
   failed: number
   avgScore: number
@@ -19,7 +19,6 @@ interface Props {
 const CardInfo: React.FC<Props> = ({
   name,
   studentCode,
-  className,
   passed,
   failed,
   avgScore,
@@ -36,7 +35,9 @@ const CardInfo: React.FC<Props> = ({
             {studentCode}
           </p>
           <p className="inline-block rounded-lg border-2 border-second px-2 py-2 text-second">
-            {className}
+            {studentCode
+              ? studentCode[0] + studentCode[1] + studentCode[3]
+              : ""}
           </p>
         </div>
         {exportButton}

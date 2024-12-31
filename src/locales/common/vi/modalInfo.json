@@ -2,15 +2,23 @@
   "modalInfo": {
     "title": "Hồ sơ thông tin",
     "title edit mode": "Cập nhật thông tin",
-    "okText": "Cập nhật",
+    "update": "Cập nhật",
     "cancelText": "Trở lại",
     "edit": "Chỉnh sửa",
     "information title": "Thông tin cá nhân",
-    "create": "Tạo mới"
+    "create": "Tạo mới",
+    "remove": {
+      "button": "Xoá tài khoản",
+      "popconfirm title": "Bạn có chắc chắn muốn xóa sinh viên này?",
+      "popconfirm ok": "Có",
+      "popconfirm cancel": "Không"
+    }
   },
   "information": {
     "student code": "Mã sinh viên",
+    "student code placeholder": "VD: AT123456, CT123456, DT123456,...",
     "name": "Họ và tên",
+    "name placeholder": "VD: Nguyễn Văn A",
     "birth": "Ngày sinh",
     "birth placeholder": "Chọn ngày",
     "gender": "Giới tính",
@@ -21,7 +29,24 @@
     "address district": "Quận/Huyện",
     "address ward": "Phường/Xã",
     "phone": "Số điện thoại",
+    "phone placeholder": "VD: 0854422289 - Mã vùng VN",
     "description": "Thông tin này sẽ được công khai với những tài khoản trong hệ thống",
-    "no data": "Không có dữ liệu"
+    "no data": "Không có dữ liệu",
+    "status": "Trạng thái",
+    "status active": "Hoạt động",
+    "status inactive": "Không hoạt động"
+  },
+  "information shorten": {
+    "student code": "MSV",
+    "name": "HVT",
+    "birth": "NS",
+    "gender": "GT",
+    "gender female": "Nam",
+    "gender male": "Nữ",
+    "address": "DC",
+    "phone": "SDT",
+    "status": "TT",
+    "status active": "HD",
+    "status inactive": "KHD"
   }
 }

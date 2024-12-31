@@ -1,3 +1,4 @@
+/* Form item */
 .ant-form-item-row .ant-form-item-label label::after {
   content: "";
   width: 0;
@@ -8,4 +9,13 @@
 }
 .ant-form-item-row .ant-form-item-label label::before {
   margin-left: 5px;
+}
+.ant-form-item .ant-row .ant-col.ant-form-item-label {
+  padding-bottom: 4px;
+}
+
+/* Cascader */
+.ant-cascader-menus .ant-cascader-menu {
+  height: auto;
+  max-height: 200px;
 }

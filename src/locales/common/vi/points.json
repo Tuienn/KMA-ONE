@@ -5,8 +5,10 @@
     "avg": "Điểm trung bình"
   },
   "table": {
-    "number": "STT",
-    "subject name": "Tên môn học",
+    "student code": "Mã sinh viên",
+    "student name": "Họ và tên",
+    "course name": "Tên môn học",
+
     "first score": "Điểm thành phần 1",
     "second score": "Điểm thành phần 2",
     "exam score": "Điểm thi",
@@ -15,8 +17,9 @@
     "credit": "Số tín chỉ"
   },
   "table shorten": {
-    "number": "STT",
-    "subject name": "Tên môn học",
+    "student code": "MSV",
+    "student name": "HVT",
+    "course name": "TMH",
     "first score": "DTP1",
     "second score": "DTP2",
     "exam score": "DT",
