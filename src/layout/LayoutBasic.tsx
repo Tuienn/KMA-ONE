@@ -109,8 +109,8 @@ const LayoutBasic: React.FC<Props> = ({ children }) => {
       ),
     ]),
     getItem(
-      <Link to={"/points"}>{t("sider.look up points")}</Link>,
-      "points",
+      <Link to={"/scores"}>{t("sider.look up scores")}</Link>,
+      "scores",
       <FileSearchOutlined />,
     ),
     getItem(
@@ -161,7 +161,12 @@ const LayoutBasic: React.FC<Props> = ({ children }) => {
       ),
     ]),
     getItem(
-      <button onClick={changeLanguage}>
+      <button
+        onClick={() => {
+          changeLanguage()
+          setOpenDrawer(false)
+        }}
+      >
         {t("layoutBasic_user:drawer.change language")}
       </button>,
       "change-language",

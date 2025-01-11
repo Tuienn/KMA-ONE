@@ -25,7 +25,7 @@ const StudentManagement = () => {
   }
 
   const queryListStudents = useQuery({
-    queryKey: ["GET", "students", paging],
+    queryKey: ["GET", "student-list", paging],
     queryFn: async () => {
       const res = await apiService("get", "/student", {
         pageIndex: paging,
@@ -35,7 +35,7 @@ const StudentManagement = () => {
       return {
         page: paging,
         total: res.total,
-        data: res.items.map((item: any) => formatStudentData(item)),
+        list: res.items.map((item: any) => formatStudentData(item)),
       }
     },
   })
@@ -48,8 +48,6 @@ const StudentManagement = () => {
       })
     }
   }, [queryListStudents.isError])
-
-  const handleRefetchQuery = () => queryListStudents.refetch()
 
   const listSearch: FormItemCommonType[] = [
     {
@@ -279,7 +277,7 @@ const StudentManagement = () => {
           //     id: 6,
           //   },
           // ],
-          list: queryListStudents.isSuccess ? queryListStudents.data.data : [],
+          list: queryListStudents.isSuccess ? queryListStudents.data.list : [],
         }}
       />
       <ModalInfo
@@ -287,7 +285,6 @@ const StudentManagement = () => {
         open={openModal}
         setOpen={setOpenModal}
         studentId={studentIdModal === "" ? undefined : studentIdModal}
-        handleRefetchQuery={handleRefetchQuery}
       />
     </div>
   )

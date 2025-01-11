@@ -1,8 +1,10 @@
 import { PlusCircleOutlined } from "@ant-design/icons"
-import { Button } from "antd"
+import { useQuery } from "@tanstack/react-query"
+import { App, Button } from "antd"
 import i18next from "i18next"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
+import apiService from "../../api/APIService"
 import HeaderCommon from "../../components/admin/common/HeaderCommon"
 import ListSearchCommon from "../../components/admin/common/ListSearchCommon"
 import ModalCourse from "../../components/admin/courseManagement/ModalCourse"
@@ -11,9 +13,45 @@ import { FormItemCommonType } from "../../components/common/formItemCustom/FormI
 import { createSemesterOptions, getCurrenBatch } from "../../utils/formatValue"
 
 const CourseManagement = () => {
-  const { t } = useTranslation("courseManagement")
+  const { t } = useTranslation(["courseManagement", "notification"])
   const [openModal, setOpenModal] = useState<boolean>(false)
   const { AT, CT, DT } = getCurrenBatch()
+  const [paging, setPaging] = useState<number>(1)
+  const [courseIdModal, setCourseIdModal] = useState<string | number>("")
+  const { notification } = App.useApp()
+
+  useEffect(() => {
+    if (!openModal) {
+      setCourseIdModal("")
+    }
+  }, [openModal])
+
+  const queryListCourse = useQuery({
+    queryKey: ["GET", "list-course"],
+    queryFn: async () => {
+      const res = await apiService("get", "/course", {
+        pageSize: 10,
+        pageIndex: paging,
+        sortBy: "Id",
+        SortDesc: false,
+      })
+
+      return {
+        page: paging,
+        total: res.total,
+        list: res.items,
+      }
+    },
+  })
+
+  useEffect(() => {
+    if (queryListCourse.isError) {
+      notification.error({
+        message: t("notification:api.title"),
+        description: t("notification:api.get.error"),
+      })
+    }
+  }, [queryListCourse.isError])
 
   const listSearch: FormItemCommonType[] = [
     {
@@ -94,42 +132,54 @@ const CourseManagement = () => {
       />
       <TableCourses
         loading={false}
-        dataSource={[
-          {
-            key: 1,
-            name: "Course 1",
-            credit: 3,
-            batch: "AT1",
-            semester: 111,
-            class: ["L01", "L02", "L03"],
-          },
-          {
-            key: 2,
-            name: "Course 2",
-            credit: 4,
-            batch: "CT2",
-            semester: 222,
-            class: ["L01", "L02", "L03"],
-          },
-          {
-            key: 3,
-            name: "Course 3",
-            credit: 2,
-            batch: "DT3",
-            semester: 311,
-            class: ["L01", "L02", "L03"],
-          },
-          {
-            key: 4,
-            name: "Course 4",
-            credit: 1,
-            batch: "AT2",
-            semester: 422,
-            class: ["L01", "L02", "L03"],
-          },
-        ]}
+        // dataSource={[
+        //   {
+        //     key: 1,
+        //     name: "Course 1",
+        //     credit: 3,
+        //     batch: "AT1",
+        //     semester: 111,
+        //     class: ["L01", "L02", "L03"],
+        //   },
+        //   {
+        //     key: 2,
+        //     name: "Course 2",
+        //     credit: 4,
+        //     batch: "CT2",
+        //     semester: 222,
+        //     class: ["L01", "L02", "L03"],
+        //   },
+        //   {
+        //     key: 3,
+        //     name: "Course 3",
+        //     credit: 2,
+        //     batch: "DT3",
+        //     semester: 311,
+        //     class: ["L01", "L02", "L03"],
+        //   },
+        //   {
+        //     key: 4,
+        //     name: "Course 4",
+        //     credit: 1,
+        //     batch: "AT2",
+        //     semester: 422,
+        //     class: ["L01", "L02", "L03"],
+        //   },
+        // ]}
+        dataSource={{
+          list: queryListCourse.isSuccess ? queryListCourse.data.list : [],
+          total: queryListCourse.isSuccess ? queryListCourse.data.total : 0,
+          page: paging,
+        }}
+        handleChangePaging={setPaging}
+        handleOpenModal={setOpenModal}
+        handleSelectCourseId={setCourseIdModal}
       />
-      <ModalCourse open={openModal} handleOpen={setOpenModal} />
+      <ModalCourse
+        open={openModal}
+        handleOpen={setOpenModal}
+        courseId={courseIdModal === "" ? undefined : courseIdModal}
+      />
     </div>
   )
 }

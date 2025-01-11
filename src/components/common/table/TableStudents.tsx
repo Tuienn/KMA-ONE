@@ -8,7 +8,7 @@ interface Props {
   loading: boolean
   handleSelectStudentCode: Dispatch<SetStateAction<string | number>>
   handleOpenModal: Dispatch<SetStateAction<boolean>>
-  handleChangePaging?: (page: number) => void
+  handleChangePaging: (page: number) => void
 }
 
 interface DataType extends DataStudentType {
@@ -129,7 +129,6 @@ const TableStudents: React.FC<Props> = ({
         pageSize: 25,
         total: dataSource.total * 25,
         onChange: handleChangePaging,
-
         // showLessItems: true,
         // hideOnSinglePage: true,
       }}

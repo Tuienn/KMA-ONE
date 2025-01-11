@@ -1,12 +1,6 @@
 import { Grid, Table, TableColumnsType, Tag } from "antd"
 import { useTranslation } from "react-i18next"
 
-interface Props {
-  loading: boolean
-  dataSource: any
-  type: "list-by-student" | "list-by-course"
-}
-
 interface DataType {
   key: number
   courseName?: string
@@ -20,9 +14,15 @@ interface DataType {
   letterGrade: string //Điểm chữ
 }
 
+interface Props {
+  loading: boolean
+  dataSource: any
+  type: "list-by-student" | "list-by-course"
+}
+
 const { useBreakpoint } = Grid
-const TablePoints: React.FC<Props> = ({ loading, dataSource, type }) => {
-  const { t } = useTranslation("points")
+const TableScores: React.FC<Props> = ({ loading, dataSource, type }) => {
+  const { t } = useTranslation("scores")
   const { md } = useBreakpoint()
 
   const columns: TableColumnsType<DataType> = [
@@ -111,4 +111,4 @@ const TablePoints: React.FC<Props> = ({ loading, dataSource, type }) => {
   )
 }
 
-export default TablePoints
+export default TableScores

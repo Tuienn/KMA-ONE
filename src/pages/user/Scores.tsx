@@ -5,13 +5,13 @@ import { useTranslation } from "react-i18next"
 import apiService from "../../api/APIService"
 import FormItemCommon from "../../components/common/formItemCustom/FormItemCommon"
 import ExportButton from "../../components/common/handleFileButton/ExportButton"
-import TablePoints from "../../components/common/table/TablePoints"
+import TableScores from "../../components/common/table/TableScores"
 import CardInfo from "../../components/user/points/CardInfo"
 import { formatScoreByStudentData } from "../../utils/formatValue"
 import { getAuthToken } from "../../utils/handleStorage"
 
-const Points: React.FC = () => {
-  const { t } = useTranslation(["form", "points", "notification"])
+const Scores: React.FC = () => {
+  const { t } = useTranslation(["form", "scores", "notification"])
   const [form] = Form.useForm()
   const { authStudentCode } = getAuthToken()
   const { notification } = App.useApp()
@@ -180,12 +180,11 @@ const Points: React.FC = () => {
               className="w-[70%]"
               querySetting={{
                 linkAPI: "/search",
-                formatOption: (dataQuery: any) => {
-                  return {
-                    value: dataQuery.id,
-                    label: `${dataQuery.name} - ${dataQuery.studentCode}`,
-                  }
-                },
+                formatOption: (dataQuery: any) =>
+                  dataQuery.students.map((item: any) => ({
+                    value: item.id,
+                    label: `${item.name} - ${item.studentCode}`,
+                  })),
               }}
             />
             <FormItemCommon
@@ -208,20 +207,20 @@ const Points: React.FC = () => {
               fileName={`${queryScoreByStudent.data?.name} - ${queryScoreByStudent.data?.studentCode}`}
               dataRows={queryScoreByStudent.data?.dataSource}
               headers={[
-                t("points:table.course name"),
-                t("points:table.credit"),
-                t("points:table.first score"),
-                t("points:table.second score"),
-                t("points:table.exam score"),
-                t("points:table.final score"),
-                t("points:table.letter grade"),
+                t("scores:table.course name"),
+                t("scores:table.credit"),
+                t("scores:table.first score"),
+                t("scores:table.second score"),
+                t("scores:table.exam score"),
+                t("scores:table.final score"),
+                t("scores:table.letter grade"),
               ]}
             />
           }
         />
       </div>
       {/* <div className="mt-3 flex place-content-end"></div> */}
-      <TablePoints
+      <TableScores
         loading={queryScoreByStudent.isPending}
         dataSource={queryScoreByStudent.data?.dataSource ?? []}
         type="list-by-student"
@@ -230,4 +229,4 @@ const Points: React.FC = () => {
   )
 }
 
-export default Points
+export default Scores

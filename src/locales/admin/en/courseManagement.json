@@ -28,7 +28,12 @@
     "title": "Course information",
     "create": "Create",
     "update": "Update",
-    "delete": "Delete",
+    "remove": {
+      "button": "Remove",
+      "popconfirm title": "Are you sure you want to delete this course?",
+      "popconfirm ok": "Yes",
+      "popconfirm cancel": "No"
+    },
     "form": {
       "course name": "Course name",
       "placholder course name": "Input course name",

@@ -1,10 +1,14 @@
 import { Table, TableColumnsType, Tag } from "antd"
+import { Dispatch, SetStateAction } from "react"
 import { useTranslation } from "react-i18next"
 import { formatOptionsSemester } from "../../../utils/formatValue"
 
 interface Props {
   loading: boolean
   dataSource: any
+  handleOpenModal: Dispatch<SetStateAction<boolean>>
+  handleSelectCourseId: Dispatch<SetStateAction<string | number>>
+  handleChangePaging: (page: number) => void
 }
 
 interface DataType {
@@ -16,7 +20,13 @@ interface DataType {
   class: string[]
 }
 
-const TableCourses: React.FC<Props> = ({ loading, dataSource }) => {
+const TableCourses: React.FC<Props> = ({
+  loading,
+  dataSource,
+  handleChangePaging,
+  handleSelectCourseId,
+  handleOpenModal,
+}) => {
   const { t } = useTranslation("courseManagement")
   const columns: TableColumnsType<DataType> = [
     {
@@ -28,7 +38,7 @@ const TableCourses: React.FC<Props> = ({ loading, dataSource }) => {
     {
       title: t("table.credit"),
       dataIndex: "credit",
-      width: "160px",
+      width: "120px",
     },
     {
       title: t("table.batch"),
@@ -38,7 +48,7 @@ const TableCourses: React.FC<Props> = ({ loading, dataSource }) => {
     {
       title: t("table.semester"),
       dataIndex: "semester",
-      width: "160px",
+      width: "180px",
     },
     {
       title: t("table.class"),
@@ -47,27 +57,37 @@ const TableCourses: React.FC<Props> = ({ loading, dataSource }) => {
     },
   ]
 
-  const data = dataSource.map((item: any, index: number) => {
+  const data = dataSource.list.map((item: any) => {
     const { phase, year, round } = formatOptionsSemester(item.semester)
 
     return {
-      key: index,
-      name: item.name,
+      key: item.id,
+      name: (
+        <a
+          className="text-second"
+          onClick={() => {
+            handleSelectCourseId(item.id)
+            handleOpenModal(true)
+          }}
+        >
+          {item.name}
+        </a>
+      ),
       credit: item.credit,
-      batch: item.batch,
+      batch: <Tag>{item.batch}</Tag>,
       semester:
         t("list search.list placholder.semester year") +
         " " +
         year +
-        "/" +
+        " / " +
         t("list search.list placholder.semester phase") +
         " " +
         phase +
-        "/" +
+        " / " +
         t("list search.list placholder.semester round") +
         " " +
         round,
-      class: item.class.map((item: any) => <Tag key={item}>{item}</Tag>),
+      class: item.class?.map((item: any) => <Tag key={item}>{item}</Tag>),
     }
   })
 
@@ -79,7 +99,12 @@ const TableCourses: React.FC<Props> = ({ loading, dataSource }) => {
       className="mt-3"
       bordered
       dataSource={data}
-      pagination={false}
+      pagination={{
+        total: dataSource.total * 10,
+        pageSize: 10,
+        current: dataSource.page,
+        onChange: handleChangePaging,
+      }}
       // rowClassName={(record, index) => (index % 2 === 0 ? "bg-gray-100" : "")}
     />
   )

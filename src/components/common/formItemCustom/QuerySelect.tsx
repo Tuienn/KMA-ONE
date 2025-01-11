@@ -31,6 +31,7 @@ const QuerySelect: React.FC<QuerySelectType> = ({
   rules,
   querySetting,
   className,
+  disabled,
 }) => {
   const { initialParams, linkAPI, formatOption } =
     querySetting as QuerySettingType
@@ -50,12 +51,13 @@ const QuerySelect: React.FC<QuerySelectType> = ({
   })
 
   const options: DefaultOptionType[] = listDataQuery.isSuccess
-    ? listDataQuery.data?.map(formatOption)
+    ? formatOption(listDataQuery.data)
     : []
 
   return (
     <Form.Item name={name} className={className} rules={rules} label={label}>
       <Select
+        disabled={disabled}
         className="w-full"
         allowClear={true}
         showSearch

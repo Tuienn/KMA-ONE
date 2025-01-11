@@ -2,7 +2,7 @@ import { RedoOutlined, SearchOutlined } from "@ant-design/icons"
 import { Button, Card, Flex, Form } from "antd"
 import dayjs from "dayjs"
 import i18next from "i18next"
-import React from "react"
+import React, { useEffect } from "react"
 import { UsePath, UseSearch } from "../../../context/PathProvider"
 import { formatDateToString } from "../../../utils/common"
 import FormItemCommon, {
@@ -18,7 +18,13 @@ const ListSearchCommon: React.FC<Props> = ({ title, listSearch }) => {
   const [form] = Form.useForm()
   const { history } = UsePath()
 
-  const currentUrl = UsePath().pathname
+  const { searchPath, pathname } = UsePath()
+
+  useEffect(() => {}, [])
+
+  useEffect(() => {
+    form.setFieldsValue(searchPath)
+  }, [pathname])
 
   return (
     <Card
@@ -48,7 +54,7 @@ const ListSearchCommon: React.FC<Props> = ({ title, listSearch }) => {
             icon={<RedoOutlined />}
             onClick={() => {
               form.resetFields()
-              UseSearch(history, currentUrl, {})
+              UseSearch(history, pathname, {})
             }}
           >
             {i18next.language === "en" ? "Reset" : "Làm mới"}
@@ -65,7 +71,7 @@ const ListSearchCommon: React.FC<Props> = ({ title, listSearch }) => {
             }
           }
 
-          UseSearch(history, currentUrl, value)
+          UseSearch(history, pathname, value)
         }}
       >
         <Flex gap={8} wrap>

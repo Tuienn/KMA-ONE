@@ -12,7 +12,7 @@
     "button reset": "Xóa bộ lọc",
     "list placholder": {
       "student name": "Nhập tên sinh viên",
-      "student code": "Nhập mã sinh viên",
+      "student": "Nhập mã sinh viên hoặc tên sinh viên",
       "course name": "Nhập tên môn học",
       "class": "Chọn lớp học",
       "batch": "Chọn khóa học"

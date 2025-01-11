@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next"
 import HeaderCommon from "../../components/admin/common/HeaderCommon"
 import ListSearchCommon from "../../components/admin/common/ListSearchCommon"
 import { FormItemCommonType } from "../../components/common/formItemCustom/FormItemCommon"
-import TablePoints from "../../components/common/table/TablePoints"
+import TableScores from "../../components/common/table/TableScores"
 import { UsePath, UseSearch } from "../../context/PathProvider"
 import { getCurrenBatch } from "../../utils/formatValue"
 
@@ -18,18 +18,20 @@ const ScoreManagement = () => {
 
   const listSearch: FormItemCommonType[] = [
     {
-      type: "input",
+      type: "query_select",
       name: "studentCode",
       disabled: mode === "list-by-course",
-      placeholder: t("list search.list placholder.student code"),
-      className: "w-[calc(100%/5-8px)]",
-    },
-    {
-      type: "input",
-      name: "studentName",
-      disabled: mode === "list-by-course",
-      placeholder: t("list search.list placholder.student name"),
-      className: "w-[calc(100%/5-8px)]",
+      placeholder: t("list search.list placholder.student"),
+      className: "w-[calc(40%-8px)]",
+      querySetting: {
+        initialParams: {},
+        linkAPI: "/student/search",
+        formatOption: (dataQuery) =>
+          dataQuery.students.map((item: any) => ({
+            value: item.studentCode,
+            label: item.name + " - " + item.studentCode,
+          })),
+      },
     },
     {
       type: "input",
@@ -85,7 +87,6 @@ const ScoreManagement = () => {
         },
       ],
     },
-    
   ]
 
   const dataSource = [
@@ -187,7 +188,7 @@ const ScoreManagement = () => {
         title={t("list search.title")}
         listSearch={listSearch}
       />
-      <TablePoints type={mode} loading={false} dataSource={dataSource} />
+      <TableScores type={mode} loading={false} dataSource={dataSource} />
     </>
   )
 }

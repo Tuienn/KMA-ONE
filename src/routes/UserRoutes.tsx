@@ -5,7 +5,7 @@ import ChatProvider from "../context/ChatProvider"
 import ExamSchedule from "../pages/user/schedule/ExamSchedule"
 import MySchedule from "../pages/user/schedule/MySchedule"
 
-const Points = lazy(() => import("../pages/user/Points"))
+const Scores = lazy(() => import("../pages/user/Scores"))
 const DetailClass = lazy(
   () => import("../pages/user/schedule/classList/DetailClass"),
 )
@@ -41,9 +41,9 @@ const UserRoutes = [
     element: <ExamSchedule />,
   },
   {
-    path: "/points",
-    name: "points",
-    element: <Points />,
+    path: "/scores",
+    name: "scores",
+    element: <Scores />,
   },
   {
     path: "/chat-app",

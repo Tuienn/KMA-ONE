@@ -8,7 +8,7 @@ import QuerySelect from "./QuerySelect"
 export interface QuerySettingType {
   initialParams?: any
   linkAPI: string
-  formatOption: (dataQuery: any) => { value: any; label: string }
+  formatOption: (dataQuery: any) => { value: any; label: string }[]
 }
 interface DateSettingType {
   type: "month" | "date" | "year" | "time"
@@ -67,6 +67,7 @@ const FormItemCommon: React.FC<FormItemCommonType> = ({
           rules={rules}
           querySetting={querySetting}
           className={className}
+          disabled={disabled}
         />
       )
     case "select":

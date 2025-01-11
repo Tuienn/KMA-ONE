@@ -1,9 +1,12 @@
-import { Button, Form, Modal } from "antd"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { App, Button, Form, Modal, Popconfirm } from "antd"
 import i18next from "i18next"
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useEffect } from "react"
 import { useTranslation } from "react-i18next"
+import apiService from "../../../api/APIService"
 import {
   createSemesterOptions,
+  formatOptionsSemester,
   getCurrenBatch,
 } from "../../../utils/formatValue"
 import FormItemCommon from "../../common/formItemCustom/FormItemCommon"
@@ -19,24 +22,120 @@ const ModalCourse: React.FC<Props> = ({ open, handleOpen, courseId }) => {
   const { t } = useTranslation(["courseManagement", "notification"])
   const isCreateMode = courseId ? false : true
   const { AT, CT, DT } = getCurrenBatch()
-  const handleSubmit = (values: any) => {
-    console.log(values)
+  const queryClient = useQueryClient()
+
+  const { notification } = App.useApp()
+
+  useEffect(() => {
+    if (open) {
+      form.resetFields()
+    }
+  }, [open])
+
+  const queryCourse = useQuery({
+    queryKey: ["GET", "course", courseId],
+    queryFn: async () => {
+      const res = await apiService("get", `/course/${courseId}`)
+      const semester = formatOptionsSemester(res.semester)
+      const data = {
+        ...res,
+        batch: [res.batch.slice(0, 2), res.batch],
+        semester: [semester.year, semester.phase, semester.round],
+      }
+      form.setFieldsValue(data)
+      return data
+    },
+    enabled: !isCreateMode && open,
+    // staleTime: Infinity,
+  })
+
+  const handleMutationSuccess = (type: "create" | "update" | "delete") => {
+    notification.success({
+      message: t("notification:api.title"),
+      description: t(`notification:api.${type}.success`),
+    })
+    queryClient.invalidateQueries({ queryKey: ["GET", "list-course"] })
+    handleOpen(false)
   }
+  const handleMutationError = (type: "create" | "update" | "delete") => {
+    notification.error({
+      message: t("notification:api.title"),
+      description: t(`notification:api.${type}.success`),
+    })
+  }
+
+  const mutationDeleteCourse = useMutation({
+    mutationKey: ["DELETE", "course", courseId],
+    mutationFn: async () => apiService("delete", `/course/${courseId}`),
+    onSuccess: () => handleMutationSuccess("delete"),
+    onError: () => handleMutationError("delete"),
+  })
+
+  const mutationUpdateCourse = useMutation({
+    mutationKey: ["PUT", "course", courseId],
+    mutationFn: async (data: any) =>
+      apiService("put", `/course/${courseId}`, {}, data),
+    onSuccess: () => handleMutationSuccess("update"),
+    onError: () => handleMutationError("update"),
+  })
+  const mutationCreateCourse = useMutation({
+    mutationKey: ["POST", "course"],
+    mutationFn: async (data: any) => apiService("post", "/course", {}, data),
+    onSuccess: () => handleMutationSuccess("create"),
+    onError: () => handleMutationError("create"),
+  })
+
+  const handleSubmit = (values: any) => {
+    const data = {
+      ...values,
+      semester: parseInt(
+        `${values.semester[0]}${values.semester[1]}${values.semester[2]}`,
+      ),
+      batch: values.batch[1],
+    }
+
+    if (isCreateMode) {
+      mutationCreateCourse.mutate(data)
+    } else {
+      mutationUpdateCourse.mutate(data)
+    }
+  }
+
   return (
     <Modal
+      loading={queryCourse.isLoading}
       open={open}
-      onCancel={() => handleOpen(false)}
+      onCancel={() => {
+        handleOpen(false)
+      }}
       centered
       footer={
         !isCreateMode ? (
           <div className="flex justify-end gap-2">
-            <Button danger>{t("modal course.delete")}</Button>
-            <Button type="primary" onClick={() => form.submit()}>
+            <Popconfirm
+              onConfirm={() => mutationDeleteCourse.mutate()}
+              title={t("modal course.remove.popconfirm title")}
+              okText={t("modal course.remove.popconfirm ok")}
+              cancelText={t("modal course.remove.popconfirm cancel")}
+            >
+              <Button danger loading={mutationDeleteCourse.isPending}>
+                {t("modal course.remove.button")}
+              </Button>
+            </Popconfirm>
+            <Button
+              type="primary"
+              onClick={() => form.submit()}
+              loading={mutationUpdateCourse.isPending}
+            >
               {t("modal course.update")}
             </Button>
           </div>
         ) : (
-          <Button type="primary" onClick={() => form.submit()}>
+          <Button
+            type="primary"
+            onClick={() => form.submit()}
+            loading={mutationCreateCourse.isPending}
+          >
             {t("modal course.create")}
           </Button>
         )
@@ -51,7 +150,7 @@ const ModalCourse: React.FC<Props> = ({ open, handleOpen, courseId }) => {
       >
         <FormItemCommon
           type="input"
-          name="courseName"
+          name="name"
           label={t("modal course.form.course name")}
           placeholder={t("modal course.form.placholder course name")}
           rules={[
@@ -137,12 +236,12 @@ const ModalCourse: React.FC<Props> = ({ open, handleOpen, courseId }) => {
             },
           ]}
         />
-        <FormItemCommon
+        {/* <FormItemCommon
           type="input"
           label={t("modal course.form.teacher")}
           name="teacherName"
           placeholder={t("modal course.form.placholder teacher")}
-        />
+        /> */}
       </Form>
     </Modal>
   )

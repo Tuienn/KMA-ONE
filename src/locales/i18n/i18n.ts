@@ -12,12 +12,12 @@ import CALENDAR_EN from "../common/en/calendar.json"
 import FORM_EN from "../common/en/form.json"
 import MODAL_INFO_EN from "../common/en/modalInfo.json"
 import NOTIFICATION_EN from "../common/en/notification.json"
-import POINTS_EN from "../common/en/points.json"
+import SCORES_EN from "../common/en/scores.json"
 import CALENDAR_VI from "../common/vi/calendar.json"
 import FORM_VI from "../common/vi/form.json"
 import MODAL_INFO_VI from "../common/vi/modalInfo.json"
 import NOTIFICATION_VI from "../common/vi/notification.json"
-import POINTS_VI from "../common/vi/points.json"
+import SCORES_VI from "../common/vi/scores.json"
 import CHAT_EN from "../user/en/chat.json"
 import CLASS_LIST_EN from "../user/en/classList.json"
 import LAYOUT_BASIC_EN_USER from "../user/en/layoutBasic.json"
@@ -43,7 +43,7 @@ export const resources = {
     notification: NOTIFICATION_EN,
     calendar: CALENDAR_EN,
     form: FORM_EN,
-    points: POINTS_EN,
+    scores: SCORES_EN,
     layoutBasic_admin: LAYOUT_BASIC_EN_ADMIN,
     studentManagement: STUDENT_MANAGEMENT_EN,
     classList: CLASS_LIST_EN,
@@ -57,7 +57,7 @@ export const resources = {
     notification: NOTIFICATION_VI,
     calendar: CALENDAR_VI,
     form: FORM_VI,
-    points: POINTS_VI,
+    scores: SCORES_VI,
     layoutBasic_admin: LAYOUT_BASIC_VI_ADMIN,
     studentManagement: STUDENT_MANAGEMENT_VI,
     classList: CLASS_LIST_VI,
@@ -77,7 +77,7 @@ i18n.use(initReactI18next).init({
     "notification",
     "calendar",
     "form",
-    "points",
+    "scores",
     "layoutBasic_admin",
     "studentManagement",
     "classList",

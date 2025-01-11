@@ -1,5 +1,5 @@
 import { CameraOutlined, EditOutlined } from "@ant-design/icons"
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import {
   App,
   Avatar,
@@ -47,7 +47,6 @@ interface Props {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   permission: "admin" | "user" | "guest"
   studentId?: number | string
-  handleRefetchQuery?: () => void
 }
 
 const ModalInfo: React.FC<Props> = ({
@@ -55,7 +54,6 @@ const ModalInfo: React.FC<Props> = ({
   setOpen,
   permission,
   studentId,
-  handleRefetchQuery,
 }) => {
   const { t } = useTranslation(["modalInfo", "notification"])
   const isCreateMode = studentId ? false : true
@@ -71,9 +69,11 @@ const ModalInfo: React.FC<Props> = ({
   const [dataForm, setDataForm] = useState<DataStudentType>(
     {} as DataStudentType,
   )
+  const queryClient = useQueryClient()
 
   useEffect(() => {
     if (open === true && studentId) {
+      form.resetFields()
       apiService("get", `student/${studentId}`).then((res) => {
         setDataForm(formatStudentData(res))
 
@@ -90,67 +90,41 @@ const ModalInfo: React.FC<Props> = ({
     }
   }, [open])
 
+  const handleMutationSuccess = (type: "create" | "update" | "delete") => {
+    notification.success({
+      message: t("notification:api.title"),
+      description: t(`notification:api.${type}.success`),
+    })
+    queryClient.invalidateQueries({ queryKey: ["GET", "student-list"] })
+    setOpen(false)
+  }
+  const handleMutationError = (type: "create" | "update" | "delete") => {
+    notification.error({
+      message: t("notification:api.title"),
+      description: t(`notification:api.${type}.success`),
+    })
+  }
+
   const mutationDeleteStudent = useMutation({
     mutationKey: ["DELETE", studentId],
     mutationFn: async () => apiService("delete", `/student/${studentId}`),
-    onSuccess: () => {
-      if (handleRefetchQuery) {
-        handleRefetchQuery()
-      }
-      notification.success({
-        message: t("notification:api.title"),
-        description: t("notification:api.delete.success"),
-      })
-      setOpen(false)
-    },
-    onError: () => {
-      notification.error({
-        message: t("notification:api.title"),
-        description: t("notification:api.delete.error"),
-      })
-      setOpen(false)
-    },
+    onSuccess: () => handleMutationSuccess("delete"),
+    onError: () => handleMutationError("delete"),
   })
 
   const mutationUpdateStudent = useMutation({
     mutationKey: ["PUT", studentId],
     mutationFn: async (data: any) =>
       apiService("put", `/student/${studentId}`, {}, data),
-    onSuccess: () => {
-      if (handleRefetchQuery) {
-        handleRefetchQuery()
-      }
-      notification.success({
-        message: t("notification:api.title"),
-        description: t("notification:api.update.success"),
-      })
-      setOpen(false)
-    },
-    onError: () =>
-      notification.error({
-        message: t("notification:api.title"),
-        description: t("notification:api.update.error"),
-      }),
+    onSuccess: () => handleMutationSuccess("update"),
+    onError: () => handleMutationError("update"),
   })
 
   const mutationCreateStudent = useMutation({
     mutationKey: ["POST", "student"],
     mutationFn: async (data: any) => apiService("post", "/student", {}, data),
-    onSuccess: () => {
-      if (handleRefetchQuery) {
-        handleRefetchQuery()
-      }
-      notification.success({
-        message: t("notification:api.title"),
-        description: t("notification:api.create.success"),
-      })
-      setOpen(false)
-    },
-    onError: () =>
-      notification.error({
-        message: t("notification:api.title"),
-        description: t("notification:api.create.error"),
-      }),
+    onSuccess: () => handleMutationSuccess("create"),
+    onError: () => handleMutationError("create"),
   })
 
   const profileForm = [
@@ -296,7 +270,6 @@ const ModalInfo: React.FC<Props> = ({
       onCancel={() => {
         setOpen(false)
         setEditMode(false)
-        form.resetFields()
         setDataForm({} as DataStudentType)
       }}
       okText={t("modalInfo.update")}

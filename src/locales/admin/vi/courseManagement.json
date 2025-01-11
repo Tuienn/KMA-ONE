@@ -28,7 +28,12 @@
     "title": "Thông tin môn học",
     "create": "Tạo mới",
     "update": "Cập nhật",
-    "delete": "Xóa",
+    "remove": {
+      "button": "Xoá",
+      "popconfirm title": "Bạn có chắc chắn muốn xóa môn học này?",
+      "popconfirm ok": "Có",
+      "popconfirm cancel": "Không"
+    },
     "form": {
       "course name": "Tên môn học",
       "placholder course name": "Nhập tên môn học",

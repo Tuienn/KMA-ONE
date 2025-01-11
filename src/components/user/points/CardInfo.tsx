@@ -24,7 +24,7 @@ const CardInfo: React.FC<Props> = ({
   avgScore,
   exportButton,
 }) => {
-  const { t } = useTranslation("points")
+  const { t } = useTranslation("scores")
 
   return (
     <div className="mt-[40px] w-full lg:mt-0">

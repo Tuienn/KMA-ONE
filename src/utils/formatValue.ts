@@ -19,14 +19,14 @@ export const createSemesterOptions = (
   const yearText = lng === "vi" ? "Năm" : "Year"
   const phaseText = lng === "vi" ? "Kỳ" : "Phase"
   const roundText = lng === "vi" ? "Đợt" : "Round"
-  return Array.from({ length: years }, (_, yearIndex) => ({
-    value: (yearIndex + 1).toString(),
+  return Array.from({ length: years }, (_, yearIndex: number) => ({
+    value: yearIndex + 1,
     label: yearText + ` ${yearIndex + 1}`,
     children: Array.from({ length: phases }, (_, phaseIndex) => ({
-      value: (phaseIndex + 1).toString(),
+      value: phaseIndex + 1,
       label: phaseText + ` ${phaseIndex + 1}`,
       children: Array.from({ length: rounds }, (_, roundIndex) => ({
-        value: (roundIndex + 1).toString(),
+        value: roundIndex + 1,
         label: roundText + ` ${roundIndex + 1}`,
       })),
     })),
