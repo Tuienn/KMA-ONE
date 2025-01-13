@@ -1,7 +1,15 @@
 {
-  "find class": {
+  "findClass": {
     "placeholder": "Search by name of course",
     "detail": "Detail",
     "list": "Class list"
+  },
+  "detailClass": {
+    "tab1": "Student list",
+    "tab2": "Score list",
+    "otherClass": "Other class list"
+  },
+  "basicClassData": {
+    "title": "Information"
   }
 }

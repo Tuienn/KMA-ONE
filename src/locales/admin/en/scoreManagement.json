@@ -2,18 +2,18 @@
   "header": {
     "title": "SCORE MANAGEMENT",
     "mode": {
-      "student list": "Score list by student",
-      "course list": "Score list by course"
+      "studentList": "Score list by student",
+      "courseList": "Score list by course"
     }
   },
-  "list search": {
+  "listSearch": {
     "title": "Search score",
-    "button search": "Search",
-    "button reset": "Reset",
-    "list placholder": {
-      "student name": "Select student name",
+    "buttonSearch": "Search",
+    "buttonReset": "Reset",
+    "listPlaceholder": {
+      "studentName": "Select student name",
       "student": "Input student code or student name",
-      "course name": "Input course name",
+      "courseName": "Input course name",
       "class": "Select class",
       "batch": "Select batch"
     }

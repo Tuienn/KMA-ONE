@@ -14,8 +14,14 @@ import { formatStudentData, getCurrenBatch } from "../../utils/formatValue"
 
 const StudentManagement = () => {
   const { t } = useTranslation(["studentManagement", "notification"])
-  const [openModal, setOpenModal] = useState<boolean>(false)
-  const [studentIdModal, setStudentIdModal] = useState<string | number>("")
+
+  const [studentModalState, setStudentModalState] = useState<{
+    isOpen: boolean
+    studentId: number | null
+  }>({
+    isOpen: false,
+    studentId: null,
+  })
   const { AT, CT, DT } = getCurrenBatch()
   const [paging, setPaging] = useState<number>(1)
   const { notification } = App.useApp()
@@ -53,17 +59,17 @@ const StudentManagement = () => {
     {
       type: "input",
       name: "code",
-      placeholder: t("list search.list placholder.code"),
+      placeholder: t("listSearch.listPlaceholder.code"),
       className: "w-[calc(100%/5-8px)]",
     },
     {
       type: "input",
       name: "name",
-      placeholder: t("list search.list placholder.name"),
+      placeholder: t("listSearch.listPlaceholder.name"),
       rules: [
         {
           pattern: /[\x5F]+|[a-z]|[0-9]/,
-          message: t("notification:form.input pattern"),
+          message: t("notification:form.inputPattern"),
         },
       ],
       className: "w-[calc(100%/5-8px)]",
@@ -71,7 +77,7 @@ const StudentManagement = () => {
     {
       type: "date_picker",
       name: "dob",
-      placeholder: t("list search.list placholder.dob"),
+      placeholder: t("listSearch.listPlaceholder.dob"),
       dateSetting: {
         type: "date",
         minDate: dayjs(`${new Date().getFullYear() - 40}/00/00`, "YYYY/MM/DD"),
@@ -82,27 +88,27 @@ const StudentManagement = () => {
     {
       type: "select",
       name: "gender",
-      placeholder: t("list search.list placholder.gender"),
+      placeholder: t("listSearch.listPlaceholder.gender"),
       options: [
-        { value: 0, label: t("list search.list placholder.gender male") },
-        { value: 1, label: t("list search.list placholder.gender female") },
+        { value: 0, label: t("listSearch.listPlaceholder.genderMale") },
+        { value: 1, label: t("listSearch.listPlaceholder.genderFemale") },
       ],
       className: "w-[calc(100%/5-8px)]",
     },
     {
       type: "input",
       name: "address",
-      placeholder: t("list search.list placholder.address"),
+      placeholder: t("listSearch.listPlaceholder.address"),
       className: "w-[calc(100%/5)]",
     },
     {
       type: "input",
       name: "phone",
-      placeholder: t("list search.list placholder.phone"),
+      placeholder: t("listSearch.listPlaceholder.phone"),
       rules: [
         {
           pattern: /^\d+$/,
-          message: t("notification:form.input pattern"),
+          message: t("notification:form.inputPattern"),
         },
       ],
       className: "w-[calc(100%/5-8px)]",
@@ -110,15 +116,15 @@ const StudentManagement = () => {
     {
       type: "select",
       name: "isActive",
-      placeholder: t("list search.list placholder.status"),
+      placeholder: t("listSearch.listPlaceholder.status"),
       options: [
         {
           value: "true",
-          label: t("list search.list placholder.status active"),
+          label: t("listSearch.listPlaceholder.statusActive"),
         },
         {
           value: "false",
-          label: t("list search.list placholder.status inactive"),
+          label: t("listSearch.listPlaceholder.statusInactive"),
         },
       ],
       className: "w-[calc(100%/5-8px)]",
@@ -127,14 +133,14 @@ const StudentManagement = () => {
       type: "input",
       name: "courseName",
 
-      placeholder: t("list search.list placholder.course name"),
+      placeholder: t("listSearch.listPlaceholder.courseName"),
       className: "w-[calc(100%/5-8px)]",
     },
     {
       type: "select",
       name: "class",
 
-      placeholder: t("list search.list placholder.class"),
+      placeholder: t("listSearch.listPlaceholder.class"),
       options: [
         { value: "L01", label: "L01" },
         { value: "L02", label: "L02" },
@@ -148,7 +154,7 @@ const StudentManagement = () => {
       type: "cascader_select",
       name: "batch",
 
-      placeholder: t("list search.list placholder.batch"),
+      placeholder: t("listSearch.listPlaceholder.batch"),
 
       options: [
         {
@@ -189,102 +195,33 @@ const StudentManagement = () => {
             type="primary"
             icon={<PlusCircleOutlined />}
             onClick={() => {
-              setStudentIdModal("")
-              setOpenModal(true)
+              setStudentModalState({
+                isOpen: true,
+                studentId: null,
+              })
             }}
           >
-            {t("header.button create")}
+            {t("header.buttonCreate")}
           </Button>
         }
       />
-      <ListSearchCommon
-        title={t("list search.title")}
-        listSearch={listSearch}
-      />
+      <ListSearchCommon title={t("listSearch.title")} listSearch={listSearch} />
       <TableStudents
-        handleOpenModal={setOpenModal}
-        handleSelectStudentCode={setStudentIdModal}
+        handleSelectStudentCode={setStudentModalState}
         loading={queryListStudents.isPending}
         handleChangePaging={handleChangePaging}
+        permission="admin"
         dataSource={{
           page: paging,
           total: queryListStudents.isSuccess && queryListStudents.data.total,
-          // list: [
-          //   {
-          //     name: "User 1",
-          //     code: "Code_001",
-          //     birth: null,
-          //     gender: null,
-          //     address: null,
-          //     phone: null,
-          //     status: true,
-          //     gpa: 3.5,
-          //     id: 1,
-          //   },
-          //   {
-          //     name: "User 2",
-          //     code: "Code_002",
-          //     birth: "1991-02-12",
-          //     gender: 1,
-          //     address: "Address 2",
-          //     phone: "0901234501",
-          //     status: false,
-          //     gpa: 3.8,
-          //     id: 2,
-          //   },
-          //   {
-          //     name: "User 3",
-          //     code: "Code_003",
-          //     birth: "1992-03-15",
-          //     gender: 0,
-          //     address: "Address 3",
-          //     phone: "0901234502",
-          //     status: true,
-          //     gpa: 3.2,
-          //     id: 3,
-          //   },
-          //   {
-          //     name: "User 4",
-          //     code: "Code_004",
-          //     birth: "1993-04-18",
-          //     gender: 1,
-          //     address: "Address 4",
-          //     phone: "0901234503",
-          //     status: false,
-          //     gpa: 3.9,
-          //     id: 4,
-          //   },
-          //   {
-          //     name: "User 5",
-          //     code: "Code_005",
-          //     birth: "1994-05-20",
-          //     gender: 0,
-          //     address: "Address 5",
-          //     phone: "0901234504",
-          //     status: true,
-          //     gpa: 3.1,
-          //     id: 5,
-          //   },
-          //   {
-          //     name: "User 6",
-          //     code: "Code_006",
-          //     birth: "1995-06-22",
-          //     gender: 1,
-          //     address: "Address 6",
-          //     phone: "0901234505",
-          //     status: false,
-          //     gpa: 3.7,
-          //     id: 6,
-          //   },
-          // ],
           list: queryListStudents.isSuccess ? queryListStudents.data.list : [],
         }}
       />
       <ModalInfo
         permission="admin"
-        open={openModal}
-        setOpen={setOpenModal}
-        studentId={studentIdModal === "" ? undefined : studentIdModal}
+        open={studentModalState.isOpen}
+        setStudentModalState={setStudentModalState}
+        studentId={studentModalState.studentId}
       />
     </div>
   )

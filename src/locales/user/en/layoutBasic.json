@@ -2,19 +2,19 @@
   "drawer": {
     "information": "Profile information",
     "source": "Source code",
-    "source frontend": "Link gitHub front-end",
-    "source backend": "Link gitHub back-end",
-    "source docker": "Link gitHub docker",
-    "change language": "Change language VI/EN",
+    "sourceFrontend": "Link gitHub front-end",
+    "sourceBackend": "Link gitHub back-end",
+    "sourceDocker": "Link gitHub docker",
+    "changeLanguage": "Change language VI/EN",
     "about": "About",
     "logout": "Logout"
   },
   "sider": {
     "schedule": "Schedule",
-    "schedule item1": "My schedule",
-    "schedule item2": "Class list",
-    "schedule item3": "Exam schedule",
-    "look up scores": "Look up scores",
+    "scheduleItem1": "My schedule",
+    "scheduleItem2": "Class list",
+    "scheduleItem3": "Exam schedule",
+    "lookUpScores": "Look up scores",
     "chat": "Chat",
     "Q&A": "Q&A with AI",
     "notification": "Notification"

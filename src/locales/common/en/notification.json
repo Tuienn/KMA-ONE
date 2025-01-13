@@ -1,22 +1,22 @@
 {
   "form": {
-    "input required": "Please fill in this field",
-    "input pattern": "Please fill in the correct format",
-    "select required": "Please select an option",
-    "address not full": "Please fill in all address fields"
+    "inputRequired": "Please fill in this field",
+    "inputPattern": "Please fill in the correct format",
+    "selectRequired": "Please select an option",
+    "addressNotFull": "Please fill in all address fields"
   },
   "calendar": {
-    "over range": "Out of range"
+    "overRange": "Out of range"
   },
-  "page not found": {
+  "pageNotFound": {
     "title": "Sorry, the page you visited does not exist",
     "button": "Back to home"
   },
   "logout": {
     "title": "Logout",
     "content": "Are you sure you want to log out?",
-    "button cancel": "Cancel",
-    "button confirm": "Logout"
+    "buttonCancel": "Cancel",
+    "buttonConfirm": "Logout"
   },
   "api": {
     "title": "KMAONE announce",

@@ -1,20 +1,36 @@
 import { useQuery } from "@tanstack/react-query"
-import { Select } from "antd"
+import { App, Select } from "antd"
+import { useEffect } from "react"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
 import apiService from "../../../../api/APIService"
 import GroupClassItem from "../../../../components/user/schedule/classList/findClass/GroupClassItem"
 import { compareIgnoreCaseAndDiacritics } from "../../../../utils/common"
+import { getAuthToken } from "../../../../utils/handleStorage"
 
 const FindClass: React.FC = () => {
-  const { t } = useTranslation("classList")
+  const { t } = useTranslation(["classList", "notification"])
   const navigate = useNavigate()
+  const { authStudentCode } = getAuthToken()
+  const { notification } = App.useApp()
 
   const queryGroupClass = useQuery({
     queryKey: ["GET", "group-class"],
-    queryFn: async () => apiService("get", "/class"),
+    queryFn: async () =>
+      apiService("get", "/student/Classes", {
+        studentCode: authStudentCode,
+      }),
     staleTime: Infinity,
   })
+
+  useEffect(() => {
+    if (queryGroupClass.isError) {
+      notification.error({
+        message: t("notification:api.title"),
+        description: t("notification:api.get.error"),
+      })
+    }
+  }, [queryGroupClass.isError])
 
   return (
     <div className="relative">
@@ -25,9 +41,9 @@ const FindClass: React.FC = () => {
           allowClear={true}
           options={queryGroupClass.data?.map((item: any) => ({
             value: item.id,
-            label: `${item.course} - ${item.className}`,
+            label: `${item.course} - ${item.name}`,
           }))}
-          placeholder={t("find class.placeholder")}
+          placeholder={t("findClass.placeholder")}
           filterOption={(input: string, option: any) =>
             compareIgnoreCaseAndDiacritics(input, option.label)
           }

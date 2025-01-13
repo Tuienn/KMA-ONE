@@ -178,6 +178,7 @@ export const formatStudentData = (data: any, isGet: boolean = true) => {
     address: data.address,
     phone: data.phoneNumber,
     status: data.isActive,
+    gpa: data.gpa ? parseFloat(data.gpa.toFixed(2)) : null,
   }
 }
 

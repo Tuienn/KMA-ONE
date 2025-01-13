@@ -21,7 +21,7 @@ const ScoreManagement = () => {
       type: "query_select",
       name: "studentCode",
       disabled: mode === "list-by-course",
-      placeholder: t("list search.list placholder.student"),
+      placeholder: t("listSearch.listPlaceholder.student"),
       className: "w-[calc(40%-8px)]",
       querySetting: {
         initialParams: {},
@@ -37,14 +37,14 @@ const ScoreManagement = () => {
       type: "input",
       name: "courseName",
       disabled: mode === "list-by-student",
-      placeholder: t("list search.list placholder.course name"),
+      placeholder: t("listSearch.listPlaceholder.courseName"),
       className: "w-[calc(100%/5-8px)]",
     },
     {
       type: "select",
       name: "class",
       disabled: mode === "list-by-student",
-      placeholder: t("list search.list placholder.class"),
+      placeholder: t("listSearch.listPlaceholder.class"),
       options: [
         { value: "L01", label: "L01" },
         { value: "L02", label: "L02" },
@@ -58,7 +58,7 @@ const ScoreManagement = () => {
       type: "cascader_select",
       name: "batch",
       className: "w-[calc(100%/5)]",
-      placeholder: t("list search.list placholder.batch"),
+      placeholder: t("listSearch.listPlaceholder.batch"),
       disabled: mode === "list-by-student",
       options: [
         {
@@ -169,11 +169,11 @@ const ScoreManagement = () => {
       <Segmented<string>
         options={[
           {
-            label: t("header.mode.student list"),
+            label: t("header.mode.studentList"),
             value: "list-by-student",
           },
           {
-            label: t("header.mode.course list"),
+            label: t("header.mode.courseList"),
             value: "list-by-course",
           },
         ]}
@@ -184,10 +184,7 @@ const ScoreManagement = () => {
         className="mt-3 border-2"
         defaultValue={pathname.split("/")[2]}
       />
-      <ListSearchCommon
-        title={t("list search.title")}
-        listSearch={listSearch}
-      />
+      <ListSearchCommon title={t("listSearch.title")} listSearch={listSearch} />
       <TableScores type={mode} loading={false} dataSource={dataSource} />
     </>
   )

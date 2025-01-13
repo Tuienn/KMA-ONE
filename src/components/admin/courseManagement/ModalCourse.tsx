@@ -114,12 +114,12 @@ const ModalCourse: React.FC<Props> = ({ open, handleOpen, courseId }) => {
           <div className="flex justify-end gap-2">
             <Popconfirm
               onConfirm={() => mutationDeleteCourse.mutate()}
-              title={t("modal course.remove.popconfirm title")}
-              okText={t("modal course.remove.popconfirm ok")}
-              cancelText={t("modal course.remove.popconfirm cancel")}
+              title={t("modalCourse.remove.popconfirmTitle")}
+              okText={t("modalCourse.remove.popconfirmOk")}
+              cancelText={t("modalCourse.remove.popconfirmCancel")}
             >
               <Button danger loading={mutationDeleteCourse.isPending}>
-                {t("modal course.remove.button")}
+                {t("modalCourse.remove.button")}
               </Button>
             </Popconfirm>
             <Button
@@ -127,7 +127,7 @@ const ModalCourse: React.FC<Props> = ({ open, handleOpen, courseId }) => {
               onClick={() => form.submit()}
               loading={mutationUpdateCourse.isPending}
             >
-              {t("modal course.update")}
+              {t("modalCourse.update")}
             </Button>
           </div>
         ) : (
@@ -136,11 +136,11 @@ const ModalCourse: React.FC<Props> = ({ open, handleOpen, courseId }) => {
             onClick={() => form.submit()}
             loading={mutationCreateCourse.isPending}
           >
-            {t("modal course.create")}
+            {t("modalCourse.create")}
           </Button>
         )
       }
-      title={<h2>{t("modal course.title")}</h2>}
+      title={<h2>{t("modalCourse.title")}</h2>}
     >
       <Form
         form={form}
@@ -151,12 +151,12 @@ const ModalCourse: React.FC<Props> = ({ open, handleOpen, courseId }) => {
         <FormItemCommon
           type="input"
           name="name"
-          label={t("modal course.form.course name")}
-          placeholder={t("modal course.form.placholder course name")}
+          label={t("modalCourse.form.courseName")}
+          placeholder={t("modalCourse.form.placeholderCourseName")}
           rules={[
             {
               required: true,
-              message: t("notification:form.input required"),
+              message: t("notification:form.inputRequired"),
             },
           ]}
         />
@@ -165,8 +165,8 @@ const ModalCourse: React.FC<Props> = ({ open, handleOpen, courseId }) => {
             className="w-[calc(100%/2)]"
             type="select"
             name="credit"
-            label={t("modal course.form.credit")}
-            placeholder={t("modal course.form.placholder credit")}
+            label={t("modalCourse.form.credit")}
+            placeholder={t("modalCourse.form.placeholderCredit")}
             options={[
               { value: 1, label: "1" },
               { value: 2, label: "2" },
@@ -176,20 +176,20 @@ const ModalCourse: React.FC<Props> = ({ open, handleOpen, courseId }) => {
             rules={[
               {
                 required: true,
-                message: t("notification:form.select required"),
+                message: t("notification:form.selectRequired"),
               },
             ]}
           />
           <FormItemCommon
-            label={t("modal course.form.batch")}
+            label={t("modalCourse.form.batch")}
             className="w-[calc(100%/2-8px)]"
             type="cascader_select"
             name="batch"
-            placeholder={t("modal course.form.placholder batch")}
+            placeholder={t("modalCourse.form.placeholderBatch")}
             rules={[
               {
                 required: true,
-                message: t("notification:form.select required"),
+                message: t("notification:form.selectRequired"),
               },
             ]}
             options={[
@@ -222,17 +222,17 @@ const ModalCourse: React.FC<Props> = ({ open, handleOpen, courseId }) => {
         </div>
         <FormItemCommon
           type="cascader_select"
-          label={t("modal course.form.semester")}
+          label={t("modalCourse.form.semester")}
           name="semester"
           options={createSemesterOptions(i18next.language, 5, 2, 2)}
-          placeholder={t("modal course.form.placholder semester")}
+          placeholder={t("modalCourse.form.placeholderSemester")}
           cascaderSetting={{
             isFullRender: true,
           }}
           rules={[
             {
               required: true,
-              message: t("notification:form.select required"),
+              message: t("notification:form.selectRequired"),
             },
           ]}
         />

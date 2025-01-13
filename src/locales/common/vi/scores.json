@@ -1,30 +1,29 @@
 {
-  "card info": {
+  "cardInfo": {
     "passed": "Số môn đã hoàn thành",
     "failed": "Số môn còn nợ",
     "avg": "Điểm trung bình"
   },
   "table": {
-    "student code": "Mã sinh viên",
-    "student name": "Họ và tên",
-    "course name": "Tên môn học",
-
-    "first score": "Điểm thành phần 1",
-    "second score": "Điểm thành phần 2",
-    "exam score": "Điểm thi",
-    "final score": "Điểm tổng kết",
-    "letter grade": "Điểm chữ",
+    "studentCode": "Mã sinh viên",
+    "studentName": "Họ và tên",
+    "courseName": "Tên môn học",
+    "firstScore": "Điểm thành phần 1",
+    "secondScore": "Điểm thành phần 2",
+    "examScore": "Điểm thi",
+    "finalScore": "Điểm tổng kết",
+    "letterGrade": "Điểm chữ",
     "credit": "Số tín chỉ"
   },
-  "table shorten": {
-    "student code": "MSV",
-    "student name": "HVT",
-    "course name": "TMH",
-    "first score": "DTP1",
-    "second score": "DTP2",
-    "exam score": "DT",
-    "final score": "DTK",
-    "letter grade": "DC",
+  "tableShorten": {
+    "studentCode": "MSV",
+    "studentName": "HVT",
+    "courseName": "TMH",
+    "firstScore": "DTP1",
+    "secondScore": "DTP2",
+    "examScore": "DT",
+    "finalScore": "DTK",
+    "letterGrade": "DC",
     "credit": "TC"
   }
 }

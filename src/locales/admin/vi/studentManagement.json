@@ -1,27 +1,27 @@
 {
   "header": {
-    "title": "QUẢN LÝ SINH VIÊN",
-    "button create": "Tạo sinh viên"
+    "title": "QUẢN LÝ SINH VIÊN",
+    "buttonCreate": "Tạo sinh viên"
   },
-  "list search": {
+  "listSearch": {
     "title": "Tìm kiếm sinh viên",
-    "button search": "Tìm kiếm",
-    "button reset": "Xóa bộ lọc",
-    "list placholder": {
-      "code": "Nhập mã sinh viên",
-      "name": "Nhập tên",
-      "gender": "Chọn giới tính",
-      "gender male": "Nam",
-      "gender female": "Nữ",
-      "dob": "Nhập ngày sinh",
-      "address": "Nhập địa chỉ",
-      "phone": "Nhập SĐT",
-      "status": "Chọn trạng thái",
-      "status active": "Hoạt động",
-      "status inactive": "Không hoạt động",
-      "class": "Chọn lớp học",
-      "batch": "Chọn khóa học",
-      "course name": "Nhập tên môn học"
+    "buttonSearch": "Tìm kiếm",
+    "buttonReset": "Xóa bộ lọc",
+    "listPlaceholder": {
+      "code": "Nhập mã sinh viên",
+      "name": "Nhập tên",
+      "gender": "Chọn giới tính",
+      "genderMale": "Nam",
+      "genderFemale": "Nữ",
+      "dob": "Nhập ngày sinh",
+      "address": "Nhập địa chỉ",
+      "phone": "Nhập SĐT",
+      "status": "Chọn trạng thái",
+      "statusActive": "Hoạt động",
+      "statusInactive": "Không hoạt động",
+      "class": "Chọn lớp học",
+      "batch": "Chọn khóa học",
+      "courseName": "Nhập tên môn học"
     }
   }
 }

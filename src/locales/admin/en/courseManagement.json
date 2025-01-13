@@ -1,20 +1,20 @@
 {
   "header": {
     "title": "COURSE MANAGEMENT",
-    "button create": "Create course"
+    "buttonCreate": "Create course"
   },
-  "list search": {
+  "listSearch": {
     "title": "Search course",
-    "button search": "Search",
-    "button reset": "Reset",
-    "list placholder": {
+    "buttonSearch": "Search",
+    "buttonReset": "Reset",
+    "listPlaceholder": {
       "name": "Input course name",
       "credit": "Select credit",
       "batch": "Select batch",
       "semester": "Select semester",
-      "semester year": "Year",
-      "semester phase": "Phase",
-      "semester round": "Round"
+      "semesterYear": "Year",
+      "semesterPhase": "Phase",
+      "semesterRound": "Round"
     }
   },
   "table": {
@@ -24,29 +24,29 @@
     "semester": "Semester",
     "class": "Class"
   },
-  "modal course": {
+  "modalCourse": {
     "title": "Course information",
     "create": "Create",
     "update": "Update",
     "remove": {
       "button": "Remove",
-      "popconfirm title": "Are you sure you want to delete this course?",
-      "popconfirm ok": "Yes",
-      "popconfirm cancel": "No"
+      "popconfirmTitle": "Are you sure you want to delete this course?",
+      "popconfirmOk": "Yes",
+      "popconfirmCancel": "No"
     },
     "form": {
-      "course name": "Course name",
-      "placholder course name": "Input course name",
+      "courseName": "Course name",
+      "placeholderCourseName": "Input course name",
       "credit": "Credit",
-      "placholder credit": "Select credit",
+      "placeholderCredit": "Select credit",
       "semester": "Semester",
-      "placholder semester": "Select semester",
+      "placeholderSemester": "Select semester",
       "class": "Class",
-      "placholder class": "Select class",
+      "placeholderClass": "Select class",
       "batch": "Batch",
-      "placholder batch": "Select batch",
+      "placeholderBatch": "Select batch",
       "teacher": "Teacher name",
-      "placholder teacher": "Input teacher name"
+      "placeholderTeacher": "Input teacher name"
     }
   }
 }

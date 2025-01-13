@@ -62,7 +62,13 @@ const LayoutBasic: React.FC<Props> = ({ children }) => {
     "layoutBasic_admin",
     "notification",
   ])
-  const [openModal, setOpenModal] = useState<boolean>(false)
+  const [studentModalState, setStudentModalState] = useState<{
+    isOpen: boolean
+    studentId: number | null
+  }>({
+    isOpen: false,
+    studentId: null,
+  })
   const { xs } = useBreakpoint()
   const { pathname } = UsePath()
   const { authPermission, authId } = getAuthToken()
@@ -91,25 +97,25 @@ const LayoutBasic: React.FC<Props> = ({ children }) => {
   const userSiderMenu: MenuItem[] = [
     getItem(t("sider.schedule"), 1, <ScheduleOutlined />, [
       getItem(
-        <Link to={"/schedule/my-schedule"}>{t("sider.schedule item1")}</Link>,
+        <Link to={"/schedule/my-schedule"}>{t("sider.scheduleItem1")}</Link>,
         "my-schedule",
         <ScheduleOutlined />,
       ),
       getItem(
         <Link to={"/schedule/class-list/find-class"}>
-          {t("sider.schedule item2")}
+          {t("sider.scheduleItem2")}
         </Link>,
         "class-list",
         <TeamOutlined />,
       ),
       getItem(
-        <Link to={"/schedule/exam-schedule"}>{t("sider.schedule item3")}</Link>,
+        <Link to={"/schedule/exam-schedule"}>{t("sider.scheduleItem3")}</Link>,
         "exam-schedule",
         <ProfileOutlined />,
       ),
     ]),
     getItem(
-      <Link to={"/scores"}>{t("sider.look up scores")}</Link>,
+      <Link to={"/scores"}>{t("sider.lookUpScores")}</Link>,
       "scores",
       <FileSearchOutlined />,
     ),
@@ -134,7 +140,7 @@ const LayoutBasic: React.FC<Props> = ({ children }) => {
     getItem(
       <button
         onClick={() => {
-          setOpenModal(true)
+          setStudentModalState({ isOpen: true, studentId: authId })
           setOpenDrawer(false)
         }}
       >
@@ -145,17 +151,17 @@ const LayoutBasic: React.FC<Props> = ({ children }) => {
     ),
     getItem(t("layoutBasic_user:drawer.source"), "source", <LinkOutlined />, [
       getItem(
-        t("layoutBasic_user:drawer.source frontend"),
+        t("layoutBasic_user:drawer.sourceFrontend"),
         "link1",
         <GithubOutlined />,
       ),
       getItem(
-        t("layoutBasic_user:drawer.source backend"),
+        t("layoutBasic_user:drawer.sourceBackend"),
         "link2",
         <GithubOutlined />,
       ),
       getItem(
-        t("layoutBasic_user:drawer.source docker"),
+        t("layoutBasic_user:drawer.sourceDocker"),
         "link3",
         <DockerOutlined />,
       ),
@@ -167,7 +173,7 @@ const LayoutBasic: React.FC<Props> = ({ children }) => {
           setOpenDrawer(false)
         }}
       >
-        {t("layoutBasic_user:drawer.change language")}
+        {t("layoutBasic_user:drawer.changeLanguage")}
       </button>,
       "change-language",
       <GlobalOutlined />,
@@ -182,8 +188,8 @@ const LayoutBasic: React.FC<Props> = ({ children }) => {
           nagivate("/login")
         }}
         title={t("notification:logout.title")}
-        okText={t("notification:logout.button confirm")}
-        cancelText={t("notification:logout.button cancel")}
+        okText={t("notification:logout.buttonConfirm")}
+        cancelText={t("notification:logout.buttonCancel")}
         description={t("notification:logout.content")}
         placement="bottom"
       >
@@ -322,11 +328,11 @@ const LayoutBasic: React.FC<Props> = ({ children }) => {
       </Layout>
 
       <ModalInfo
-        open={openModal}
-        setOpen={setOpenModal}
+        open={studentModalState.isOpen}
+        setStudentModalState={setStudentModalState}
         permission="user"
+        studentId={studentModalState.studentId}
         // initialValue={initialModalForm}
-        studentId={authId}
       />
     </>
   )

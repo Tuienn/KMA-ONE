@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
 import { ClassItemProps } from "./GroupClassItem"
 
-const ClassItem: React.FC<ClassItemProps> = ({ id, className, course }) => {
+const ClassItem: React.FC<ClassItemProps> = ({ id, name, course }) => {
   const { t } = useTranslation("classList")
   const navigate = useNavigate()
 
@@ -21,7 +21,7 @@ const ClassItem: React.FC<ClassItemProps> = ({ id, className, course }) => {
         <div className="flex items-center justify-between md:!text-[16px]">
           <div>
             <Badge status="warning" className="mr-2" />
-            {className}
+            {name}
           </div>
           <Button
             type="link"
@@ -30,7 +30,7 @@ const ClassItem: React.FC<ClassItemProps> = ({ id, className, course }) => {
             iconPosition="end"
             onClick={() => navigate(`/schedule/class-list/${id}`)}
           >
-            {t("find class.detail")}
+            {t("findClass.detail")}
           </Button>
         </div>
       </div>

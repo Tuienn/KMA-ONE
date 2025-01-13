@@ -53,13 +53,13 @@ const MySchedule: React.FC = () => {
     t("day.0"),
   ]
   const fullDays = [
-    t("day full.1"),
-    t("day full.2"),
-    t("day full.3"),
-    t("day full.4"),
-    t("day full.5"),
-    t("day full.6"),
-    t("day full.0"),
+    t("dayFull.1"),
+    t("dayFull.2"),
+    t("dayFull.3"),
+    t("dayFull.4"),
+    t("dayFull.5"),
+    t("dayFull.6"),
+    t("dayFull.0"),
   ]
 
   useLayoutEffect(() => {

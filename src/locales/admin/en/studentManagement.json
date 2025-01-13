@@ -1,27 +1,27 @@
 {
   "header": {
     "title": "STUDENT MANAGEMENT",
-    "button create": "Create student"
+    "buttonCreate": "Create student"
   },
-  "list search": {
+  "listSearch": {
     "title": "Search student",
-    "button search": "Search",
-    "button reset": "Reset",
-    "list placholder": {
+    "buttonSearch": "Search",
+    "buttonReset": "Reset",
+    "listPlaceholder": {
       "code": "Input student code",
       "name": "Input name",
       "gender": "Select gender",
-      "gender male": "Male",
-      "gender female": "Female",
+      "genderMale": "Male",
+      "genderFemale": "Female",
       "dob": "Input date of birth",
       "address": "Input address",
       "phone": "Input phone number",
       "status": "Select status",
-      "status active": "Active",
-      "status inactive": "Inactive",
+      "statusActive": "Active",
+      "statusInactive": "Inactive",
       "class": "Select class",
       "batch": "Select batch",
-      "course name": "Input course name"
+      "courseName": "Input course name"
     }
   }
 }

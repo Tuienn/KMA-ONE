@@ -16,125 +16,6 @@ const Scores: React.FC = () => {
   const { authStudentCode } = getAuthToken()
   const { notification } = App.useApp()
 
-  // const dataSource = [
-  //   {
-  //     courseName: "Mathematics",
-  //     credit: 3,
-  //     firstScore: 8.5,
-  //     secondScore: 7.0,
-  //     examScore: 9.0,
-  //     finalScore: 8.0,
-  //   },
-  //   {
-  //     courseName: "Physics",
-  //     credit: 4,
-  //     firstScore: 7.5,
-  //     secondScore: 6.5,
-  //     examScore: 8.0,
-  //     finalScore: 7.5,
-  //     letterGrade: "C",
-  //   },
-  //   {
-  //     courseName: "Geography",
-  //     credit: 2,
-  //     firstScore: 7.0,
-  //     secondScore: 6.0,
-  //     examScore: 7.5,
-  //     finalScore: 7.0,
-  //     letterGrade: "C+",
-  //   },
-  //   {
-  //     courseName: "Physical Education",
-  //     credit: 1,
-  //     firstScore: 7.5,
-  //     secondScore: 8.0,
-  //     examScore: 8.5,
-  //     finalScore: 8.0,
-  //     letterGrade: "B+",
-  //   },
-  //   {
-  //     courseName: "Computer Science",
-  //     credit: 5,
-  //     firstScore: 9.5,
-  //     secondScore: 9.0,
-  //     examScore: 9.5,
-  //     finalScore: 9.5,
-  //     letterGrade: "A",
-  //   },
-  //   {
-  //     courseName: "Physics",
-  //     credit: 4,
-  //     firstScore: 7.5,
-  //     secondScore: 6.5,
-  //     examScore: 8.0,
-  //     finalScore: 7.5,
-  //     letterGrade: "C",
-  //   },
-  //   {
-  //     courseName: "Geography",
-  //     credit: 2,
-  //     firstScore: 7.0,
-  //     secondScore: 6.0,
-  //     examScore: 7.5,
-  //     finalScore: 7.0,
-  //     letterGrade: "C",
-  //   },
-  //   {
-  //     courseName: "Physical Education",
-  //     credit: 1,
-  //     firstScore: 7.5,
-  //     secondScore: 8.0,
-  //     examScore: 8.5,
-  //     finalScore: 5,
-  //     letterGrade: "B",
-  //   },
-  //   {
-  //     courseName: "Computer Science",
-  //     credit: 5,
-  //     firstScore: 9.5,
-  //     secondScore: 9.0,
-  //     examScore: 9.5,
-  //     finalScore: 9.5,
-  //     letterGrade: "A+",
-  //   },
-  //   {
-  //     courseName: "Mathematics",
-  //     credit: 3,
-  //     firstScore: 8.5,
-  //     secondScore: 7.0,
-  //     examScore: 9.0,
-  //     finalScore: 8.0,
-  //     letterGrade: "B+",
-  //   },
-  //   {
-  //     courseName: "Physics",
-  //     credit: 4,
-  //     firstScore: 7.5,
-  //     secondScore: 6.5,
-  //     examScore: 8.0,
-  //     finalScore: 7.5,
-  //     letterGrade: "C",
-  //   },
-  //   {
-  //     courseName: "Geography",
-  //     credit: 2,
-  //     firstScore: 7.0,
-  //     secondScore: 6.0,
-  //     examScore: 7.5,
-  //     finalScore: 7.0,
-  //     letterGrade: "C+",
-  //   },
-  //   {
-  //     courseName: "Physical Education",
-  //     credit: 1,
-  //     firstScore: 7.5,
-  //     secondScore: 8.0,
-  //     examScore: 8.5,
-  //     finalScore: 8.0,
-  //     letterGrade: "B+",
-  //   },
-  // ]
-
   const queryScoreByStudent = useQuery({
     queryKey: ["GET", "scoreByStudent"],
     queryFn: async () => {
@@ -207,13 +88,13 @@ const Scores: React.FC = () => {
               fileName={`${queryScoreByStudent.data?.name} - ${queryScoreByStudent.data?.studentCode}`}
               dataRows={queryScoreByStudent.data?.dataSource}
               headers={[
-                t("scores:table.course name"),
+                t("scores:table.courseName"),
                 t("scores:table.credit"),
-                t("scores:table.first score"),
-                t("scores:table.second score"),
-                t("scores:table.exam score"),
-                t("scores:table.final score"),
-                t("scores:table.letter grade"),
+                t("scores:table.firstScore"),
+                t("scores:table.secondScore"),
+                t("scores:table.examScore"),
+                t("scores:table.finalScore"),
+                t("scores:table.letterGrade"),
               ]}
             />
           }

@@ -9,7 +9,7 @@ const DetailDay: React.FC<Omit<DateType, "year">> = ({ date, month }) => {
     <div className="absolute left-[-8px] mt-2 w-[calc(100%+16px)] md:left-[-12px] md:w-[calc(100%+24px)]">
       <Divider style={{ borderColor: "gray" }} variant="dashed">
         <h3>
-          {t("detail session.date")} {date}, {t("detail session.month")} {month}
+          {t("detailSession.date")} {date}, {t("detailSession.month")} {month}
         </h3>
       </Divider>
       <DetailSession

@@ -13,7 +13,7 @@ import {
 import dayjs from "dayjs"
 
 import _ from "lodash"
-import { memo, useEffect, useState } from "react"
+import { Dispatch, memo, SetStateAction, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import {
   apiGetDistricts,
@@ -21,6 +21,7 @@ import {
   apiGetWards,
 } from "../../api/apiProvince"
 import apiService from "../../api/APIService"
+import backgroundInfo2 from "../../assets/images/background.png"
 import backgroundInfo from "../../assets/images/backgroundInfo.jpg"
 import { formatDateToString, getFirstLetterName } from "../../utils/common"
 import {
@@ -40,18 +41,24 @@ export interface DataStudentType {
   address?: string
   phone?: string
   status?: boolean | true
+  gpa?: number | null
 }
 
 interface Props {
   open: boolean
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setStudentModalState: Dispatch<
+    SetStateAction<{
+      isOpen: boolean
+      studentId: number | null
+    }>
+  >
   permission: "admin" | "user" | "guest"
-  studentId?: number | string
+  studentId: number | null
 }
 
 const ModalInfo: React.FC<Props> = ({
   open,
-  setOpen,
+  setStudentModalState,
   permission,
   studentId,
 }) => {
@@ -72,21 +79,25 @@ const ModalInfo: React.FC<Props> = ({
   const queryClient = useQueryClient()
 
   useEffect(() => {
-    if (open === true && studentId) {
+    if (open === true) {
       form.resetFields()
-      apiService("get", `student/${studentId}`).then((res) => {
-        setDataForm(formatStudentData(res))
+      if (studentId) {
+        apiService("get", `student/${studentId}`).then((res) => {
+          console.log(res)
 
-        form.setFieldsValue({
-          ...formatStudentData(res),
-          birth: dayjs(res?.birth ?? "0000/00/00", "YYYY/MM/DD"),
-          address: {
-            province: res?.address?.split(", ")[0],
-            district: res?.address?.split(", ")[1],
-            ward: res?.address?.split(", ")[2],
-          },
+          setDataForm(formatStudentData(res))
+
+          form.setFieldsValue({
+            ...formatStudentData(res),
+            birth: dayjs(res?.birth ?? "0000/00/00", "YYYY/MM/DD"),
+            address: {
+              province: res?.address?.split(", ")[0],
+              district: res?.address?.split(", ")[1],
+              ward: res?.address?.split(", ")[2],
+            },
+          })
         })
-      })
+      }
     }
   }, [open])
 
@@ -96,12 +107,15 @@ const ModalInfo: React.FC<Props> = ({
       description: t(`notification:api.${type}.success`),
     })
     queryClient.invalidateQueries({ queryKey: ["GET", "student-list"] })
-    setOpen(false)
+    setStudentModalState({
+      isOpen: false,
+      studentId: null,
+    })
   }
   const handleMutationError = (type: "create" | "update" | "delete") => {
     notification.error({
       message: t("notification:api.title"),
-      description: t(`notification:api.${type}.success`),
+      description: t(`notification:api.${type}.error`),
     })
   }
 
@@ -129,7 +143,7 @@ const ModalInfo: React.FC<Props> = ({
 
   const profileForm = [
     {
-      name: t("information.student code"),
+      name: t("information.studentCode"),
       value: dataForm.code || "",
     },
     { name: t("information.name"), value: dataForm.name },
@@ -137,7 +151,7 @@ const ModalInfo: React.FC<Props> = ({
       name: t("information.birth"),
       value: dataForm.birth ?? (
         <p className="text-[14px] italic text-gray-500">
-          {t("information.no data")}
+          {t("information.noData")}
         </p>
       ),
     },
@@ -146,13 +160,13 @@ const ModalInfo: React.FC<Props> = ({
       value:
         dataForm.gender !== null ? (
           dataForm.gender === 0 ? (
-            t("information.gender male")
+            t("information.genderMale")
           ) : (
-            t("information.gender female")
+            t("information.genderFemale")
           )
         ) : (
           <p className="text-[14px] italic text-gray-500">
-            {t("information.no data")}
+            {t("information.noData")}
           </p>
         ),
     },
@@ -160,7 +174,7 @@ const ModalInfo: React.FC<Props> = ({
       name: t("information.phone"),
       value: dataForm.phone ?? (
         <p className="text-[14px] italic text-gray-500">
-          {t("information.no data")}
+          {t("information.noData")}
         </p>
       ),
     },
@@ -168,7 +182,7 @@ const ModalInfo: React.FC<Props> = ({
       name: t("information.address"),
       value: dataForm.address ?? (
         <p className="text-[14px] italic text-gray-500">
-          {t("information.no data")}
+          {t("information.noData")}
         </p>
       ),
     },
@@ -262,13 +276,16 @@ const ModalInfo: React.FC<Props> = ({
       title={
         <h2>
           {editMode
-            ? t("modalInfo.title edit mode")
-            : t("modalInfo.information title")}
+            ? t("modalInfo.titleEditMode")
+            : t("modalInfo.informationTitle")}
         </h2>
       }
       open={open}
       onCancel={() => {
-        setOpen(false)
+        setStudentModalState({
+          isOpen: false,
+          studentId: null,
+        })
         setEditMode(false)
         setDataForm({} as DataStudentType)
       }}
@@ -289,7 +306,10 @@ const ModalInfo: React.FC<Props> = ({
           <div className={`w-full ${editMode && "h-0"}`}>
             <div className="relative">
               <Image
-                src={dataForm.background ?? backgroundInfo}
+                src={
+                  dataForm.background ??
+                  _.sample([backgroundInfo, backgroundInfo2])
+                }
                 className="rounded-lg"
               />
               {isUser && (
@@ -323,7 +343,7 @@ const ModalInfo: React.FC<Props> = ({
             {/* Giao dien xem thong tin */}
             <div className="mt-[60px] border-b-2 border-t-4 py-3">
               <h4 className="mb-2 font-medium">
-                {t("modalInfo.information title")}
+                {t("modalInfo.informationTitle")}
               </h4>
 
               <ul className="mb-2 w-full">
@@ -370,20 +390,20 @@ const ModalInfo: React.FC<Props> = ({
             >
               <FormItemCommon
                 type="input"
-                label={t("information.student code")}
+                label={t("information.studentCode")}
                 name="code"
                 rules={[
                   {
                     required: true,
-                    message: t("notification:form.input required"),
+                    message: t("notification:form.inputRequired"),
                   },
                   {
                     pattern: /^(CT|AT|DT|ct|at|dt)\d{6}$/,
-                    message: t("notification:form.input pattern"),
+                    message: t("notification:form.inputPattern"),
                   },
                 ]}
                 className={`${isUser && "hidden"}`}
-                placeholder={t("information.student code placeholder")}
+                placeholder={t("information.studentCodePlaceholder")}
               />
               <FormItemCommon
                 type="input"
@@ -392,20 +412,20 @@ const ModalInfo: React.FC<Props> = ({
                 rules={[
                   {
                     required: true,
-                    message: t("notification:form.input required"),
+                    message: t("notification:form.inputRequired"),
                   },
                   {
                     pattern: /^[A-ZÀ-Ỹ][a-zà-ỹ]*(\s[A-ZÀ-Ỹ][a-zà-ỹ]*)*$/,
-                    message: t("notification:form.input pattern"),
+                    message: t("notification:form.inputPattern"),
                   },
                 ]}
-                placeholder={t("information.name placeholder")}
+                placeholder={t("information.namePlaceholder")}
               />
               <FormItemCommon
                 type="date_picker"
                 name={"birth"}
                 label={t("information.birth")}
-                placeholder={t("information.birth placeholder")}
+                placeholder={t("information.birthPlaceholder")}
                 dateSetting={{
                   type: "date",
                   minDate: dayjs(
@@ -421,9 +441,9 @@ const ModalInfo: React.FC<Props> = ({
               <Form.Item name={"gender"} label={t("information.gender")}>
                 <Radio.Group>
                   <Radio value={0} className="mr-7">
-                    {t("information.gender male")}
+                    {t("information.genderMale")}
                   </Radio>
-                  <Radio value={1}>{t("information.gender female")}</Radio>
+                  <Radio value={1}>{t("information.genderFemale")}</Radio>
                 </Radio.Group>
               </Form.Item>
               <div className="pb-2">{t("information.address")}</div>
@@ -432,7 +452,7 @@ const ModalInfo: React.FC<Props> = ({
                   type="search_select"
                   name={["address", "province"]}
                   className="flex-1 sm:max-w-[154.5px]"
-                  placeholder={t("information.address province")}
+                  placeholder={t("information.addressProvince")}
                   options={formatOptionsAddress(queryProvinces?.data)}
                   loading={queryProvinces.isLoading}
                   // label={t("information.address")}
@@ -441,7 +461,7 @@ const ModalInfo: React.FC<Props> = ({
                   type="search_select"
                   name={["address", "district"]}
                   className="flex-1 sm:max-w-[154.5px]"
-                  placeholder={t("information.address district")}
+                  placeholder={t("information.addressDistrict")}
                   options={formatOptionsAddress(queryDistricts?.data)}
                   loading={queryDistricts.isLoading}
                   disabled={!provinceValue}
@@ -450,7 +470,7 @@ const ModalInfo: React.FC<Props> = ({
                   type="search_select"
                   name={["address", "ward"]}
                   className="flex-1 sm:max-w-[154.5px]"
-                  placeholder={t("information.address ward")}
+                  placeholder={t("information.addressWard")}
                   options={formatOptionsAddress(queryWards?.data)}
                   disabled={!districtValue}
                   loading={queryWards?.isLoading}
@@ -463,17 +483,17 @@ const ModalInfo: React.FC<Props> = ({
                 rules={[
                   {
                     pattern: /(84|0[3|5|7|8|9])+([0-9]{8})\b/g,
-                    message: t("notification:form.input pattern"),
+                    message: t("notification:form.inputPattern"),
                   },
                 ]}
-                placeholder={t("information.phone placeholder")}
+                placeholder={t("information.phonePlaceholder")}
               />
 
               <FormItemCommon
                 type="switch"
                 name={"status"}
                 label="Trạng thái"
-                placeholder={`${t("information.status active")}-${t("information.status inactive")}`}
+                placeholder={`${t("information.statusActive")}-${t("information.statusInactive")}`}
               />
             </Form>
             {/* Footer nut bam */}
@@ -491,10 +511,10 @@ const ModalInfo: React.FC<Props> = ({
               {!isCreateMode && (
                 <div className="flex justify-end gap-3">
                   <Popconfirm
-                    title={t("modalInfo.remove.popconfirm title")}
+                    title={t("modalInfo.remove.popconfirmTitle")}
                     onConfirm={() => mutationDeleteStudent.mutate()}
-                    okText={t("modalInfo.remove.popconfirm ok")}
-                    cancelText={t("modalInfo.remove.popconfirm cancel")}
+                    okText={t("modalInfo.remove.popconfirmOk")}
+                    cancelText={t("modalInfo.remove.popconfirmCancel")}
                   >
                     <Button
                       danger

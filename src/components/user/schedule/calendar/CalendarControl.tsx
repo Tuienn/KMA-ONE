@@ -41,18 +41,18 @@ const CalendarControl: React.FC<Props> = ({ dateSlide, setDateSlide }) => {
     t("month.11"),
   ]
   const fullMonths = [
-    t("month full.0"),
-    t("month full.1"),
-    t("month full.2"),
-    t("month full.3"),
-    t("month full.4"),
-    t("month full.5"),
-    t("month full.6"),
-    t("month full.7"),
-    t("month full.8"),
-    t("month full.9"),
-    t("month full.10"),
-    t("month full.11"),
+    t("monthFull.0"),
+    t("monthFull.1"),
+    t("monthFull.2"),
+    t("monthFull.3"),
+    t("monthFull.4"),
+    t("monthFull.5"),
+    t("monthFull.6"),
+    t("monthFull.7"),
+    t("monthFull.8"),
+    t("monthFull.9"),
+    t("monthFull.10"),
+    t("monthFull.11"),
   ]
 
   return (
@@ -95,7 +95,7 @@ const CalendarControl: React.FC<Props> = ({ dateSlide, setDateSlide }) => {
               previous.year < start.year ||
               (previous.year === start.year && previous.month < start.month)
             ) {
-              message.error(t("notification:calendar.over range"), 1)
+              message.error(t("notification:calendar.overRange"), 1)
               return
             }
             setDateSlide(previous)
@@ -115,7 +115,7 @@ const CalendarControl: React.FC<Props> = ({ dateSlide, setDateSlide }) => {
               next.year > end.year ||
               (next.year === end.year && next.month > end.month)
             ) {
-              message.error(t("notification:calendar.over range"), 1)
+              message.error(t("notification:calendar.overRange"), 1)
               return
             }
             setDateSlide(next)

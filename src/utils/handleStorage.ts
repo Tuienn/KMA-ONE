@@ -39,7 +39,7 @@ export const getDataStorage = (
 
 export const getAuthToken = (): {
   authPermission: "user" | "admin"
-  authId: number | string
+  authId: number
   expiredTime: number
   authStudentCode?: string
 } => {

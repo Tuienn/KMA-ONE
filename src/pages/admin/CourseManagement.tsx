@@ -57,13 +57,13 @@ const CourseManagement = () => {
     {
       type: "input",
       name: "name",
-      placeholder: t("list search.list placholder.name"),
+      placeholder: t("listSearch.listPlaceholder.name"),
       className: "w-[calc(100%/4-8px)]",
     },
     {
       type: "select",
       name: "credit",
-      placeholder: t("list search.list placholder.credit"),
+      placeholder: t("listSearch.listPlaceholder.credit"),
       options: [
         { value: 1, label: "1" },
         { value: 2, label: "2" },
@@ -76,7 +76,7 @@ const CourseManagement = () => {
       type: "cascader_select",
       name: "batch",
       className: "w-[150px]",
-      placeholder: t("list search.list placholder.batch"),
+      placeholder: t("listSearch.listPlaceholder.batch"),
       options: [
         {
           value: "AT",
@@ -106,7 +106,7 @@ const CourseManagement = () => {
     },
     {
       type: "cascader_select",
-      placeholder: t("list search.list placholder.semester"),
+      placeholder: t("listSearch.listPlaceholder.semester"),
       name: "semester",
       className: "w-[150px]",
       options: createSemesterOptions(i18next.language, 5, 2, 2),
@@ -122,50 +122,13 @@ const CourseManagement = () => {
             icon={<PlusCircleOutlined />}
             onClick={() => setOpenModal(true)}
           >
-            {t("header.button create")}
+            {t("header.buttonCreate")}
           </Button>
         }
       />
-      <ListSearchCommon
-        title={t("list search.title")}
-        listSearch={listSearch}
-      />
+      <ListSearchCommon title={t("listSearch.title")} listSearch={listSearch} />
       <TableCourses
         loading={false}
-        // dataSource={[
-        //   {
-        //     key: 1,
-        //     name: "Course 1",
-        //     credit: 3,
-        //     batch: "AT1",
-        //     semester: 111,
-        //     class: ["L01", "L02", "L03"],
-        //   },
-        //   {
-        //     key: 2,
-        //     name: "Course 2",
-        //     credit: 4,
-        //     batch: "CT2",
-        //     semester: 222,
-        //     class: ["L01", "L02", "L03"],
-        //   },
-        //   {
-        //     key: 3,
-        //     name: "Course 3",
-        //     credit: 2,
-        //     batch: "DT3",
-        //     semester: 311,
-        //     class: ["L01", "L02", "L03"],
-        //   },
-        //   {
-        //     key: 4,
-        //     name: "Course 4",
-        //     credit: 1,
-        //     batch: "AT2",
-        //     semester: 422,
-        //     class: ["L01", "L02", "L03"],
-        //   },
-        // ]}
         dataSource={{
           list: queryListCourse.isSuccess ? queryListCourse.data.list : [],
           total: queryListCourse.isSuccess ? queryListCourse.data.total : 0,

@@ -1,22 +1,22 @@
 {
   "form": {
-    "input required": "Vui lòng nhập thông tin",
-    "input pattern": "Vui lòng nhập đúng định dạng",
-    "select required": "Vui lòng chọn thông tin",
-    "address not full": "Vui lòng chọn đủ địa chỉ"
+    "inputRequired": "Vui lòng nhập thông tin",
+    "inputPattern": "Vui lòng nhập đúng định dạng",
+    "selectRequired": "Vui lòng chọn thông tin",
+    "addressNotFull": "Vui lòng chọn đủ địa chỉ"
   },
   "calendar": {
-    "over range": "Vượt quá phạm vi cho phép"
+    "overRange": "Vượt quá phạm vi cho phép"
   },
-  "page not found": {
+  "pageNotFound": {
     "title": "Xin lỗi, trang bạn truy cập không tồn tại",
     "button": "Quay lại trang chủ"
   },
   "logout": {
     "title": "Đăng xuất",
     "content": "Bạn có chắc chắn muốn đăng xuất?",
-    "button cancel": "Hủy",
-    "button confirm": "Đăng xuất"
+    "buttonCancel": "Hủy",
+    "buttonConfirm": "Đăng xuất"
   },
   "api": {
     "title": "KMAONE thông báo",

@@ -22,7 +22,7 @@
     "10": "Thg 11",
     "11": "Thg 12"
   },
-  "day full": {
+  "dayFull": {
     "0": "Chủ nhật",
     "1": "Thứ 2",
     "2": "Thứ 3",
@@ -31,7 +31,7 @@
     "5": "Thứ 6",
     "6": "Thứ 7"
   },
-  "month full": {
+  "monthFull": {
     "0": "Tháng 1",
     "1": "Tháng 2",
     "2": "Tháng 3",
@@ -49,16 +49,16 @@
     "next": "Tháng sau",
     "previous": "Tháng trước"
   },
-  "card session": {
-    "course name": "Tên môn học",
+  "cardSession": {
+    "courseName": "Tên môn học",
     "class": "Lớp",
     "session": "Ca học",
     "time": "Thời gian",
     "room": "Phòng học",
     "teacher": "Giảng viên",
-    "see more": "Xem chi tiết lớp học"
+    "seeMore": "Xem chi tiết lớp học"
   },
-  "detail session": {
+  "detailSession": {
     "date": "Ngày",
     "month": "tháng"
   }

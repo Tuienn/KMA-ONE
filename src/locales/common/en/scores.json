@@ -1,29 +1,29 @@
 {
-  "card info": {
+  "cardInfo": {
     "passed": "Completed courses ",
     "failed": "Failed courses ",
     "avg": "Average score"
   },
   "table": {
-    "student code": "Student code",
-    "student name": "Student name",
-    "course name": "Course name",
-    "first score": "First sub-score",
-    "second score": "Second sub-score",
-    "exam score": "Exam score",
-    "final score": "Final score",
-    "letter grade": "Letter grade",
+    "studentCode": "Student code",
+    "studentName": "Student name",
+    "courseName": "Course name",
+    "firstScore": "First sub-score",
+    "secondScore": "Second sub-score",
+    "examScore": "Exam score",
+    "finalScore": "Final score",
+    "letterGrade": "Letter grade",
     "credit": "Credit"
   },
-  "table shorten": {
-    "student code": "Stu code",
-    "student name": "Stu name",
-    "course name": "Sub name",
-    "first score": "1st S",
-    "second score": "2st S",
-    "exam score": "EX",
-    "final score": "FS",
-    "letter grade": "LG",
+  "tableShorten": {
+    "studentCode": "Stu code",
+    "studentName": "Stu name",
+    "courseName": "Sub name",
+    "firstScore": "1st S",
+    "secondScore": "2st S",
+    "examScore": "EX",
+    "finalScore": "FS",
+    "letterGrade": "LG",
     "credit": "Cre"
   }
 }

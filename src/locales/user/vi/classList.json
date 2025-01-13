@@ -1,7 +1,15 @@
 {
-  "find class": {
+  "findClass": {
     "placeholder": "Tìm kiếm theo tên môn học",
     "detail": "Chi tiết",
     "list": "Danh sách lớp học"
+  },
+  "detailClass": {
+    "tab1": "Danh sách sinh viên",
+    "tab2": "Danh sách điểm",
+    "otherClass": "Danh sách lớp học khác"
+  },
+  "basicClassData": {
+    "title": "Thông tin"
   }
 }

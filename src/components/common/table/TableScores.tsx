@@ -27,53 +27,53 @@ const TableScores: React.FC<Props> = ({ loading, dataSource, type }) => {
 
   const columns: TableColumnsType<DataType> = [
     {
-      title: md ? t("table.course name") : t("table shorten.course name"),
+      title: md ? t("table.courseName") : t("tableShorten.courseName"),
       dataIndex: "courseName",
       fixed: "left",
       width: "200px",
       hidden: type === "list-by-course",
     },
     {
-      title: md ? t("table.credit") : t("table shorten.credit"),
+      title: md ? t("table.credit") : t("tableShorten.credit"),
       dataIndex: "credit",
       width: md ? "120px" : "80px",
       hidden: type === "list-by-course",
     },
     {
-      title: md ? t("table.student name") : t("table shorten.student name"),
+      title: md ? t("table.studentName") : t("tableShorten.studentName"),
       dataIndex: "studentName",
       fixed: "left",
       width: "200px",
       hidden: type === "list-by-student",
     },
     {
-      title: md ? t("table.student code") : t("table shorten.student code"),
+      title: md ? t("table.studentCode") : t("tableShorten.studentCode"),
       dataIndex: "studentCode",
       width: md ? "160px" : "80px",
       hidden: type === "list-by-student",
     },
     {
-      title: md ? t("table.first score") : t("table shorten.first score"),
+      title: md ? t("table.firstScore") : t("tableShorten.firstScore"),
       dataIndex: "firstScore",
       width: md ? "160px" : "80px",
     },
     {
-      title: md ? t("table.second score") : t("table shorten.second score"),
+      title: md ? t("table.secondScore") : t("tableShorten.secondScore"),
       dataIndex: "secondScore",
       width: md ? "160px" : "80px",
     },
     {
-      title: md ? t("table.exam score") : t("table shorten.exam score"),
+      title: md ? t("table.examScore") : t("tableShorten.examScore"),
       dataIndex: "examScore",
       width: md ? "160px" : "80px",
     },
     {
-      title: md ? t("table.final score") : t("table shorten.final score"),
+      title: md ? t("table.finalScore") : t("tableShorten.finalScore"),
       dataIndex: "finalScore",
       width: md ? "160px" : "80px",
     },
     {
-      title: md ? t("table.letter grade") : t("table shorten.letter grade"),
+      title: md ? t("table.letterGrade") : t("tableShorten.letterGrade"),
       dataIndex: "letterGrade",
       width: md ? "160px" : "80px",
       sorter: (a, b) => a.finalScore - b.finalScore,

@@ -10,10 +10,10 @@ const PageNotFound: React.FC = () => {
     <Result
       status="404"
       title={404}
-      subTitle={t("page not found.title")}
+      subTitle={t("pageNotFound.title")}
       extra={
         <Button type="primary" onClick={() => nagivate("/")}>
-          {t("page not found.button")}
+          {t("pageNotFound.button")}
         </Button>
       }
     />

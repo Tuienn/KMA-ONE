@@ -1,21 +1,21 @@
 {
   "header": {
-    "title": "QUẢN LÝ ĐIỂM",
+    "title": "QUẢN LÝ ĐIỂM",
     "mode": {
-      "student list": "Danh sách điểm theo sinh viên",
-      "course list": "Danh sách điểm theo môn học"
+      "studentList": "Danh sách điểm theo sinh viên",
+      "courseList": "Danh sách điểm theo môn học"
     }
   },
-  "list search": {
-    "title": "Tìm kiếm điểm",
-    "button search": "Tìm kiếm",
-    "button reset": "Xóa bộ lọc",
-    "list placholder": {
-      "student name": "Nhập tên sinh viên",
-      "student": "Nhập mã sinh viên hoặc tên sinh viên",
-      "course name": "Nhập tên môn học",
-      "class": "Chọn lớp học",
-      "batch": "Chọn khóa học"
+  "listSearch": {
+    "title": "Tìm kiếm điểm",
+    "buttonSearch": "Tìm kiếm",
+    "buttonReset": "Xóa bộ lọc",
+    "listPlaceholder": {
+      "studentName": "Nhập tên sinh viên",
+      "student": "Nhập mã sinh viên hoặc tên sinh viên",
+      "courseName": "Nhập tên môn học",
+      "class": "Chọn lớp học",
+      "batch": "Chọn khóa học"
     }
   }
 }

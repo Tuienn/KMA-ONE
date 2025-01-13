@@ -45,21 +45,21 @@ const CardInfo: React.FC<Props> = ({
       <div className="mt-3 flex flex-col rounded-xl bg-[#6a7ba2] md:flex-row">
         <div className="flex items-center border-b-[1px] border-slate-400 p-4 md:w-1/3 md:border-b-0 md:border-r-[1px]">
           <div className="w-[90%]">
-            <p className="text-white">{t("card info.passed")}</p>
+            <p className="text-white">{t("cardInfo.passed")}</p>
             <p className="text-4xl font-black text-[#93fdcb]">{passed}</p>
           </div>
           <CheckOutlined className="w-[10%] justify-center text-4xl text-[#93fdcb]" />
         </div>
         <div className="flex items-center border-b-[1px] border-slate-400 p-5 md:w-1/3 md:border-b-0 md:border-r-[1px]">
           <div className="w-[90%]">
-            <p className="text-white">{t("card info.failed")}</p>
+            <p className="text-white">{t("cardInfo.failed")}</p>
             <p className="text-4xl font-black text-[#F6D6D6]">{failed}</p>
           </div>
           <ExclamationOutlined className="w-[10%] justify-center text-4xl text-[#F6D6D6]" />
         </div>
         <div className="flex items-center p-5 md:w-1/3">
           <div className="w-[90%]">
-            <p className="text-white">{t("card info.avg")}</p>
+            <p className="text-white">{t("cardInfo.avg")}</p>
             <p className="text-4xl font-black text-yellow-200">{avgScore}</p>
           </div>
           <LineChartOutlined className="w-[10%] justify-center text-4xl text-yellow-200" />

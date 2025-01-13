@@ -14,11 +14,11 @@ const DetailSesion: React.FC<DetailSessionProps> = ({
   const { t } = useTranslation("calendar")
   const { sessionCource, start, end } = formatSessionCalendar_object(session)
   const dataForm = [
-    { title: t("card session.class"), value: className },
-    { title: t("card session.room"), value: room },
-    { title: t("card session.session"), value: sessionCource },
-    { title: t("card session.time"), value: `${start} - ${end}` },
-    { title: t("card session.teacher"), value: teacherName },
+    { title: t("cardSession.class"), value: className },
+    { title: t("cardSession.room"), value: room },
+    { title: t("cardSession.session"), value: sessionCource },
+    { title: t("cardSession.time"), value: `${start} - ${end}` },
+    { title: t("cardSession.teacher"), value: teacherName },
   ]
 
   return (
@@ -47,7 +47,7 @@ const DetailSesion: React.FC<DetailSessionProps> = ({
           <Divider className="mb-3 mt-3" />
           <div className="text-center">
             <Link to={"/"} className="m-auto cursor-pointer text-second">
-              {t("card session.see more")}
+              {t("cardSession.seeMore")}
             </Link>
           </div>
         </Card>

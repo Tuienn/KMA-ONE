@@ -25,7 +25,7 @@ const ListMessage: React.FC = () => {
       {_.isEmpty(messages) ? (
         <div className="flex h-full items-center justify-center">
           <h2 className="text-center text-2xl font-semibold text-gray-400 md:text-3xl">
-            {t("chat ai.no content")}
+            {t("chatAI.noContent")}
           </h2>
         </div>
       ) : (

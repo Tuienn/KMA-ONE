@@ -76,15 +76,15 @@ const TableCourses: React.FC<Props> = ({
       credit: item.credit,
       batch: <Tag>{item.batch}</Tag>,
       semester:
-        t("list search.list placholder.semester year") +
+        t("listSearch.listPlaceholder.semesterYear") +
         " " +
         year +
         " / " +
-        t("list search.list placholder.semester phase") +
+        t("listSearch.listPlaceholder.semesterPhase") +
         " " +
         phase +
         " / " +
-        t("list search.list placholder.semester round") +
+        t("listSearch.listPlaceholder.semesterRound") +
         " " +
         round,
       class: item.class?.map((item: any) => <Tag key={item}>{item}</Tag>),

@@ -1,52 +1,52 @@
 {
   "header": {
-    "title": "QUẢN LÝ MÔN HỌC",
-    "button create": "Tạo môn học"
+    "title": "QUẢN LÝ MÔN HỌC",
+    "buttonCreate": "Tạo môn học"
   },
-  "list search": {
-    "title": "Tìm kiếm môn học",
-    "button search": "Tìm kiếm",
-    "button reset": "Xóa bộ lọc",
-    "list placholder": {
-      "name": "Nhập tên môn học",
-      "credit": "Chọn số tín chỉ",
-      "batch": "Chọn khóa học",
-      "semester": "Chọn đợt học",
-      "semester year": "Năm",
-      "semester phase": "Kì",
-      "semester round": "Đợt"
+  "listSearch": {
+    "title": "Tìm kiếm môn học",
+    "buttonSearch": "Tìm kiếm",
+    "buttonReset": "Xóa bộ lọc",
+    "listPlaceholder": {
+      "name": "Nhập tên môn học",
+      "credit": "Chọn số tín chỉ",
+      "batch": "Chọn khóa học",
+      "semester": "Chọn đợt học",
+      "semesterYear": "Năm",
+      "semesterPhase": "Kì",
+      "semesterRound": "Đợt"
     }
   },
   "table": {
-    "name": "Tên môn học",
-    "credit": "Số tín chỉ",
-    "batch": "Khóa",
-    "semester": "Đợt học",
-    "class": "Lớp học"
+    "name": "Tên môn học",
+    "credit": "Số tín chỉ",
+    "batch": "Khóa",
+    "semester": "Đợt học",
+    "class": "Lớp học"
   },
-  "modal course": {
-    "title": "Thông tin môn học",
-    "create": "Tạo mới",
-    "update": "Cập nhật",
+  "modalCourse": {
+    "title": "Thông tin môn học",
+    "create": "Tạo mới",
+    "update": "Cập nhật",
     "remove": {
-      "button": "Xoá",
-      "popconfirm title": "Bạn có chắc chắn muốn xóa môn học này?",
-      "popconfirm ok": "Có",
-      "popconfirm cancel": "Không"
+      "button": "Xoá",
+      "popconfirmTitle": "Bạn có chắc chắn muốn xóa môn học này?",
+      "popconfirmOk": "Có",
+      "popconfirmCancel": "Không"
     },
     "form": {
-      "course name": "Tên môn học",
-      "placholder course name": "Nhập tên môn học",
-      "credit": "Số tín chỉ",
-      "placholder credit": "Chọn số tín chỉ",
-      "semester": "Đợt học",
-      "placholder semester": "Chọn đợt học",
-      "class": "Lớp học",
-      "placholder class": "Chọn lớp học",
-      "batch": "Khóa học",
-      "placholder batch": "Chọn khóa học",
-      "teacher": "Tên giảng viên",
-      "placholder teacher": "Nhập tên giảng viên"
+      "courseName": "Tên môn học",
+      "placeholderCourseName": "Nhập tên môn học",
+      "credit": "Số tín chỉ",
+      "placeholderCredit": "Chọn số tín chỉ",
+      "semester": "Đợt học",
+      "placeholderSemester": "Chọn đợt học",
+      "class": "Lớp học",
+      "placeholderClass": "Chọn lớp học",
+      "batch": "Khóa học",
+      "placeholderBatch": "Chọn khóa học",
+      "teacher": "Tên giảng viên",
+      "placeholderTeacher": "Nhập tên giảng viên"
     }
   }
 }
