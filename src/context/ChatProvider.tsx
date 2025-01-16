@@ -11,22 +11,31 @@ interface Props {
   children: React.ReactNode
 }
 
-const ChatContext = createContext({
-  messages: [] as Message[],
+interface ChatContextType {
+  messages: Message[]
+  isChatAI: boolean
+  addMessage: (message: Message) => void
+}
+
+// Provide an initial value with correct function signatures
+const ChatContext = createContext<ChatContextType>({
+  messages: [],
   isChatAI: true,
-  addMessage: (message: Message) => {},
+  addMessage: () => {}, // Placeholder function
 })
 
 const ChatProvider: React.FC<Props> = ({ children }) => {
   const [messages, setMessages] = useState<Message[]>([])
-  let isChatAI = true
+  const isChatAI = true
 
-  const valueContext = {
+  const addMessage = (message: Message) => {
+    setMessages((prev) => [...prev, message])
+  }
+
+  const valueContext: ChatContextType = {
     messages,
     isChatAI,
-    addMessage: (message: Message) => {
-      setMessages((prev) => [...prev, message])
-    },
+    addMessage,
   }
 
   return (

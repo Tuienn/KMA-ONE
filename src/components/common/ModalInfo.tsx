@@ -54,7 +54,7 @@ interface Props {
   >
   permission: "admin" | "user" | "guest"
   studentId: number | null
-  refetchFilter: () => void
+  refetchFilter?: () => void
 }
 
 const ModalInfo: React.FC<Props> = ({
@@ -106,7 +106,9 @@ const ModalInfo: React.FC<Props> = ({
       message: t("notification:api.title"),
       description: t(`notification:api.${type}.success`),
     })
-    refetchFilter()
+    if (refetchFilter) {
+      refetchFilter()
+    }
     setStudentModalState({
       isOpen: false,
       studentId: null,
