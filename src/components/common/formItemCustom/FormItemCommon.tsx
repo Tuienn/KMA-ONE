@@ -18,6 +18,12 @@ interface DateSettingType {
 }
 interface CascaderSettingType {
   isFullRender?: boolean | false
+  placement?: "bottomLeft" | "bottomRight" | "topLeft" | "topRight"
+  changeOnSelect?: boolean | false
+}
+
+interface SelectSettingType {
+  multiple?: boolean | false
 }
 
 export interface FormItemCommonType {
@@ -39,6 +45,7 @@ export interface FormItemCommonType {
   querySetting?: QuerySettingType
   dateSetting?: DateSettingType
   cascaderSetting?: CascaderSettingType
+  selectSetting?: SelectSettingType
   options?: DefaultOptionType[]
   loading?: boolean | false
 }
@@ -54,7 +61,9 @@ const FormItemCommon: React.FC<FormItemCommonType> = ({
   querySetting,
   dateSetting,
   cascaderSetting,
+  selectSetting,
   options,
+
   loading,
 }) => {
   switch (type) {
@@ -86,6 +95,7 @@ const FormItemCommon: React.FC<FormItemCommonType> = ({
             allowClear
             loading={loading}
             popupMatchSelectWidth={false}
+            mode={selectSetting?.multiple ? "multiple" : undefined}
           />
         </Form.Item>
       )
@@ -130,6 +140,8 @@ const FormItemCommon: React.FC<FormItemCommonType> = ({
             allowClear
             displayRender={displayRender}
             disabled={disabled}
+            placement={cascaderSetting?.placement ?? "bottomLeft"}
+            changeOnSelect={cascaderSetting?.changeOnSelect}
           />
         </Form.Item>
       )
@@ -143,6 +155,7 @@ const FormItemCommon: React.FC<FormItemCommonType> = ({
           rules={rules}
           label={label}
           valuePropName="checked"
+          initialValue={true}
         >
           <Switch
             checkedChildren={placeholderSwitch[0]}

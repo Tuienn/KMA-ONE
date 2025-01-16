@@ -1,5 +1,5 @@
 import { PlusCircleOutlined } from "@ant-design/icons"
-import { useQuery } from "@tanstack/react-query"
+import { useMutation } from "@tanstack/react-query"
 import { App, Button } from "antd"
 import i18next from "i18next"
 import { useEffect, useState } from "react"
@@ -10,6 +10,7 @@ import ListSearchCommon from "../../components/admin/common/ListSearchCommon"
 import ModalCourse from "../../components/admin/courseManagement/ModalCourse"
 import TableCourses from "../../components/admin/courseManagement/TableCourses"
 import { FormItemCommonType } from "../../components/common/formItemCustom/FormItemCommon"
+import { UsePath } from "../../context/PathProvider"
 import { createSemesterOptions, getCurrenBatch } from "../../utils/formatValue"
 
 const CourseManagement = () => {
@@ -19,44 +20,55 @@ const CourseManagement = () => {
   const [paging, setPaging] = useState<number>(1)
   const [courseIdModal, setCourseIdModal] = useState<string | number>("")
   const { notification } = App.useApp()
-
+  const { searchPath } = UsePath()
   useEffect(() => {
     if (!openModal) {
       setCourseIdModal("")
     }
   }, [openModal])
 
-  const queryListCourse = useQuery({
-    queryKey: ["GET", "list-course"],
-    queryFn: async () => {
-      const res = await apiService("get", "/course", {
-        pageSize: 10,
-        pageIndex: paging,
-        sortBy: "Id",
-        SortDesc: false,
-      })
-
+  const muatateFilterCourse = useMutation({
+    mutationKey: ["POST", "filter-course"],
+    mutationFn: async () => {
+      const res = await apiService(
+        "post",
+        "/course/filter",
+        {},
+        {
+          pageSize: 10,
+          pageIndex: paging,
+          sortBy: "Id",
+          SortDesc: false,
+          ...searchPath,
+          batch: searchPath.batch?.[1],
+          semester: Number(searchPath.semester?.join("")),
+        },
+      )
       return {
         page: paging,
         total: res.total,
-        list: res.items,
+        list: res.courses,
       }
     },
-  })
-
-  useEffect(() => {
-    if (queryListCourse.isError) {
+    onError: () =>
       notification.error({
         message: t("notification:api.title"),
         description: t("notification:api.get.error"),
-      })
-    }
-  }, [queryListCourse.isError])
+      }),
+  })
 
+  useEffect(() => {
+    muatateFilterCourse.mutate()
+  }, [searchPath, paging])
+
+  const handleRefecthFilter = () => {
+    setPaging(1)
+    muatateFilterCourse.mutate()
+  }
   const listSearch: FormItemCommonType[] = [
     {
       type: "input",
-      name: "name",
+      name: "courseName",
       placeholder: t("listSearch.listPlaceholder.name"),
       className: "w-[calc(100%/4-8px)]",
     },
@@ -70,13 +82,14 @@ const CourseManagement = () => {
         { value: 3, label: "3" },
         { value: 4, label: "4" },
       ],
-      className: "w-[calc(100%/7-8px)]",
+      className: "w-[calc(100%/4-8px)]",
     },
     {
       type: "cascader_select",
       name: "batch",
-      className: "w-[150px]",
+      className: "w-[calc(100%/4-8px)]",
       placeholder: t("listSearch.listPlaceholder.batch"),
+
       options: [
         {
           value: "AT",
@@ -108,7 +121,11 @@ const CourseManagement = () => {
       type: "cascader_select",
       placeholder: t("listSearch.listPlaceholder.semester"),
       name: "semester",
-      className: "w-[150px]",
+      className: "w-[calc(100%/4)]",
+      cascaderSetting: {
+        isFullRender: true,
+        placement: "bottomRight",
+      },
       options: createSemesterOptions(i18next.language, 5, 2, 2),
     },
   ]
@@ -117,21 +134,29 @@ const CourseManagement = () => {
       <HeaderCommon
         title={t("header.title")}
         extra={
-          <Button
-            type="primary"
-            icon={<PlusCircleOutlined />}
-            onClick={() => setOpenModal(true)}
-          >
-            {t("header.buttonCreate")}
-          </Button>
+          <div className="flex gap-2">
+            {/* <ExportButton />
+            <ImportButton /> */}
+            <Button
+              type="primary"
+              icon={<PlusCircleOutlined />}
+              onClick={() => setOpenModal(true)}
+            >
+              {t("header.buttonCreate")}
+            </Button>
+          </div>
         }
       />
       <ListSearchCommon title={t("listSearch.title")} listSearch={listSearch} />
       <TableCourses
-        loading={false}
+        loading={muatateFilterCourse.isPending}
         dataSource={{
-          list: queryListCourse.isSuccess ? queryListCourse.data.list : [],
-          total: queryListCourse.isSuccess ? queryListCourse.data.total : 0,
+          list: muatateFilterCourse.isSuccess
+            ? muatateFilterCourse.data.list
+            : [],
+          total: muatateFilterCourse.isSuccess
+            ? muatateFilterCourse.data.total
+            : 0,
           page: paging,
         }}
         handleChangePaging={setPaging}
@@ -142,6 +167,7 @@ const CourseManagement = () => {
         open={openModal}
         handleOpen={setOpenModal}
         courseId={courseIdModal === "" ? undefined : courseIdModal}
+        handleRefetch={handleRefecthFilter}
       />
     </div>
   )

@@ -44,7 +44,9 @@ const AMonth: React.FC<Props> = ({
             <div
               className={`m-auto h-7 w-7 cursor-pointer rounded-full text-center font-medium leading-7 md:h-10 md:w-10 md:text-[17px] md:leading-10 ${isCurrentDate(date) && "bg-second text-white"} ${isSelectDate(date) && !isCurrentDate(date) && "bg-slate-200"}`}
               onClick={() => {
-                date != 0 && setSelectedDate({ month, year, date })
+                if (date !== 0) {
+                  setSelectedDate({ month, year, date })
+                }
               }}
             >
               {date != 0 && date}

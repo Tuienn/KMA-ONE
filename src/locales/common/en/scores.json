@@ -25,5 +25,9 @@
     "finalScore": "FS",
     "letterGrade": "LG",
     "credit": "Cre"
+  },
+  "findScore": {
+    "inputPlaceholder": "Input name or student code",
+    "selectPlaceholder": "Select semster"
   }
 }

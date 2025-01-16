@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import { App, Button, Form, Modal, Popconfirm } from "antd"
 import i18next from "i18next"
 import { Dispatch, SetStateAction, useEffect } from "react"
@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next"
 import apiService from "../../../api/APIService"
 import {
   createSemesterOptions,
-  formatOptionsSemester,
+  formatSemesterToObj,
   getCurrenBatch,
 } from "../../../utils/formatValue"
 import FormItemCommon from "../../common/formItemCustom/FormItemCommon"
@@ -15,14 +15,19 @@ interface Props {
   open: boolean
   handleOpen: Dispatch<SetStateAction<boolean>>
   courseId?: string | number
+  handleRefetch: () => void
 }
 
-const ModalCourse: React.FC<Props> = ({ open, handleOpen, courseId }) => {
+const ModalCourse: React.FC<Props> = ({
+  open,
+  handleOpen,
+  courseId,
+  handleRefetch,
+}) => {
   const [form] = Form.useForm()
   const { t } = useTranslation(["courseManagement", "notification"])
   const isCreateMode = courseId ? false : true
   const { AT, CT, DT } = getCurrenBatch()
-  const queryClient = useQueryClient()
 
   const { notification } = App.useApp()
 
@@ -36,7 +41,7 @@ const ModalCourse: React.FC<Props> = ({ open, handleOpen, courseId }) => {
     queryKey: ["GET", "course", courseId],
     queryFn: async () => {
       const res = await apiService("get", `/course/${courseId}`)
-      const semester = formatOptionsSemester(res.semester)
+      const semester = formatSemesterToObj(res.semester)
       const data = {
         ...res,
         batch: [res.batch.slice(0, 2), res.batch],
@@ -54,7 +59,7 @@ const ModalCourse: React.FC<Props> = ({ open, handleOpen, courseId }) => {
       message: t("notification:api.title"),
       description: t(`notification:api.${type}.success`),
     })
-    queryClient.invalidateQueries({ queryKey: ["GET", "list-course"] })
+    handleRefetch()
     handleOpen(false)
   }
   const handleMutationError = (type: "create" | "update" | "delete") => {
@@ -80,7 +85,8 @@ const ModalCourse: React.FC<Props> = ({ open, handleOpen, courseId }) => {
   })
   const mutationCreateCourse = useMutation({
     mutationKey: ["POST", "course"],
-    mutationFn: async (data: any) => apiService("post", "/course", {}, data),
+    mutationFn: async (data: any) =>
+      apiService("post", "/course/Create", {}, data),
     onSuccess: () => handleMutationSuccess("create"),
     onError: () => handleMutationError("create"),
   })
@@ -236,12 +242,24 @@ const ModalCourse: React.FC<Props> = ({ open, handleOpen, courseId }) => {
             },
           ]}
         />
-        {/* <FormItemCommon
-          type="input"
-          label={t("modal course.form.teacher")}
-          name="teacherName"
-          placeholder={t("modal course.form.placholder teacher")}
-        /> */}
+        {isCreateMode && (
+          <FormItemCommon
+            type="select"
+            label={t("courseManagement:modalCourse.form.class")}
+            name="classes"
+            placeholder={t(
+              "courseManagement:modalCourse.form.placeholderClass",
+            )}
+            options={[
+              { value: "L01", label: "L01" },
+              { value: "L02", label: "L02" },
+              { value: "L03", label: "L03" },
+              { value: "L04", label: "L04" },
+              { value: "L05", label: "L05" },
+            ]}
+            selectSetting={{ multiple: true }}
+          />
+        )}
       </Form>
     </Modal>
   )

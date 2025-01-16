@@ -1,6 +1,5 @@
 import {
   AntDesignOutlined,
-  BellOutlined,
   BookOutlined,
   CloseOutlined,
   DockerOutlined,
@@ -16,7 +15,6 @@ import {
   ScheduleOutlined,
   TeamOutlined,
   UserOutlined,
-  WechatWorkOutlined,
 } from "@ant-design/icons"
 import type { MenuProps } from "antd"
 import { Avatar, Drawer, Grid, Layout, Menu, Popconfirm, Tooltip } from "antd"
@@ -120,19 +118,9 @@ const LayoutBasic: React.FC<Props> = ({ children }) => {
       <FileSearchOutlined />,
     ),
     getItem(
-      <Link to={"/chat-app"}>{t("sider.chat")}</Link>,
-      "chat-app",
-      <WechatWorkOutlined />,
-    ),
-    getItem(
       <Link to={"/chat-ai"}>{t("layoutBasic_user:sider.Q&A")}</Link>,
       "chat-ai",
       <OpenAIOutlined />,
-    ),
-    getItem(
-      t("layoutBasic_user:sider.notification"),
-      "notification",
-      <BellOutlined />,
     ),
   ]
 
@@ -222,20 +210,6 @@ const LayoutBasic: React.FC<Props> = ({ children }) => {
       <Link to="/score-management">{t("layoutBasic_admin:sider.score")}</Link>,
       "score-management",
       <FileSearchOutlined />,
-    ),
-    getItem(
-      <Link to="/schedule-management">
-        {t("layoutBasic_admin:sider.schedule")}
-      </Link>,
-      "schedule-management",
-      <ScheduleOutlined />,
-    ),
-    getItem(
-      <Link to="/notification-management">
-        {t("layoutBasic_admin:sider.notification")}
-      </Link>,
-      "notification-management",
-      <BellOutlined />,
     ),
   ]
   return (

@@ -25,5 +25,9 @@
     "finalScore": "DTK",
     "letterGrade": "DC",
     "credit": "TC"
+  },
+  "findScore": {
+    "inputPlaceholder": "Nhập tên hoặc mã sinh viên",
+    "selectPlaceholder": "Chọn học kỳ"
   }
 }

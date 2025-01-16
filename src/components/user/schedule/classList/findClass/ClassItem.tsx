@@ -10,7 +10,10 @@ const ClassItem: React.FC<ClassItemProps> = ({ id, name, course }) => {
 
   return (
     <div className="overflow-hidden rounded-lg bg-white duration-200 hover:translate-y-[-5px]">
-      <img src="https://portal.actvn.edu.vn/images/background-course.png" />
+      <img
+        src="https://portal.actvn.edu.vn/images/background-course.png"
+        className="w-full"
+      />
       <div className="p-2 md:p-3">
         <div className="font-medium">
           <Typography.Paragraph ellipsis={{}} className="!mb-0 md:!text-[16px]">

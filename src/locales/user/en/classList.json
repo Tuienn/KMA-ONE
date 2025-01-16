@@ -10,6 +10,7 @@
     "otherClass": "Other class list"
   },
   "basicClassData": {
-    "title": "Information"
+    "title": "Information",
+    "noData": "No data"
   }
 }

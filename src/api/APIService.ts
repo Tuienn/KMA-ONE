@@ -1,4 +1,4 @@
-import axios, { AxiosRequestHeaders } from "axios"
+import axios from "axios"
 
 const API = axios.create({
   baseURL: import.meta.env["VITE_API_SERVICE_URL"],
@@ -32,13 +32,11 @@ export const apiService = async (
   url: string,
   params?: any,
   data?: any,
-  headers?: AxiosRequestHeaders,
 ) => {
   try {
     const response = await API({
       method,
       url,
-      headers: headers,
       params,
       data,
     })

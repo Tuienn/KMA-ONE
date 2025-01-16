@@ -95,7 +95,7 @@ const CalendarControl: React.FC<Props> = ({ dateSlide, setDateSlide }) => {
               previous.year < start.year ||
               (previous.year === start.year && previous.month < start.month)
             ) {
-              message.error(t("notification:calendar.overRange"), 1)
+              message.warning(t("notification:calendar.overRange"), 1)
               return
             }
             setDateSlide(previous)
@@ -115,7 +115,7 @@ const CalendarControl: React.FC<Props> = ({ dateSlide, setDateSlide }) => {
               next.year > end.year ||
               (next.year === end.year && next.month > end.month)
             ) {
-              message.error(t("notification:calendar.overRange"), 1)
+              message.warning(t("notification:calendar.overRange"), 1)
               return
             }
             setDateSlide(next)

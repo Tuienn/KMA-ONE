@@ -1,4 +1,5 @@
-import { Segmented } from "antd"
+import { PlusCircleOutlined } from "@ant-design/icons"
+import { Button, Tabs } from "antd"
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import HeaderCommon from "../../components/admin/common/HeaderCommon"
@@ -165,27 +166,43 @@ const ScoreManagement = () => {
 
   return (
     <>
-      <HeaderCommon title={t("header.title")} />
-      <Segmented<string>
-        options={[
-          {
-            label: t("header.mode.studentList"),
-            value: "list-by-student",
-          },
-          {
-            label: t("header.mode.courseList"),
-            value: "list-by-course",
-          },
-        ]}
-        onChange={(value) => {
-          setMode(value as "list-by-student" | "list-by-course")
-          UseSearch(history, `/score-management/${value}`, {})
-        }}
-        className="mt-3 border-2"
-        defaultValue={pathname.split("/")[2]}
-      />
-      <ListSearchCommon title={t("listSearch.title")} listSearch={listSearch} />
-      <TableScores type={mode} loading={false} dataSource={dataSource} />
+      <div className="round-lg bg-white p-2">
+        <HeaderCommon
+          title={t("header.title")}
+          extra={
+            <div className="flex gap-2">
+              {/* <ExportButton />
+              <ImportButton /> */}
+              <Button type="primary" icon={<PlusCircleOutlined />}>
+                Tạo mới điểm
+              </Button>{" "}
+            </div>
+          }
+        />
+        <Tabs
+          items={[
+            {
+              label: t("header.mode.studentList"),
+              key: "list-by-student",
+            },
+            {
+              label: t("header.mode.courseList"),
+              key: "list-by-course",
+            },
+          ]}
+          onChange={(value) => {
+            setMode(value as "list-by-student" | "list-by-course")
+            UseSearch(history, `/score-management/${value}`, {})
+          }}
+          className="mt-3 h-[50px]"
+          defaultValue={pathname.split("/")[2]}
+        />
+        <ListSearchCommon
+          title={t("listSearch.title")}
+          listSearch={listSearch}
+        />
+        <TableScores type={mode} loading={false} dataSource={dataSource} />
+      </div>
     </>
   )
 }

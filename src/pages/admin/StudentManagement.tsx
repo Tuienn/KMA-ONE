@@ -1,5 +1,5 @@
 import { PlusCircleOutlined } from "@ant-design/icons"
-import { useQuery } from "@tanstack/react-query"
+import { useMutation } from "@tanstack/react-query"
 import { App, Button } from "antd"
 import dayjs from "dayjs"
 import { useEffect, useState } from "react"
@@ -10,6 +10,7 @@ import ListSearchCommon from "../../components/admin/common/ListSearchCommon"
 import { FormItemCommonType } from "../../components/common/formItemCustom/FormItemCommon"
 import ModalInfo from "../../components/common/ModalInfo"
 import TableStudents from "../../components/common/table/TableStudents"
+import { UsePath } from "../../context/PathProvider"
 import { formatStudentData, getCurrenBatch } from "../../utils/formatValue"
 
 const StudentManagement = () => {
@@ -25,40 +26,54 @@ const StudentManagement = () => {
   const { AT, CT, DT } = getCurrenBatch()
   const [paging, setPaging] = useState<number>(1)
   const { notification } = App.useApp()
+  const { searchPath } = UsePath()
 
-  const handleChangePaging = (page: number) => {
-    setPaging(page)
-  }
-
-  const queryListStudents = useQuery({
-    queryKey: ["GET", "student-list", paging],
-    queryFn: async () => {
-      const res = await apiService("get", "/student", {
-        pageIndex: paging,
-        pageSize: 25,
-      })
-
+  const mutationFilterStudents = useMutation({
+    mutationKey: ["POST", "student-list", searchPath],
+    mutationFn: async () => {
+      const res = await apiService(
+        "post",
+        "/student/Filter",
+        {},
+        {
+          pageIndex: paging,
+          pageSize: 25,
+          sortBy: "Name",
+          sortDesc: false,
+          ...searchPath,
+          batch: searchPath.batch?.[1],
+        },
+      )
       return {
         page: paging,
         total: res.total,
-        list: res.items.map((item: any) => formatStudentData(item)),
+        list: res.studentresult.map((item: any) => formatStudentData(item)),
       }
     },
-  })
-
-  useEffect(() => {
-    if (queryListStudents.isError) {
+    onError: () => {
       notification.error({
         message: t("notification:api.title"),
         description: t("notification:api.get.error"),
       })
-    }
-  }, [queryListStudents.isError])
+    },
+  })
+  const handleChangePaging = (page: number) => {
+    setPaging(page)
+  }
+
+  const handleRefecthFilter = () => {
+    setPaging(1)
+    mutationFilterStudents.mutate()
+  }
+
+  useEffect(() => {
+    mutationFilterStudents.mutate()
+  }, [searchPath, paging])
 
   const listSearch: FormItemCommonType[] = [
     {
       type: "input",
-      name: "code",
+      name: "studentCode",
       placeholder: t("listSearch.listPlaceholder.code"),
       className: "w-[calc(100%/5-8px)]",
     },
@@ -103,7 +118,7 @@ const StudentManagement = () => {
     },
     {
       type: "input",
-      name: "phone",
+      name: "phoneNumber",
       placeholder: t("listSearch.listPlaceholder.phone"),
       rules: [
         {
@@ -138,7 +153,7 @@ const StudentManagement = () => {
     },
     {
       type: "select",
-      name: "class",
+      name: "className",
 
       placeholder: t("listSearch.listPlaceholder.class"),
       options: [
@@ -155,7 +170,9 @@ const StudentManagement = () => {
       name: "batch",
 
       placeholder: t("listSearch.listPlaceholder.batch"),
-
+      cascaderSetting: {
+        placement: "bottomRight",
+      },
       options: [
         {
           value: "AT",
@@ -191,30 +208,38 @@ const StudentManagement = () => {
       <HeaderCommon
         title={t("header.title")}
         extra={
-          <Button
-            type="primary"
-            icon={<PlusCircleOutlined />}
-            onClick={() => {
-              setStudentModalState({
-                isOpen: true,
-                studentId: null,
-              })
-            }}
-          >
-            {t("header.buttonCreate")}
-          </Button>
+          <div className="flex gap-2">
+            {/* <ExportButton />
+            <ImportButton /> */}
+            <Button
+              type="primary"
+              icon={<PlusCircleOutlined />}
+              onClick={() => {
+                setStudentModalState({
+                  isOpen: true,
+                  studentId: null,
+                })
+              }}
+            >
+              {t("header.buttonCreate")}
+            </Button>{" "}
+          </div>
         }
       />
       <ListSearchCommon title={t("listSearch.title")} listSearch={listSearch} />
       <TableStudents
         handleSelectStudentCode={setStudentModalState}
-        loading={queryListStudents.isPending}
+        loading={mutationFilterStudents.isPending}
         handleChangePaging={handleChangePaging}
         permission="admin"
         dataSource={{
           page: paging,
-          total: queryListStudents.isSuccess && queryListStudents.data.total,
-          list: queryListStudents.isSuccess ? queryListStudents.data.list : [],
+          total: mutationFilterStudents.isSuccess
+            ? mutationFilterStudents.data.total
+            : 0,
+          list: mutationFilterStudents.isSuccess
+            ? mutationFilterStudents.data.list
+            : [],
         }}
       />
       <ModalInfo
@@ -222,6 +247,7 @@ const StudentManagement = () => {
         open={studentModalState.isOpen}
         setStudentModalState={setStudentModalState}
         studentId={studentModalState.studentId}
+        refetchFilter={handleRefecthFilter}
       />
     </div>
   )

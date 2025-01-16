@@ -1,26 +1,38 @@
 import { useQuery } from "@tanstack/react-query"
-import { App, Form, Space } from "antd"
+import { App } from "antd"
 import { useEffect } from "react"
 import { useTranslation } from "react-i18next"
 import apiService from "../../api/APIService"
-import FormItemCommon from "../../components/common/formItemCustom/FormItemCommon"
 import ExportButton from "../../components/common/handleFileButton/ExportButton"
 import TableScores from "../../components/common/table/TableScores"
 import CardInfo from "../../components/user/points/CardInfo"
+import FindScore from "../../components/user/points/FindScore"
+import { UsePath, UseSearch } from "../../context/PathProvider"
 import { formatScoreByStudentData } from "../../utils/formatValue"
 import { getAuthToken } from "../../utils/handleStorage"
 
 const Scores: React.FC = () => {
-  const { t } = useTranslation(["form", "scores", "notification"])
-  const [form] = Form.useForm()
+  const { t } = useTranslation(["scores", "notification"])
   const { authStudentCode } = getAuthToken()
   const { notification } = App.useApp()
 
+  const { searchPath, history } = UsePath()
+
+  useEffect(() => {
+    if (!searchPath.studentCode) {
+      UseSearch(history, "/scores", {
+        ...searchPath,
+        studentCode: authStudentCode,
+      })
+    }
+  }, [])
+
   const queryScoreByStudent = useQuery({
-    queryKey: ["GET", "scoreByStudent"],
+    queryKey: ["GET", "scoreByStudent", searchPath],
     queryFn: async () => {
       const res = await apiService("get", "/student/score", {
-        studentCode: authStudentCode,
+        studentCode: searchPath.studentCode,
+        semester: searchPath.semester,
       })
 
       return {
@@ -35,6 +47,7 @@ const Scores: React.FC = () => {
       }
     },
     staleTime: Infinity,
+    enabled: !!searchPath.studentCode,
   })
 
   useEffect(() => {
@@ -49,34 +62,7 @@ const Scores: React.FC = () => {
   return (
     <div>
       <div className="relative h-fit">
-        <Form
-          form={form}
-          className="z-1 absolute top-[-40px] w-full lg:top-1 lg:flex lg:justify-end"
-        >
-          <Space.Compact className="w-full lg:max-w-[430px]">
-            <FormItemCommon
-              name="keyword"
-              type="query_select"
-              placeholder={t("form item search student.placeholder")}
-              className="w-[70%]"
-              querySetting={{
-                linkAPI: "/search",
-                formatOption: (dataQuery: any) =>
-                  dataQuery.students.map((item: any) => ({
-                    value: item.id,
-                    label: `${item.name} - ${item.studentCode}`,
-                  })),
-              }}
-            />
-            <FormItemCommon
-              type="select"
-              name="type"
-              options={[]}
-              className="w-[30%]"
-              placeholder={t("form item classify student.placeholder")}
-            />
-          </Space.Compact>
-        </Form>
+        <FindScore />
         <CardInfo
           name={queryScoreByStudent.data?.name}
           studentCode={queryScoreByStudent.data?.studentCode}

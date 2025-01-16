@@ -40,18 +40,20 @@ const TableScores: React.FC<Props> = ({ loading, dataSource, type }) => {
       hidden: type === "list-by-course",
     },
     {
+      title: md ? t("table.studentCode") : t("tableShorten.studentCode"),
+      dataIndex: "studentCode",
+      width: md ? "160px" : "100px",
+      hidden: type === "list-by-student",
+      fixed: "left",
+    },
+    {
       title: md ? t("table.studentName") : t("tableShorten.studentName"),
       dataIndex: "studentName",
-      fixed: "left",
+
       width: "200px",
       hidden: type === "list-by-student",
     },
-    {
-      title: md ? t("table.studentCode") : t("tableShorten.studentCode"),
-      dataIndex: "studentCode",
-      width: md ? "160px" : "80px",
-      hidden: type === "list-by-student",
-    },
+
     {
       title: md ? t("table.firstScore") : t("tableShorten.firstScore"),
       dataIndex: "firstScore",
@@ -80,10 +82,12 @@ const TableScores: React.FC<Props> = ({ loading, dataSource, type }) => {
     },
   ]
 
-  const data = !loading
+  const data = dataSource
     ? dataSource.map((item: any, index: number) => ({
         key: index,
         courseName: item.courseName,
+        studentName: item.studentName,
+        studentCode: item.studentCode,
         firstScore: item.firstScore,
         secondScore: item.secondScore,
         examScore: item.examScore,

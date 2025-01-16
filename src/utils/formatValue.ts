@@ -1,6 +1,6 @@
 import { DateType } from "../pages/user/schedule/MySchedule"
 
-export const formatOptionsSemester = (semester: number) => {
+export const formatSemesterToObj = (semester: number) => {
   const [year, phase, round] = semester.toString().split("").map(Number)
 
   return {
@@ -8,6 +8,10 @@ export const formatOptionsSemester = (semester: number) => {
     phase: phase,
     round: round,
   }
+}
+
+export const formatSemsterOptionValue = (semesterValue: number[]) => {
+  return semesterValue.join("")
 }
 
 export const createSemesterOptions = (
@@ -167,6 +171,7 @@ export const formatStudentData = (data: any, isGet: boolean = true) => {
       phoneNumber: data.phone,
       isActive: data.status,
       account: data.code,
+      password: data.code,
     }
   }
   return {
@@ -192,15 +197,19 @@ export const formatScoreByStudentData = (data: any, isGet: boolean = true) => {
       score3: data.examScore,
       average: data.finalScore,
       letterGrade: data.letterGrade,
+      studentName: data.studentName,
+      studentCode: data.studentCode,
     }
   }
   return {
     courseName: data.course,
     credit: data.credit,
-    firstScore: data.score1,
-    secondScore: data.score2,
-    examScore: data.score3,
-    finalScore: data.average,
+    firstScore: parseFloat(data.score1.toFixed(2)),
+    secondScore: parseFloat(data.score2.toFixed(2)),
+    examScore: parseFloat(data.score3.toFixed(2)),
+    finalScore: parseFloat(data.average.toFixed(2)),
     letterGrade: data.letterGrade,
+    studentName: data.studentName,
+    studentCode: data.studentCode,
   }
 }

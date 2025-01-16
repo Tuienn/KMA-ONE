@@ -44,9 +44,7 @@
       "class": "Lớp học",
       "placeholderClass": "Chọn lớp học",
       "batch": "Khóa học",
-      "placeholderBatch": "Chọn khóa học",
-      "teacher": "Tên giảng viên",
-      "placeholderTeacher": "Nhập tên giảng viên"
+      "placeholderBatch": "Chọn khóa học"
     }
   }
 }

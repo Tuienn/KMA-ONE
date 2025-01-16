@@ -31,7 +31,8 @@
     "statusActive": "Active",
     "statusInactive": "Inactive",
     "description": "This information will be publicly available to accounts within the system",
-    "noData": "No data"
+    "noData": "No data",
+    "viewScore": "View score detail"
   },
   "informationShorten": {
     "studentCode": "StuCode",

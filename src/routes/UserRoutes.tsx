@@ -9,7 +9,6 @@ const Scores = lazy(() => import("../pages/user/Scores"))
 const DetailClass = lazy(
   () => import("../pages/user/schedule/classList/DetailClass"),
 )
-const ChatApp = lazy(() => import("../pages/user/ChatApp"))
 const FindClass = lazy(
   () => import("../pages/user/schedule/classList/FindClass"),
 )
@@ -44,11 +43,6 @@ const UserRoutes = [
     path: "/scores",
     name: "scores",
     element: <Scores />,
-  },
-  {
-    path: "/chat-app",
-    name: "chat-app",
-    element: <ChatApp />,
   },
   {
     path: "/chat-ai",

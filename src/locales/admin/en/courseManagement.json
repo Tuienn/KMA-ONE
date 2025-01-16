@@ -44,9 +44,7 @@
       "class": "Class",
       "placeholderClass": "Select class",
       "batch": "Batch",
-      "placeholderBatch": "Select batch",
-      "teacher": "Teacher name",
-      "placeholderTeacher": "Input teacher name"
+      "placeholderBatch": "Select batch"
     }
   }
 }

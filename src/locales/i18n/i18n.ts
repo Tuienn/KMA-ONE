@@ -9,12 +9,10 @@ import LAYOUT_BASIC_VI_ADMIN from "../admin/vi/layoutBasic.json"
 import SCORE_MANAGEMENT_VI from "../admin/vi/scoreManagement.json"
 import STUDENT_MANAGEMENT_VI from "../admin/vi/studentManagement.json"
 import CALENDAR_EN from "../common/en/calendar.json"
-import FORM_EN from "../common/en/form.json"
 import MODAL_INFO_EN from "../common/en/modalInfo.json"
 import NOTIFICATION_EN from "../common/en/notification.json"
 import SCORES_EN from "../common/en/scores.json"
 import CALENDAR_VI from "../common/vi/calendar.json"
-import FORM_VI from "../common/vi/form.json"
 import MODAL_INFO_VI from "../common/vi/modalInfo.json"
 import NOTIFICATION_VI from "../common/vi/notification.json"
 import SCORES_VI from "../common/vi/scores.json"
@@ -42,7 +40,6 @@ export const resources = {
     modalInfo: MODAL_INFO_EN,
     notification: NOTIFICATION_EN,
     calendar: CALENDAR_EN,
-    form: FORM_EN,
     scores: SCORES_EN,
     layoutBasic_admin: LAYOUT_BASIC_EN_ADMIN,
     studentManagement: STUDENT_MANAGEMENT_EN,
@@ -56,7 +53,6 @@ export const resources = {
     modalInfo: MODAL_INFO_VI,
     notification: NOTIFICATION_VI,
     calendar: CALENDAR_VI,
-    form: FORM_VI,
     scores: SCORES_VI,
     layoutBasic_admin: LAYOUT_BASIC_VI_ADMIN,
     studentManagement: STUDENT_MANAGEMENT_VI,
@@ -76,7 +72,6 @@ i18n.use(initReactI18next).init({
     "modalInfo",
     "notification",
     "calendar",
-    "form",
     "scores",
     "layoutBasic_admin",
     "studentManagement",

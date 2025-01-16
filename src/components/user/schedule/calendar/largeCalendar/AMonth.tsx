@@ -24,44 +24,45 @@ const AMonth: React.FC<DateType> = ({ month, year }) => {
           >
             {date != 0 && date}
           </div>
-          {!isCurrentDate(date) && (
-            <ul
-              className="p-1::webkit-scrollbar-hidden mt-1 box-border h-[calc(100%-32px)] overflow-y-auto"
-              style={{
-                scrollbarWidth: "none",
-                scrollbarGutter: "stable",
-              }}
-            >
-              <DetailSession
-                courseName="ReactJS chill code is funny"
-                className="ReactJS"
-                room="A1"
-                session={1}
-                teacherName="Nguyen Van A"
-              />
-              <DetailSession
-                courseName="ReactJS chill code is funny"
-                className="ReactJS"
-                room="A1"
-                session={1}
-                teacherName="Nguyen Van A"
-              />
-              <DetailSession
-                courseName="ReactJS chill code is funny"
-                className="ReactJS"
-                room="A1"
-                session={1}
-                teacherName="Nguyen Van A"
-              />
-              <DetailSession
-                courseName="ReactJS chill code is funny"
-                className="ReactJS"
-                room="A1"
-                session={1}
-                teacherName="Nguyen Van A"
-              />
-            </ul>
-          )}
+          {!isCurrentDate(date) &&
+            (index === 3 || index === 6 || index == 15 || index === 10) && (
+              <ul
+                className="p-1::webkit-scrollbar-hidden mt-1 box-border h-[calc(100%-32px)] overflow-y-auto"
+                style={{
+                  scrollbarWidth: "none",
+                  scrollbarGutter: "stable",
+                }}
+              >
+                <DetailSession
+                  courseName="Thực tập cơ sở"
+                  className="L01"
+                  room="A1"
+                  session={1}
+                  teacherName="Lê Anh Tiến"
+                />
+                <DetailSession
+                  courseName="ReactJS chill code is funny"
+                  className="ReactJS"
+                  room="A1"
+                  session={1}
+                  teacherName="Nguyen Van A"
+                />
+                <DetailSession
+                  courseName="ReactJS chill code is funny"
+                  className="ReactJS"
+                  room="A1"
+                  session={1}
+                  teacherName="Nguyen Van A"
+                />
+                <DetailSession
+                  courseName="ReactJS chill code is funny"
+                  className="ReactJS"
+                  room="A1"
+                  session={1}
+                  teacherName="Nguyen Van A"
+                />
+              </ul>
+            )}
         </div>
       ))}
     </div>

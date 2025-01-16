@@ -10,6 +10,7 @@
     "otherClass": "Danh sách lớp học khác"
   },
   "basicClassData": {
-    "title": "Thông tin"
+    "title": "Thông tin",
+    "noData": "Không có dữ liệu"
   }
 }

@@ -1,7 +1,7 @@
 import { Table, TableColumnsType, Tag } from "antd"
 import { Dispatch, SetStateAction } from "react"
 import { useTranslation } from "react-i18next"
-import { formatOptionsSemester } from "../../../utils/formatValue"
+import { formatSemesterToObj } from "../../../utils/formatValue"
 
 interface Props {
   loading: boolean
@@ -31,7 +31,7 @@ const TableCourses: React.FC<Props> = ({
   const columns: TableColumnsType<DataType> = [
     {
       title: t("table.name"),
-      dataIndex: "name",
+      dataIndex: "courseName",
       width: "300px",
       fixed: "left",
     },
@@ -43,7 +43,7 @@ const TableCourses: React.FC<Props> = ({
     {
       title: t("table.batch"),
       dataIndex: "batch",
-      width: "160px",
+      width: "120px",
     },
     {
       title: t("table.semester"),
@@ -52,17 +52,17 @@ const TableCourses: React.FC<Props> = ({
     },
     {
       title: t("table.class"),
-      dataIndex: "class",
-      width: "160px",
+      dataIndex: "classes",
+      width: "260px",
     },
   ]
 
   const data = dataSource.list.map((item: any) => {
-    const { phase, year, round } = formatOptionsSemester(item.semester)
+    const { phase, year, round } = formatSemesterToObj(item.semester)
 
     return {
       key: item.id,
-      name: (
+      courseName: (
         <a
           className="text-second"
           onClick={() => {
@@ -70,7 +70,7 @@ const TableCourses: React.FC<Props> = ({
             handleOpenModal(true)
           }}
         >
-          {item.name}
+          {item.courseName}
         </a>
       ),
       credit: item.credit,
@@ -87,7 +87,11 @@ const TableCourses: React.FC<Props> = ({
         t("listSearch.listPlaceholder.semesterRound") +
         " " +
         round,
-      class: item.class?.map((item: any) => <Tag key={item}>{item}</Tag>),
+      classes: item.classes?.map((item: any) => (
+        <Tag className="cursor-pointer" key={item}>
+          {item}
+        </Tag>
+      )),
     }
   })
 

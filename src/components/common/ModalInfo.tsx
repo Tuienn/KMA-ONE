@@ -1,5 +1,5 @@
 import { CameraOutlined, EditOutlined } from "@ant-design/icons"
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import {
   App,
   Avatar,
@@ -15,14 +15,14 @@ import dayjs from "dayjs"
 import _ from "lodash"
 import { Dispatch, memo, SetStateAction, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
+import { Link } from "react-router-dom"
 import {
   apiGetDistricts,
   apiGetProvinces,
   apiGetWards,
 } from "../../api/apiProvince"
 import apiService from "../../api/APIService"
-import backgroundInfo2 from "../../assets/images/background.png"
-import backgroundInfo from "../../assets/images/backgroundInfo.jpg"
+import backgroundInfo from "../../assets/images/background.png"
 import { formatDateToString, getFirstLetterName } from "../../utils/common"
 import {
   formatOptionsAddress,
@@ -54,6 +54,7 @@ interface Props {
   >
   permission: "admin" | "user" | "guest"
   studentId: number | null
+  refetchFilter: () => void
 }
 
 const ModalInfo: React.FC<Props> = ({
@@ -61,6 +62,7 @@ const ModalInfo: React.FC<Props> = ({
   setStudentModalState,
   permission,
   studentId,
+  refetchFilter,
 }) => {
   const { t } = useTranslation(["modalInfo", "notification"])
   const isCreateMode = studentId ? false : true
@@ -76,15 +78,13 @@ const ModalInfo: React.FC<Props> = ({
   const [dataForm, setDataForm] = useState<DataStudentType>(
     {} as DataStudentType,
   )
-  const queryClient = useQueryClient()
 
   useEffect(() => {
-    if (open === true) {
+    if (open) {
       form.resetFields()
+      setEditMode(false)
       if (studentId) {
         apiService("get", `student/${studentId}`).then((res) => {
-          console.log(res)
-
           setDataForm(formatStudentData(res))
 
           form.setFieldsValue({
@@ -106,7 +106,7 @@ const ModalInfo: React.FC<Props> = ({
       message: t("notification:api.title"),
       description: t(`notification:api.${type}.success`),
     })
-    queryClient.invalidateQueries({ queryKey: ["GET", "student-list"] })
+    refetchFilter()
     setStudentModalState({
       isOpen: false,
       studentId: null,
@@ -259,12 +259,9 @@ const ModalInfo: React.FC<Props> = ({
       birth: value.birth && formatDateToString(value.birth),
       address: formatAddress(value.address),
     }
-    setDataForm(formatData)
+
     if (isCreateMode) {
-      mutationCreateStudent.mutate({
-        ...formatStudentData(formatData, false),
-        password: formatData.code, // password default is student code
-      })
+      mutationCreateStudent.mutate(formatStudentData(formatData, false))
     } else {
       mutationUpdateStudent.mutate(formatStudentData(formatData, false))
     }
@@ -306,10 +303,7 @@ const ModalInfo: React.FC<Props> = ({
           <div className={`w-full ${editMode && "h-0"}`}>
             <div className="relative">
               <Image
-                src={
-                  dataForm.background ??
-                  _.sample([backgroundInfo, backgroundInfo2])
-                }
+                src={dataForm.background ?? backgroundInfo}
                 className="rounded-lg"
               />
               {isUser && (
@@ -364,6 +358,17 @@ const ModalInfo: React.FC<Props> = ({
                 </p>
               )}
             </div>
+
+            {isGuest && (
+              <div className="mt-2 flex justify-center">
+                <Link
+                  to={`/scores?studentCode=${dataForm.code}`}
+                  className="m-auto text-second"
+                >
+                  {t("information.viewScore")}
+                </Link>
+              </div>
+            )}
 
             {/* Footer nut bam */}
             {isUser && (
@@ -489,12 +494,14 @@ const ModalInfo: React.FC<Props> = ({
                 placeholder={t("information.phonePlaceholder")}
               />
 
-              <FormItemCommon
-                type="switch"
-                name={"status"}
-                label="Trạng thái"
-                placeholder={`${t("information.statusActive")}-${t("information.statusInactive")}`}
-              />
+              {isAdmin && (
+                <FormItemCommon
+                  type="switch"
+                  name={"status"}
+                  label="Trạng thái"
+                  placeholder={`${t("information.statusActive")}-${t("information.statusInactive")}`}
+                />
+              )}
             </Form>
             {/* Footer nut bam */}
             <div className="mt-2 flex justify-end gap-3">

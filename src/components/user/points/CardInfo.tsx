@@ -28,7 +28,9 @@ const CardInfo: React.FC<Props> = ({
 
   return (
     <div className="mt-[40px] w-full lg:mt-0">
-      <h2 className="mb-3 mt-0 text-3xl font-normal leading-9">{name}</h2>
+      <h2 className="mb-3 mt-0 text-3xl font-normal leading-9">
+        {name ?? "Loading..."}
+      </h2>
       <div className="flex items-center justify-between">
         <div className="flex gap-3">
           <p className="inline-block rounded-lg border-2 border-primary px-2 py-2 text-primary">
