@@ -10,8 +10,13 @@ import ListSearchCommon from "../../components/admin/common/ListSearchCommon"
 import ModalCourse from "../../components/admin/courseManagement/ModalCourse"
 import TableCourses from "../../components/admin/courseManagement/TableCourses"
 import { FormItemCommonType } from "../../components/common/formItemCustom/FormItemCommon"
+import ExportButton from "../../components/common/handleFileButton/ExportButton"
 import { UsePath } from "../../context/PathProvider"
-import { createSemesterOptions, getCurrenBatch } from "../../utils/formatValue"
+import {
+  createSemesterOptions,
+  formatCoursesForExcel,
+  getCurrenBatch,
+} from "../../utils/formatValue"
 
 const CourseManagement = () => {
   const { t } = useTranslation(["courseManagement", "notification"])
@@ -35,7 +40,7 @@ const CourseManagement = () => {
         "/course/filter",
         {},
         {
-          pageSize: 10,
+          pageSize: 25,
           pageIndex: paging,
           sortBy: "Id",
           SortDesc: false,
@@ -49,6 +54,30 @@ const CourseManagement = () => {
         total: res.total,
         list: res.courses,
       }
+    },
+    onError: () =>
+      notification.error({
+        message: t("notification:api.title"),
+        description: t("notification:api.get.error"),
+      }),
+  })
+
+  const mutateFilterAllCourses = useMutation({
+    mutationKey: ["POST", "filter-all-courses"],
+    mutationFn: async () => {
+      const res = await apiService(
+        "post",
+        "/course/filter",
+        {},
+        {
+          sortBy: "Id",
+          SortDesc: false,
+          ...searchPath,
+          batch: searchPath.batch?.[1],
+          semester: Number(searchPath.semester?.join("")),
+        },
+      )
+      return res.courses.map((item: any) => formatCoursesForExcel(item))
     },
     onError: () =>
       notification.error({
@@ -124,7 +153,6 @@ const CourseManagement = () => {
       className: "w-[calc(100%/4)]",
       cascaderSetting: {
         isFullRender: true,
-        placement: "bottomRight",
       },
       options: createSemesterOptions(i18next.language, 5, 2, 2),
     },
@@ -135,8 +163,28 @@ const CourseManagement = () => {
         title={t("header.title")}
         extra={
           <div className="flex gap-2">
-            {/* <ExportButton />
-            <ImportButton /> */}
+            <div
+              className="inline"
+              onClick={() => mutateFilterAllCourses.mutate()}
+            >
+              <ExportButton
+                fileName="new_excel_courses"
+                headers={[
+                  t("table.name"),
+                  t("table.credit"),
+                  t("table.batch"),
+                  t("table.semester"),
+                  t("table.class"),
+                ]}
+                dataRows={
+                  mutateFilterAllCourses.isSuccess
+                    ? mutateFilterAllCourses.data
+                    : []
+                }
+                loading={mutateFilterAllCourses.isPending}
+              />
+            </div>
+            {/* <ImportButton /> */}
             <Button
               type="primary"
               icon={<PlusCircleOutlined />}
@@ -150,15 +198,7 @@ const CourseManagement = () => {
       <ListSearchCommon title={t("listSearch.title")} listSearch={listSearch} />
       <TableCourses
         loading={muatateFilterCourse.isPending}
-        dataSource={{
-          list: muatateFilterCourse.isSuccess
-            ? muatateFilterCourse.data.list
-            : [],
-          total: muatateFilterCourse.isSuccess
-            ? muatateFilterCourse.data.total
-            : 0,
-          page: paging,
-        }}
+        dataSource={muatateFilterCourse.data}
         handleChangePaging={setPaging}
         handleOpenModal={setOpenModal}
         handleSelectCourseId={setCourseIdModal}

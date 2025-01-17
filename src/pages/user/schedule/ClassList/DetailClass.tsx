@@ -40,7 +40,9 @@ const DetailClass: React.FC = () => {
     queryKey: ["GET", "score-list-by-class", classId],
     queryFn: async () => {
       const res = await apiService("get", `/class/${classId}/Scores`)
-      return res.scores.map((item: any) => formatScoreByStudentData(item))
+      return {
+        list: res.scores.map((item: any) => formatScoreByStudentData(item)),
+      }
     },
     staleTime: Infinity,
   })

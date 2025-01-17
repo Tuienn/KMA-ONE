@@ -36,9 +36,9 @@ const Scores: React.FC = () => {
       })
 
       return {
-        dataSource: res.scores.map((item: any) =>
-          formatScoreByStudentData(item),
-        ),
+        dataSource: {
+          list: res.scores.map((item: any) => formatScoreByStudentData(item)),
+        },
         name: res.student.name,
         studentCode: res.student.studentCode,
         passed: res.passedSubject,

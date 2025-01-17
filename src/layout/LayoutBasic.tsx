@@ -11,7 +11,6 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   OpenAIOutlined,
-  ProfileOutlined,
   ScheduleOutlined,
   TeamOutlined,
   UserOutlined,
@@ -105,11 +104,6 @@ const LayoutBasic: React.FC<Props> = ({ children }) => {
         </Link>,
         "class-list",
         <TeamOutlined />,
-      ),
-      getItem(
-        <Link to={"/schedule/exam-schedule"}>{t("sider.scheduleItem3")}</Link>,
-        "exam-schedule",
-        <ProfileOutlined />,
       ),
     ]),
     getItem(

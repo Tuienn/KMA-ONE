@@ -22,6 +22,7 @@
       "class": "Select class",
       "batch": "Select batch",
       "courseName": "Input course name"
-    }
+    },
+    "warning": "Please select both course and batch if have class name"
   }
 }

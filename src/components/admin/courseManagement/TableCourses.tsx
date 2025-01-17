@@ -57,43 +57,45 @@ const TableCourses: React.FC<Props> = ({
     },
   ]
 
-  const data = dataSource.list.map((item: any) => {
-    const { phase, year, round } = formatSemesterToObj(item.semester)
+  const data = !dataSource
+    ? []
+    : dataSource.list.map((item: any) => {
+        const { phase, year, round } = formatSemesterToObj(item.semester)
 
-    return {
-      key: item.id,
-      courseName: (
-        <a
-          className="text-second"
-          onClick={() => {
-            handleSelectCourseId(item.id)
-            handleOpenModal(true)
-          }}
-        >
-          {item.courseName}
-        </a>
-      ),
-      credit: item.credit,
-      batch: <Tag>{item.batch}</Tag>,
-      semester:
-        t("listSearch.listPlaceholder.semesterYear") +
-        " " +
-        year +
-        " / " +
-        t("listSearch.listPlaceholder.semesterPhase") +
-        " " +
-        phase +
-        " / " +
-        t("listSearch.listPlaceholder.semesterRound") +
-        " " +
-        round,
-      classes: item.classes?.map((item: any) => (
-        <Tag className="cursor-pointer" key={item}>
-          {item}
-        </Tag>
-      )),
-    }
-  })
+        return {
+          key: item.id,
+          courseName: (
+            <a
+              className="text-second"
+              onClick={() => {
+                handleSelectCourseId(item.id)
+                handleOpenModal(true)
+              }}
+            >
+              {item.courseName}
+            </a>
+          ),
+          credit: item.credit,
+          batch: <Tag>{item.batch}</Tag>,
+          semester:
+            t("listSearch.listPlaceholder.semesterYear") +
+            " " +
+            year +
+            " / " +
+            t("listSearch.listPlaceholder.semesterPhase") +
+            " " +
+            phase +
+            " / " +
+            t("listSearch.listPlaceholder.semesterRound") +
+            " " +
+            round,
+          classes: item.classes?.map((item: any) => (
+            <Tag className="cursor-pointer" key={item}>
+              {item}
+            </Tag>
+          )),
+        }
+      })
 
   return (
     <Table
@@ -104,9 +106,9 @@ const TableCourses: React.FC<Props> = ({
       bordered
       dataSource={data}
       pagination={{
-        total: dataSource.total * 10,
-        pageSize: 10,
-        current: dataSource.page,
+        total: dataSource?.total * 25,
+        pageSize: 25,
+        current: dataSource?.page,
         onChange: handleChangePaging,
       }}
       // rowClassName={(record, index) => (index % 2 === 0 ? "bg-gray-100" : "")}

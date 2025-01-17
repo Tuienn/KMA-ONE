@@ -22,6 +22,7 @@
       "class": "Chọn lớp học",
       "batch": "Chọn khóa học",
       "courseName": "Nhập tên môn học"
-    }
+    },
+    "warning": "Vui lòng chọn cả môn và khóa học nếu có tên lớp"
   }
 }

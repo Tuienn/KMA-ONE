@@ -1,32 +1,53 @@
 import { PlusCircleOutlined } from "@ant-design/icons"
-import { Button, Tabs } from "antd"
-import { useState } from "react"
+import { useMutation, useQuery } from "@tanstack/react-query"
+import { App, Button, Tabs } from "antd"
+import i18next from "i18next"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
+import apiService from "../../api/APIService"
 import HeaderCommon from "../../components/admin/common/HeaderCommon"
 import ListSearchCommon from "../../components/admin/common/ListSearchCommon"
 import { FormItemCommonType } from "../../components/common/formItemCustom/FormItemCommon"
 import TableScores from "../../components/common/table/TableScores"
 import { UsePath, UseSearch } from "../../context/PathProvider"
-import { getCurrenBatch } from "../../utils/formatValue"
+import {
+  createSemesterOptions,
+  formatScoreByStudentData,
+  formatSemsterOptionValue,
+} from "../../utils/formatValue"
 
 const ScoreManagement = () => {
-  const { t } = useTranslation(["scoreManagement", "courseManagement"])
-  const { history, pathname } = UsePath()
+  const { t } = useTranslation(["scoreManagement", "notification"])
+  const { notification, message } = App.useApp()
+  const { history, pathname, searchPath } = UsePath()
+  const [paging, setPaging] = useState<number>(1)
   const [mode, setMode] = useState<"list-by-student" | "list-by-course">(
     pathname.split("/")[2] as "list-by-student" | "list-by-course",
   )
-  const { AT, CT, DT } = getCurrenBatch()
+  const queryCourses = useQuery({
+    queryKey: ["GET", "courses"],
+    queryFn: async () => {
+      const res = await apiService("get", "/course")
+      return res.items.map((item: any) => ({
+        value: item.id,
+        label: item.name + " - " + item.batch,
+      }))
+    },
+    staleTime: Infinity,
+  })
 
   const listSearch: FormItemCommonType[] = [
     {
       type: "query_select",
       name: "studentCode",
-      disabled: mode === "list-by-course",
       placeholder: t("listSearch.listPlaceholder.student"),
-      className: "w-[calc(40%-8px)]",
+      className: "w-[calc(20%-8px)]",
       querySetting: {
-        initialParams: {},
+        // initialParams: {
+        //   keyword: searchPath.studentCode,
+        // },
         linkAPI: "/student/search",
+
         formatOption: (dataQuery) =>
           dataQuery.students.map((item: any) => ({
             value: item.studentCode,
@@ -35,15 +56,28 @@ const ScoreManagement = () => {
       },
     },
     {
-      type: "input",
-      name: "courseName",
+      className: "w-[calc(20%-8px)]",
+      disabled: mode === "list-by-course",
+      placeholder: t("listSearch.listPlaceholder.semester"),
+      type: "cascader_select",
+      name: "semester",
+      options: createSemesterOptions(i18next.language, 5, 2, 2),
+      cascaderSetting: {
+        isFullRender: true,
+        changeOnSelect: true,
+      },
+    },
+    {
+      type: "search_select",
+      name: "courseId",
       disabled: mode === "list-by-student",
       placeholder: t("listSearch.listPlaceholder.courseName"),
-      className: "w-[calc(100%/5-8px)]",
+      options: queryCourses.isSuccess ? queryCourses.data : [],
+      className: "w-[calc(200%/5-8px)]",
     },
     {
       type: "select",
-      name: "class",
+      name: "className",
       disabled: mode === "list-by-student",
       placeholder: t("listSearch.listPlaceholder.class"),
       options: [
@@ -53,116 +87,75 @@ const ScoreManagement = () => {
         { value: "L04", label: "L04" },
         { value: "L05", label: "L05" },
       ],
-      className: "w-[calc(100%/5-8px)]",
-    },
-    {
-      type: "cascader_select",
-      name: "batch",
-      className: "w-[calc(100%/5)]",
-      placeholder: t("listSearch.listPlaceholder.batch"),
-      disabled: mode === "list-by-student",
-      options: [
-        {
-          value: "AT",
-          label: "AT",
-          children: Array.from({ length: AT }, (_, i) => ({
-            value: `AT${i + 1}`,
-            label: `AT${i + 1}`,
-          })),
-        },
-        {
-          value: "CT",
-          label: "CT",
-          children: Array.from({ length: CT }, (_, i) => ({
-            value: `CT${i + 1}`,
-            label: `CT${i + 1}`,
-          })),
-        },
-        {
-          value: "DT",
-          label: "DT",
-          children: Array.from({ length: DT }, (_, i) => ({
-            value: `DT${i + 1}`,
-            label: `DT${i + 1}`,
-          })),
-        },
-      ],
+      className: "w-1/5",
     },
   ]
 
-  const dataSource = [
-    {
-      courseName: "Mathematics",
-      credit: 3,
-      firstScore: 8.5,
-      secondScore: 7.0,
-      examScore: 9.0,
-      finalScore: 8.0,
+  const queryScoreByStudent = useQuery({
+    queryKey: ["GET", "scoreByStudent", searchPath],
+    queryFn: async () => {
+      const formatSemester =
+        searchPath.semester && formatSemsterOptionValue(searchPath.semester)
+      const res = await apiService("get", "/student/score", {
+        studentCode: searchPath.studentCode,
+        semester: formatSemester,
+      })
+
+      return {
+        list: res.scores.map((item: any) => formatScoreByStudentData(item)),
+      }
     },
-    {
-      courseName: "Physics",
-      credit: 4,
-      firstScore: 7.5,
-      secondScore: 6.5,
-      examScore: 8.0,
-      finalScore: 7.5,
-      letterGrade: "C",
+    staleTime: Infinity,
+    enabled: !!searchPath.studentCode && mode === "list-by-student",
+  })
+
+  const mutateScoresByCourse = useMutation({
+    mutationKey: ["POST", "scoreByCourse", searchPath],
+    mutationFn: async () => {
+      const res = await apiService(
+        "post",
+        "/Course/filter-scores",
+        {},
+        {
+          page: {
+            SortBy: "Name",
+            SortDesc: false,
+            pageSize: 25,
+            pageIndex: paging,
+          },
+          ...searchPath,
+        },
+      )
+      return {
+        list: res.scores.map((item: any) => formatScoreByStudentData(item)),
+        total: res.total,
+        page: paging,
+      }
     },
-    {
-      courseName: "Geography",
-      credit: 2,
-      firstScore: 7.0,
-      secondScore: 6.0,
-      examScore: 7.5,
-      finalScore: 7.0,
-      letterGrade: "C+",
-    },
-    {
-      courseName: "Physical Education",
-      credit: 1,
-      firstScore: 7.5,
-      secondScore: 8.0,
-      examScore: 8.5,
-      finalScore: 8.0,
-      letterGrade: "B+",
-    },
-    {
-      courseName: "Computer Science",
-      credit: 5,
-      firstScore: 9.5,
-      secondScore: 9.0,
-      examScore: 9.5,
-      finalScore: 9.5,
-      letterGrade: "A",
-    },
-    {
-      courseName: "Physics",
-      credit: 4,
-      firstScore: 7.5,
-      secondScore: 6.5,
-      examScore: 8.0,
-      finalScore: 7.5,
-      letterGrade: "C",
-    },
-    {
-      courseName: "Geography",
-      credit: 2,
-      firstScore: 7.0,
-      secondScore: 6.0,
-      examScore: 7.5,
-      finalScore: 7.0,
-      letterGrade: "C",
-    },
-    {
-      courseName: "Physical Education",
-      credit: 1,
-      firstScore: 7.5,
-      secondScore: 8.0,
-      examScore: 8.5,
-      finalScore: 5,
-      letterGrade: "B",
-    },
-  ]
+  })
+
+  useEffect(() => {
+    if (mode === "list-by-course") {
+      if (!searchPath.courseId) {
+        message.warning(t("listSearch.warning"))
+        return
+      }
+      mutateScoresByCourse.mutate()
+    } else {
+      if (!searchPath.studentCode) {
+        message.warning(t("listSearch.warningStudent"))
+      }
+    }
+  }, [searchPath, paging])
+
+  useEffect(() => {
+    if (queryScoreByStudent.isError) {
+      notification.error({
+        message: t("notification:api.title"),
+        description: t("notification:api.get.error"),
+      })
+    }
+  }, [queryScoreByStudent.isError])
 
   return (
     <>
@@ -195,13 +188,30 @@ const ScoreManagement = () => {
             UseSearch(history, `/score-management/${value}`, {})
           }}
           className="mt-3 h-[50px]"
-          defaultValue={pathname.split("/")[2]}
+          defaultActiveKey={pathname.split("/")[2]}
         />
         <ListSearchCommon
           title={t("listSearch.title")}
           listSearch={listSearch}
         />
-        <TableScores type={mode} loading={false} dataSource={dataSource} />
+        <TableScores
+          type={mode}
+          loading={
+            queryScoreByStudent.isLoading || mutateScoresByCourse.isPending
+          }
+          dataSource={
+            mode === "list-by-student"
+              ? queryScoreByStudent.isSuccess
+                ? queryScoreByStudent.data?.list
+                : []
+              : mutateScoresByCourse.isSuccess
+                ? mutateScoresByCourse.data
+                : []
+          }
+          handleChangePaging={
+            mode === "list-by-student" ? undefined : setPaging
+          }
+        />
       </div>
     </>
   )

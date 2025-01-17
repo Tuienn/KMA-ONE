@@ -46,5 +46,26 @@
       "batch": "Batch",
       "placeholderBatch": "Select batch"
     }
+  },
+  "modalClass": {
+    "title": "Class information",
+    "update": "Update",
+    "remove": {
+      "button": "Delete",
+      "popconfirmTitle": "Are you sure you want to delete this class?",
+      "popconfirmOk": "Yes",
+      "popconfirmCancel": "No"
+    },
+    "form": {
+      "className": "Class name",
+      "course": "Course",
+      "batch": "Batch",
+      "teacher": "Teacher",
+      "placeholderTeacher": "Input teacher name",
+      "student": "Student list",
+      "placeholderStudent": "Select student list",
+      "room": "Room",
+      "placeholderRoom": "Input room"
+    }
   }
 }

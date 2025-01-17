@@ -22,14 +22,14 @@ export const compareIgnoreCaseAndDiacritics = (
 export const getCurrentDate = () => {
   const now = new Date()
 
-  const year = now.getFullYear() // Lấy năm
-  const month = String(now.getMonth() + 1).padStart(2, "0") // Lấy tháng (0-11) và thêm số 0 nếu cần
-  const date = String(now.getDate()).padStart(2, "0") // Lấy ngày và thêm số 0 nếu cần
+  const year = now.getFullYear()
+  const month = now.getMonth() + 1
+  const date = now.getDate()
 
   return {
-    date: Number(date),
-    month: Number(month),
-    year: Number(year),
+    date,
+    month,
+    year,
   }
 }
 export const getNextMonthYear = (month: number, year: number) => {

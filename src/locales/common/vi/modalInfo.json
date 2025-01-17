@@ -8,8 +8,14 @@
     "informationTitle": "Thông tin cá nhân",
     "create": "Tạo mới",
     "remove": {
-      "button": "Xoá tài khoản",
+      "button": "Xoá sinh viên",
       "popconfirmTitle": "Bạn có chắc chắn muốn xóa sinh viên này?",
+      "popconfirmOk": "Có",
+      "popconfirmCancel": "Không"
+    },
+    "resetPassword": {
+      "button": "Đặt lại mật khẩu",
+      "popconfirmTitle": "Bạn có chắc chắn muốn đặt lại mật khẩu của sinh viên này?",
       "popconfirmOk": "Có",
       "popconfirmCancel": "Không"
     }

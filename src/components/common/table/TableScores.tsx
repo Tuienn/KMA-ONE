@@ -18,10 +18,16 @@ interface Props {
   loading: boolean
   dataSource: any
   type: "list-by-student" | "list-by-course"
+  handleChangePaging?: (page: number) => void
 }
 
 const { useBreakpoint } = Grid
-const TableScores: React.FC<Props> = ({ loading, dataSource, type }) => {
+const TableScores: React.FC<Props> = ({
+  loading,
+  dataSource,
+  type,
+  handleChangePaging,
+}) => {
   const { t } = useTranslation("scores")
   const { md } = useBreakpoint()
 
@@ -81,25 +87,25 @@ const TableScores: React.FC<Props> = ({ loading, dataSource, type }) => {
       sorter: (a, b) => a.finalScore - b.finalScore,
     },
   ]
-
-  const data = dataSource
-    ? dataSource.map((item: any, index: number) => ({
-        key: index,
-        courseName: item.courseName,
-        studentName: item.studentName,
-        studentCode: item.studentCode,
-        firstScore: item.firstScore,
-        secondScore: item.secondScore,
-        examScore: item.examScore,
-        finalScore: item.finalScore,
-        letterGrade: (
-          <Tag color={item.finalScore >= 7.7 ? "green" : "red"}>
-            {item.letterGrade}
-          </Tag>
-        ),
-        credit: item.credit,
-      }))
-    : []
+  const data =
+    dataSource && dataSource.list
+      ? dataSource.list.map((item: any, index: number) => ({
+          key: index,
+          courseName: item.courseName,
+          studentName: item.studentName,
+          studentCode: item.studentCode,
+          firstScore: item.firstScore,
+          secondScore: item.secondScore,
+          examScore: item.examScore,
+          finalScore: item.finalScore,
+          letterGrade: (
+            <Tag color={item.finalScore >= 7.7 ? "green" : "red"}>
+              {item.letterGrade}
+            </Tag>
+          ),
+          credit: item.credit,
+        }))
+      : []
 
   return (
     <Table
@@ -109,8 +115,18 @@ const TableScores: React.FC<Props> = ({ loading, dataSource, type }) => {
       className="mt-3"
       bordered
       dataSource={data}
-      pagination={false}
-      // rowClassName={(record, index) => (index % 2 === 0 ? "bg-gray-100" : "")}
+      pagination={
+        handleChangePaging
+          ? {
+              current: dataSource.page,
+              pageSize: 25,
+              total: dataSource.total * 25,
+              onChange: handleChangePaging,
+              // showLessItems: true,
+              // hideOnSinglePage: true,
+            }
+          : false
+      }
     />
   )
 }

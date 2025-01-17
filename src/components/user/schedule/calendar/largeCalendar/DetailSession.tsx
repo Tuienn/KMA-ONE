@@ -11,6 +11,7 @@ const DetailSesion: React.FC<DetailSessionProps> = ({
   room,
   session,
   teacherName,
+  classId,
 }) => {
   const { t } = useTranslation("calendar")
   const { start } = formatSessionCalendar_object(session)
@@ -21,6 +22,7 @@ const DetailSesion: React.FC<DetailSessionProps> = ({
       content={
         <>
           <BasicClassData
+            classId={classId}
             className={className}
             courseName={courseName}
             room={room}
@@ -29,7 +31,10 @@ const DetailSesion: React.FC<DetailSessionProps> = ({
           />
           <Divider className="mb-2 mt-2" />
           <div className="pb-2 text-center">
-            <Link to={"/"} className="m-auto cursor-pointer text-second">
+            <Link
+              to={`/schedule/class-list/${classId}`}
+              className="m-auto cursor-pointer text-second"
+            >
               {t("cardSession.seeMore")}
             </Link>
           </div>

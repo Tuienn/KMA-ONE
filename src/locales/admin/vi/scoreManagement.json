@@ -12,10 +12,13 @@
     "buttonReset": "Xóa bộ lọc",
     "listPlaceholder": {
       "studentName": "Nhập tên sinh viên",
+      "semester": "Chọn học kỳ",
       "student": "Nhập mã sinh viên hoặc tên sinh viên",
       "courseName": "Nhập tên môn học",
       "class": "Chọn lớp học",
       "batch": "Chọn khóa học"
-    }
+    },
+    "warning": "Vui lòng môn học",
+    "warningStudent": "Vui lòng chọn sinh viên"
   }
 }

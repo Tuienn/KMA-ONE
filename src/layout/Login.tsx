@@ -33,29 +33,41 @@ const Login = () => {
 
   const mutationLogin = useMutation({
     mutationKey: ["POST", "login"],
-    mutationFn: async (data: any) => apiService("post", "login", {}, data),
-    onSuccess: () => {
+    mutationFn: async (data: any) =>
+      apiService("post", "/Auth/login", {}, data),
+    onSuccess: (res) => {
+      const isAdmin = res.role === "admin"
       api.success({
         message: "Đăng nhập thành công",
         duration: 1,
-        description: "Xin chào sinh viên",
+        description: `Xin chào ${isAdmin ? "quản lý" : "sinh viên"}`,
         onClose: () => {
-          saveDataStorage("token", {
-            // authPermission: "admin",
-            authPermission: "admin",
-            authId: 1,
-            expiredTime: new Date().getTime(),
-            authStudentCode: "CT060001",
-          })
+          if (isAdmin) {
+            saveDataStorage("token", {
+              authPermission: "admin",
+              token: res.token,
+              expiredTime: new Date().getTime(),
+            })
+          } else {
+            saveDataStorage("token", {
+              authPermission: "user",
+              authId: res.studentId,
+              expiredTime: new Date().getTime(),
+              authStudentCode: res.account,
+              token: res.token,
+            })
+          }
           // // Hard field
           window.location.reload()
         },
       })
     },
-    onError: () => {
+    onError: (res: any) => {
+      console.log("res")
+
       api.error({
         message: "Đăng nhập thất bại",
-        description: "Lỗi hệ thống",
+        description: res.response.data.message || "Lỗi hệ thống",
         duration: 1,
       })
     },
@@ -100,14 +112,14 @@ const Login = () => {
           <Divider className="mb-8 mt-2 border-[1px] border-primary" />
           <div>
             <Form.Item
-              label="Mã sinh viên"
-              name="username"
+              label="Tên đăng nhập"
+              name="account"
               rules={[
-                { required: true, message: "Vui lòng nhập mã sinh viên" },
-                {
-                  pattern: /^(CT|AT|DT|ct|at|dt)\d{6}$/,
-                  message: "Vui lòng nhập đúng định dạng",
-                },
+                { required: true, message: "Vui lòng nhập tên đăng nhập" },
+                // {
+                //   pattern: /^(CT|AT|DT|ct|at|dt)\d{6}$/,
+                //   message: "Vui lòng nhập đúng định dạng",
+                // },
               ]}
             >
               <Input placeholder="" />

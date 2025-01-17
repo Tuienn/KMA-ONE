@@ -1,4 +1,5 @@
 import { DateType } from "../pages/user/schedule/MySchedule"
+import { getCurrentDate } from "./common"
 
 export const formatSemesterToObj = (semester: number) => {
   const [year, phase, round] = semester.toString().split("").map(Number)
@@ -106,6 +107,68 @@ export const convertStar_EndToArrayCalendar = (
   return arrayCalendar
 }
 
+export const getScheduleByMonth = (
+  arraySchedule: any[],
+  month: number,
+  year: number,
+) => {
+  // Trả về nếu không có lịch hoặc lịch trống
+  if (!Array.isArray(arraySchedule) || arraySchedule.length === 0) {
+    return []
+  }
+
+  // Tìm năm và tháng tương ứng trong một bước
+  const getMonth = arraySchedule
+    .find((yearSchedule) => yearSchedule.year === year)
+    ?.months.find((monthSchedule: any) => monthSchedule.month === month)
+
+  // Trả về các ngày nếu tìm thấy, nếu không trả về mảng rỗng
+  return getMonth?.dates || []
+}
+
+export const getStartEndSchedule = (arraySchedule: any[]) => {
+  const arrayScheduleLength = arraySchedule.length
+  const { year, month } = getCurrentDate()
+
+  if (arrayScheduleLength === 0) {
+    return {
+      start: {
+        month,
+        year,
+      },
+      end: { month, year },
+    }
+  }
+
+  const endMonth =
+    arraySchedule[arrayScheduleLength - 1].months[
+      arraySchedule[arrayScheduleLength - 1].months.length - 1
+    ].month
+  return {
+    start: {
+      year: arraySchedule[0].year > year ? year : arraySchedule[0].year,
+      month:
+        arraySchedule[0].months[0].month > month
+          ? month
+          : arraySchedule[0].months[0].month,
+    },
+    end: {
+      year:
+        arraySchedule[arrayScheduleLength - 1].year < year
+          ? year
+          : arraySchedule[arrayScheduleLength - 1].year,
+      month: endMonth < month ? month : endMonth,
+    },
+  }
+}
+
+export const getScheduleDayDetail = (scheduleByMonth: any[], date: number) => {
+  const dayDetail = scheduleByMonth.find(
+    (daySchedule: any) => daySchedule.date === date,
+  )
+  return dayDetail ? dayDetail.schedules : undefined
+}
+
 // format data of session (int) to string in component CardSession
 export const formatSessionCalendar_object = (
   session: number,
@@ -187,6 +250,32 @@ export const formatStudentData = (data: any, isGet: boolean = true) => {
   }
 }
 
+export const formatStudentsForExcel = (lng: "en" | "vi", data: any) => {
+  return {
+    code: data.studentCode,
+    name: data.name,
+    dob: data.dob,
+    gender:
+      data.gender === 0
+        ? lng === "vi"
+          ? "Nam"
+          : "Male"
+        : lng === "vi"
+          ? "Nữ"
+          : "Female",
+    phone: data.phoneNumber,
+    address: data.address,
+    gpa: data.gpa ? parseFloat(data.gpa.toFixed(2)) : "null",
+    status: data.isActive
+      ? lng === "vi"
+        ? "Hoạt động"
+        : "Active"
+      : lng === "vi"
+        ? "Không hoạt động"
+        : "Inactive",
+  }
+}
+
 export const formatScoreByStudentData = (data: any, isGet: boolean = true) => {
   if (!isGet) {
     return {
@@ -211,5 +300,16 @@ export const formatScoreByStudentData = (data: any, isGet: boolean = true) => {
     letterGrade: data.letterGrade,
     studentName: data.studentName,
     studentCode: data.studentCode,
+  }
+}
+
+export const formatCoursesForExcel = (data: any) => {
+  const { year, phase, round } = formatSemesterToObj(data.semester)
+  return {
+    courseName: data.courseName,
+    credit: data.credit,
+    batch: data.batch,
+    semester: `${year}-${phase}-${round}`,
+    classes: data.classes.join(", "),
   }
 }

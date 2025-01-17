@@ -46,5 +46,26 @@
       "batch": "Khóa học",
       "placeholderBatch": "Chọn khóa học"
     }
+  },
+  "modalClass": {
+    "title": "Thông tin lớp học",
+    "update": "Cập nhật",
+    "remove": {
+      "button": "Xóa",
+      "popconfirmTitle": "Bạn có chắc chắn muốn xóa lớp này?",
+      "popconfirmOk": "Có",
+      "popconfirmCancel": "Không"
+    },
+    "form": {
+      "className": "Tên lớp",
+      "course": "Môn học",
+      "batch": "Khóa học",
+      "teacher": "Giảng viên",
+      "placeholderTeacher": "Nhập tên giảng viên",
+      "student": "Danh sách sinh viên",
+      "placeholderStudent": "Chọn danh sách sinh viên",
+      "room": "Phòng",
+      "placeholderRoom": "Nhập phòng"
+    }
   }
 }

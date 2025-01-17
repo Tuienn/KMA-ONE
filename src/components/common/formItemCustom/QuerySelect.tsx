@@ -48,6 +48,7 @@ const QuerySelect: React.FC<QuerySelectType> = ({
     queryKey: [name, debounceParams],
     queryFn: async () => apiService("get", linkAPI, debounceParams),
     enabled: debounceParams.keyword !== undefined,
+    staleTime: Infinity,
   })
 
   const options: DefaultOptionType[] = listDataQuery.isSuccess

@@ -13,9 +13,12 @@
     "listPlaceholder": {
       "studentName": "Select student name",
       "student": "Input student code or student name",
+      "semester": "Select semester",
       "courseName": "Input course name",
       "class": "Select class",
       "batch": "Select batch"
-    }
+    },
+    "warning": "Please select course",
+    "warningStudent": "Please select student"
   }
 }

@@ -519,6 +519,20 @@ const ModalInfo: React.FC<Props> = ({
               )}
               {!isCreateMode && (
                 <div className="flex justify-end gap-3">
+                  {/* <Popconfirm
+                    title={t("modalInfo.resetPassword.popconfirmTitle")}
+                    // onConfirm={}
+                    okText={t("modalInfo.resetPassword.popconfirmOk")}
+                    cancelText={t("modalInfo.resetPassword.popconfirmCancel")}
+                  >
+                    <Button
+                      danger
+                      hidden={!isAdmin}
+                      // loading={mutationDeleteStudent.isPending}
+                    >
+                      {t("modalInfo.resetPassword.button")}
+                    </Button>
+                  </Popconfirm> */}
                   <Popconfirm
                     title={t("modalInfo.remove.popconfirmTitle")}
                     onConfirm={() => mutationDeleteStudent.mutate()}

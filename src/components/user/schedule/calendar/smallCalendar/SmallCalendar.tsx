@@ -6,7 +6,7 @@ import { getCurrentDate, getSlideCalendar } from "../../../../../utils/common"
 import AMonth from "./AMonth"
 import DetailDay from "./DetailDay"
 
-interface Props {}
+type Props = object
 
 const SmallCalendar = forwardRef<CarouselRef, Props>((_, carouselRef) => {
   const currentDate = useMemo(() => getCurrentDate(), [])
@@ -16,8 +16,6 @@ const SmallCalendar = forwardRef<CarouselRef, Props>((_, carouselRef) => {
     year: currentDate.year,
     date: currentDate.date,
   })
-
-  // console.log(start_endCalendar)
 
   return (
     <div className="relative">
@@ -44,7 +42,11 @@ const SmallCalendar = forwardRef<CarouselRef, Props>((_, carouselRef) => {
           />
         ))}
       </Carousel>
-      <DetailDay month={selectedDate.month} date={selectedDate.date} />
+      <DetailDay
+        year={selectedDate.year}
+        month={selectedDate.month}
+        date={selectedDate.date}
+      />
     </div>
   )
 })

@@ -10,6 +10,7 @@ const DetailSession: React.FC<DetailSessionProps> = ({
   room,
   session,
   teacherName,
+  classId,
 }) => {
   const { start, end } = formatSessionCalendar_object(session)
   const navigate = useNavigate()
@@ -17,7 +18,7 @@ const DetailSession: React.FC<DetailSessionProps> = ({
   return (
     <div
       className="mb-3 flex rounded-lg bg-blue-100 p-2 md:p-3"
-      onClick={() => navigate("/")}
+      onClick={() => navigate(`/schedule/class-list/${classId}`)}
     >
       <div className="flex w-1/6 flex-col justify-center text-gray-500">
         <p className="text-center">{start}</p>
@@ -38,7 +39,7 @@ const DetailSession: React.FC<DetailSessionProps> = ({
           </p>
         </div>
       </div>
-      <div className="flex flex-1 justify-end">
+      <div className="flex flex-1 cursor-pointer justify-end">
         <RightOutlined />
       </div>
     </div>

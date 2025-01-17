@@ -8,8 +8,14 @@
     "informationTitle": "Profile information",
     "create": "Create",
     "remove": {
-      "button": "Remove",
+      "button": "Delete student",
       "popconfirmTitle": "Are you sure you want to delete this student?",
+      "popconfirmOk": "Yes",
+      "popconfirmCancel": "No"
+    },
+    "resetPassword": {
+      "button": "Reset password",
+      "popconfirmTitle": "Are you sure you want to reset the password of this student?",
       "popconfirmOk": "Yes",
       "popconfirmCancel": "No"
     }

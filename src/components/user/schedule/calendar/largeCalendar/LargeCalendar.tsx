@@ -1,11 +1,11 @@
 import Carousel, { CarouselRef } from "antd/es/carousel"
-import { forwardRef, useMemo } from "react"
+import { forwardRef, memo, useMemo } from "react"
 import { UseSchedule } from "../../../../../context/ScheduleProvider"
 import { DateType } from "../../../../../pages/user/schedule/MySchedule"
 import { getCurrentDate, getSlideCalendar } from "../../../../../utils/common"
 import AMonth from "./AMonth"
 
-interface Props {}
+type Props = object
 
 const LargeCalendar = forwardRef<CarouselRef, Props>((_, carouselRef) => {
   const currentDate = useMemo(() => getCurrentDate(), [])
@@ -31,4 +31,4 @@ const LargeCalendar = forwardRef<CarouselRef, Props>((_, carouselRef) => {
   )
 })
 
-export default LargeCalendar
+export default memo(LargeCalendar)

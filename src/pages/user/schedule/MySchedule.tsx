@@ -15,6 +15,7 @@ export interface DateType {
 }
 
 export interface DetailSessionProps {
+  classId: number
   courseName: string
   className: string
   room: string

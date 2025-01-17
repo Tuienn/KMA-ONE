@@ -55,7 +55,7 @@ const CalendarControl: React.FC<Props> = ({ dateSlide, setDateSlide }) => {
     t("monthFull.11"),
   ]
 
-  return (
+  return start && end ? (
     <div className="mb-2 flex cursor-pointer justify-between border-b-2 border-second px-0 pb-2 pt-0 font-bold md:mb-0">
       <div className="relative cursor-pointer">
         <div className="flex gap-1 md:text-2xl">
@@ -125,7 +125,7 @@ const CalendarControl: React.FC<Props> = ({ dateSlide, setDateSlide }) => {
         </Button>
       </div>
     </div>
-  )
+  ) : null
 }
 
 export default CalendarControl

@@ -2,7 +2,6 @@ import { lazy } from "react"
 import ScheduleProvider from "../context/ScheduleProvider"
 
 import ChatProvider from "../context/ChatProvider"
-import ExamSchedule from "../pages/user/schedule/ExamSchedule"
 import MySchedule from "../pages/user/schedule/MySchedule"
 
 const Scores = lazy(() => import("../pages/user/Scores"))
@@ -34,11 +33,7 @@ const UserRoutes = [
     name: "detail-class",
     element: <DetailClass />,
   },
-  {
-    path: "/schedule/exam-schedule",
-    name: "exam-schedule",
-    element: <ExamSchedule />,
-  },
+
   {
     path: "/scores",
     name: "scores",

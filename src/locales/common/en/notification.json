@@ -19,7 +19,7 @@
     "buttonConfirm": "Logout"
   },
   "api": {
-    "title": "KMAONE announce",
+    "title": "KMAONE notification",
     "get": {
       "error": "Error when getting data"
     },

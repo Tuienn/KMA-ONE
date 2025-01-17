@@ -1,11 +1,19 @@
+import { UseSchedule } from "../../../../../context/ScheduleProvider"
 import { DateType } from "../../../../../pages/user/schedule/MySchedule"
 import { getCurrentDate } from "../../../../../utils/common"
-import { getArrayCalendar } from "../../../../../utils/formatValue"
+import {
+  getArrayCalendar,
+  getScheduleByMonth,
+  getScheduleDayDetail,
+} from "../../../../../utils/formatValue"
 import DetailSession from "./DetailSession"
 
 const AMonth: React.FC<DateType> = ({ month, year }) => {
   const arrayCalendar = getArrayCalendar(month, year)
   const currentDate = getCurrentDate()
+  const { arraySchedule } = UseSchedule()
+
+  const scheduleByMonth = getScheduleByMonth(arraySchedule, month, year)
 
   const isCurrentDate = (date: number) => {
     return (
@@ -20,49 +28,31 @@ const AMonth: React.FC<DateType> = ({ month, year }) => {
       {arrayCalendar.map((date: number, index: number) => (
         <div key={index} className={`p-1`}>
           <div
-            className={`m-auto mt-0 h-8 w-8 cursor-pointer rounded-full text-center font-medium leading-8 md:text-[17px] ${isCurrentDate(date) && "bg-second text-white"}`}
+            className={`m-auto mt-0 h-8 w-8 ${date !== 0 && "cursor-pointer"} rounded-full text-center font-medium leading-8 md:text-[17px] ${isCurrentDate(date) && "bg-second text-white"}`}
           >
             {date != 0 && date}
           </div>
-          {!isCurrentDate(date) &&
-            (index === 3 || index === 6 || index == 15 || index === 10) && (
-              <ul
-                className="p-1::webkit-scrollbar-hidden mt-1 box-border h-[calc(100%-32px)] overflow-y-auto"
-                style={{
-                  scrollbarWidth: "none",
-                  scrollbarGutter: "stable",
-                }}
-              >
+          {getScheduleDayDetail(scheduleByMonth, date) && (
+            <ul
+              className="p-1::webkit-scrollbar-hidden mt-1 box-border h-[calc(100%-32px)] overflow-y-auto"
+              style={{
+                scrollbarWidth: "none",
+                scrollbarGutter: "stable",
+              }}
+            >
+              {getScheduleDayDetail(scheduleByMonth, date)?.map((item: any) => (
                 <DetailSession
-                  courseName="Thực tập cơ sở"
-                  className="L01"
-                  room="A1"
-                  session={1}
-                  teacherName="Lê Anh Tiến"
+                  key={item.classId}
+                  classId={item.classId}
+                  courseName={item.course}
+                  className={item.class}
+                  room={item.room}
+                  session={item.session}
+                  teacherName={item.teacherName}
                 />
-                <DetailSession
-                  courseName="ReactJS chill code is funny"
-                  className="ReactJS"
-                  room="A1"
-                  session={1}
-                  teacherName="Nguyen Van A"
-                />
-                <DetailSession
-                  courseName="ReactJS chill code is funny"
-                  className="ReactJS"
-                  room="A1"
-                  session={1}
-                  teacherName="Nguyen Van A"
-                />
-                <DetailSession
-                  courseName="ReactJS chill code is funny"
-                  className="ReactJS"
-                  room="A1"
-                  session={1}
-                  teacherName="Nguyen Van A"
-                />
-              </ul>
-            )}
+              ))}
+            </ul>
+          )}
         </div>
       ))}
     </div>

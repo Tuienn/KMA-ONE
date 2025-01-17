@@ -1,21 +1,29 @@
 import { PlusCircleOutlined } from "@ant-design/icons"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import { App, Button } from "antd"
 import dayjs from "dayjs"
+import i18next from "i18next"
 import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import apiService from "../../api/APIService"
 import HeaderCommon from "../../components/admin/common/HeaderCommon"
 import ListSearchCommon from "../../components/admin/common/ListSearchCommon"
 import { FormItemCommonType } from "../../components/common/formItemCustom/FormItemCommon"
+import ExportButton from "../../components/common/handleFileButton/ExportButton"
 import ModalInfo from "../../components/common/ModalInfo"
 import TableStudents from "../../components/common/table/TableStudents"
 import { UsePath } from "../../context/PathProvider"
-import { formatStudentData, getCurrenBatch } from "../../utils/formatValue"
+import {
+  formatStudentData,
+  formatStudentsForExcel,
+} from "../../utils/formatValue"
 
 const StudentManagement = () => {
-  const { t } = useTranslation(["studentManagement", "notification"])
-
+  const { t } = useTranslation([
+    "studentManagement",
+    "notification",
+    "modalInfo",
+  ])
   const [studentModalState, setStudentModalState] = useState<{
     isOpen: boolean
     studentId: number | null
@@ -23,11 +31,22 @@ const StudentManagement = () => {
     isOpen: false,
     studentId: null,
   })
-  const { AT, CT, DT } = getCurrenBatch()
+
   const [paging, setPaging] = useState<number>(1)
-  const { notification } = App.useApp()
+  const { notification, message } = App.useApp()
   const { searchPath } = UsePath()
 
+  const queryCourses = useQuery({
+    queryKey: ["GET", "courses"],
+    queryFn: async () => {
+      const res = await apiService("get", "/course")
+      return res.items.map((item: any) => ({
+        value: item.id,
+        label: item.name + " - " + item.batch,
+      }))
+    },
+    staleTime: Infinity,
+  })
   const mutationFilterStudents = useMutation({
     mutationKey: ["POST", "student-list", searchPath],
     mutationFn: async () => {
@@ -57,6 +76,25 @@ const StudentManagement = () => {
       })
     },
   })
+  const mutationFilterAllStudents = useMutation({
+    mutationKey: ["POST", "all-student-list"],
+    mutationFn: async () => {
+      const res = await apiService(
+        "post",
+        "/student/Filter",
+        {},
+        {
+          sortBy: "Name",
+          sortDesc: false,
+          ...searchPath,
+          batch: searchPath.batch?.[1],
+        },
+      )
+      return res.studentresult.map((item: any) =>
+        formatStudentsForExcel(i18next.language as "en" | "vi", item),
+      )
+    },
+  })
   const handleChangePaging = (page: number) => {
     setPaging(page)
   }
@@ -67,6 +105,10 @@ const StudentManagement = () => {
   }
 
   useEffect(() => {
+    if (!searchPath.courseId && searchPath.className) {
+      message.warning(t("listSearch.warning"))
+    }
+
     mutationFilterStudents.mutate()
   }, [searchPath, paging])
 
@@ -145,11 +187,11 @@ const StudentManagement = () => {
       className: "w-[calc(100%/5-8px)]",
     },
     {
-      type: "input",
-      name: "courseName",
-
+      type: "search_select",
+      name: "courseId",
       placeholder: t("listSearch.listPlaceholder.courseName"),
-      className: "w-[calc(100%/5-8px)]",
+      options: queryCourses.isSuccess ? queryCourses.data : [],
+      className: "w-[calc(200%/5-8px)]",
     },
     {
       type: "select",
@@ -163,42 +205,6 @@ const StudentManagement = () => {
         { value: "L04", label: "L04" },
         { value: "L05", label: "L05" },
       ],
-      className: "w-[calc(100%/5-8px)]",
-    },
-    {
-      type: "cascader_select",
-      name: "batch",
-
-      placeholder: t("listSearch.listPlaceholder.batch"),
-      cascaderSetting: {
-        placement: "bottomRight",
-      },
-      options: [
-        {
-          value: "AT",
-          label: "AT",
-          children: Array.from({ length: AT }, (_, i) => ({
-            value: `AT${i + 1}`,
-            label: `AT${i + 1}`,
-          })),
-        },
-        {
-          value: "CT",
-          label: "CT",
-          children: Array.from({ length: CT }, (_, i) => ({
-            value: `CT${i + 1}`,
-            label: `CT${i + 1}`,
-          })),
-        },
-        {
-          value: "DT",
-          label: "DT",
-          children: Array.from({ length: DT }, (_, i) => ({
-            value: `DT${i + 1}`,
-            label: `DT${i + 1}`,
-          })),
-        },
-      ],
       className: "w-[calc(100%/5)]",
     },
   ]
@@ -209,8 +215,31 @@ const StudentManagement = () => {
         title={t("header.title")}
         extra={
           <div className="flex gap-2">
-            {/* <ExportButton />
-            <ImportButton /> */}
+            <div
+              className="inline"
+              onClick={() => mutationFilterAllStudents.mutate()}
+            >
+              <ExportButton
+                fileName="new_excel_students"
+                headers={[
+                  t("modalInfo:information.studentCode"),
+                  t("modalInfo:information.name"),
+                  t("modalInfo:information.birth"),
+                  t("modalInfo:information.gender"),
+                  t("modalInfo:information.phone"),
+                  t("modalInfo:information.address"),
+                  "GPA",
+                  t("modalInfo:information.status"),
+                ]}
+                dataRows={
+                  mutationFilterAllStudents.isSuccess
+                    ? mutationFilterAllStudents.data
+                    : []
+                }
+                loading={mutationFilterAllStudents.isPending}
+              />
+            </div>
+            {/* <ImportButton /> */}
             <Button
               type="primary"
               icon={<PlusCircleOutlined />}

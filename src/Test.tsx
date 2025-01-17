@@ -61,7 +61,7 @@ const Test: React.FC = () => {
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
       current: 1,
-      pageSize: 10,
+      pageSize: 25,
     },
   })
 
@@ -120,7 +120,7 @@ const Test: React.FC = () => {
       rowKey={(record) => record.login.uuid}
       dataSource={data}
       pagination={{
-        pageSize: 10,
+        pageSize: 25,
         total: 20,
       }}
       loading={loading}
