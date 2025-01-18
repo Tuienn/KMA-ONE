@@ -59,7 +59,7 @@ const BasicClassData: React.FC<DetailSessionProps> = ({
   ]
   return (
     <Card
-      title={<h2 className="text-wrap">{courseName}</h2>}
+      title={<h2 className="overflow-hidden">{courseName}</h2>}
       styles={{
         header: {
           padding: "8px 12px 8px 12px",

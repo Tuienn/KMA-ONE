@@ -10,13 +10,12 @@ interface Props {
   courseId: number
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
-  handleRefetch?: () => void
 }
 const ModalClass: React.FC<Props> = ({
   classId,
   open,
   setOpen,
-  handleRefetch,
+
   courseId,
 }) => {
   const [form] = Form.useForm()

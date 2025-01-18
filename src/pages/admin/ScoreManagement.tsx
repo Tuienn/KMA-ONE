@@ -1,5 +1,6 @@
+import { PlusCircleOutlined } from "@ant-design/icons"
 import { useMutation, useQuery } from "@tanstack/react-query"
-import { App, Tabs } from "antd"
+import { App, Button, Tabs } from "antd"
 import i18next from "i18next"
 import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
@@ -165,9 +166,9 @@ const ScoreManagement = () => {
             <div className="flex gap-2">
               {/* <ExportButton />
               <ImportButton /> */}
-              {/* <Button type="primary" icon={<PlusCircleOutlined />}>
+              <Button type="primary" icon={<PlusCircleOutlined />}>
                 Tạo mới điểm
-              </Button>{" "} */}
+              </Button>{" "}
             </div>
           }
         />
@@ -201,7 +202,7 @@ const ScoreManagement = () => {
           dataSource={
             mode === "list-by-student"
               ? queryScoreByStudent.isSuccess
-                ? queryScoreByStudent.data?.list
+                ? queryScoreByStudent.data
                 : []
               : mutateScoresByCourse.isSuccess
                 ? mutateScoresByCourse.data

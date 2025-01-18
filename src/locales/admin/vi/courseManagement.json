@@ -58,7 +58,7 @@
     },
     "form": {
       "className": "Tên lớp",
-      "course": "Môn học",
+      "course": "Tên môn học",
       "batch": "Khóa học",
       "teacher": "Giảng viên",
       "placeholderTeacher": "Nhập tên giảng viên",
