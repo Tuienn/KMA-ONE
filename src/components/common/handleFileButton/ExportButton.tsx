@@ -72,7 +72,7 @@ const ExportButton: React.FC<Props> = ({
   }, [loading]) // Chạy khi loading thay đổi
 
   return (
-    <Button loading={loading} type="primary" icon={<UploadOutlined />}>
+    <Button loading={loading} icon={<UploadOutlined />}>
       Export excel
     </Button>
   )

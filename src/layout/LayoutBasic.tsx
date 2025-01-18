@@ -1,8 +1,6 @@
 import {
-  AntDesignOutlined,
   BookOutlined,
   CloseOutlined,
-  DockerOutlined,
   FileSearchOutlined,
   GithubOutlined,
   GlobalOutlined,
@@ -15,15 +13,18 @@ import {
   TeamOutlined,
   UserOutlined,
 } from "@ant-design/icons"
+import { useQuery } from "@tanstack/react-query"
 import type { MenuProps } from "antd"
 import { Avatar, Drawer, Grid, Layout, Menu, Popconfirm, Tooltip } from "antd"
 import React, { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Link, useNavigate } from "react-router-dom"
+import apiService from "../api/APIService"
 import kmaone from "../assets/images/kmaone.png"
 import logoKMA from "../assets/images/logoKMA.png"
 import { UsePath } from "../context/PathProvider"
 import { generateToken } from "../firebase/user/firebase"
+import { getFirstLetterName } from "../utils/common"
 import { getAuthToken } from "../utils/handleStorage"
 
 const ModalInfo = React.lazy(() => import("../components/common/ModalInfo"))
@@ -83,6 +84,13 @@ const LayoutBasic: React.FC<Props> = ({ children }) => {
     // })
   }, [])
 
+  const queryUserInfo = useQuery({
+    queryKey: ["GET", "student", authId],
+    queryFn: async () => apiService("get", `student/${authId}`),
+    staleTime: Infinity,
+    enabled: !!authId,
+  })
+
   const userSiderMenu: MenuItem[] = [
     getItem(t("sider.schedule"), 1, <ScheduleOutlined />, [
       getItem(
@@ -136,11 +144,11 @@ const LayoutBasic: React.FC<Props> = ({ children }) => {
         "link2",
         <GithubOutlined />,
       ),
-      getItem(
-        t("layoutBasic_user:drawer.sourceDocker"),
-        "link3",
-        <DockerOutlined />,
-      ),
+      // getItem(
+      //   t("layoutBasic_user:drawer.sourceDocker"),
+      //   "link3",
+      //   <DockerOutlined />,
+      // ),
     ]),
     getItem(
       <button
@@ -155,7 +163,7 @@ const LayoutBasic: React.FC<Props> = ({ children }) => {
       <GlobalOutlined />,
     ),
 
-    getItem(t("layoutBasic_user:drawer.about"), "about", <AntDesignOutlined />),
+    // getItem(t("layoutBasic_user:drawer.about"), "about", <AntDesignOutlined />),
     getItem(
       <Popconfirm
         onConfirm={() => {
@@ -246,22 +254,33 @@ const LayoutBasic: React.FC<Props> = ({ children }) => {
                 <MenuUnfoldOutlined className="cursor-pointer text-2xl" />
               )}
             </div>
-            <Tooltip title={""} placement="left">
+            <Tooltip
+              title={queryUserInfo?.data?.name || "Admin1"}
+              placement="left"
+            >
               <Avatar
                 size={40}
                 className={"cursor-pointer"}
                 onClick={() => setOpenDrawer(true)}
               >
-                H
+                {getFirstLetterName(queryUserInfo?.data?.name || "Admin1")}
               </Avatar>
             </Tooltip>
             <Drawer
               title={
                 <div className="flex items-center">
-                  <Avatar size={40}>H</Avatar>
+                  <div className="w-[40px]">
+                    <Avatar size={40}>
+                      {getFirstLetterName(
+                        queryUserInfo?.data?.name || "Admin1",
+                      )}
+                    </Avatar>
+                  </div>
                   <div className="ml-5">
-                    <h2>Nguyễn Ngọc Tuyền</h2>
-                    <p className="font-normal">CT060145</p>
+                    <h2>{queryUserInfo?.data?.name || "Admin1"}</h2>
+                    <p className="font-normal">
+                      {queryUserInfo?.data?.studentCode}
+                    </p>
                   </div>
                 </div>
               }
