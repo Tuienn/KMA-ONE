@@ -9,6 +9,7 @@ export interface QuerySettingType {
   initialParams?: any
   linkAPI: string
   formatOption: (dataQuery: any) => { value: any; label: string }[]
+  isMutiple?: boolean | false
 }
 interface DateSettingType {
   type: "month" | "date" | "year" | "time"

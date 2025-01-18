@@ -1,7 +1,8 @@
 import { Table, TableColumnsType, Tag } from "antd"
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { formatSemesterToObj } from "../../../utils/formatValue"
+import ModalClass from "./ModalClass"
 
 interface Props {
   loading: boolean
@@ -28,6 +29,9 @@ const TableCourses: React.FC<Props> = ({
   handleOpenModal,
 }) => {
   const { t } = useTranslation("courseManagement")
+  const [classId, setClassId] = useState<number>(0)
+  const [openModalClass, setOpenModalClass] = useState<boolean>(false)
+  const [courseId, setCourseId] = useState<number>(0)
   const columns: TableColumnsType<DataType> = [
     {
       title: t("table.name"),
@@ -56,6 +60,8 @@ const TableCourses: React.FC<Props> = ({
       width: "260px",
     },
   ]
+
+  console.log(dataSource)
 
   const data = !dataSource
     ? []
@@ -89,30 +95,46 @@ const TableCourses: React.FC<Props> = ({
             t("listSearch.listPlaceholder.semesterRound") +
             " " +
             round,
-          classes: item.classes?.map((item: any) => (
-            <Tag className="cursor-pointer" key={item}>
-              {item}
+          classes: item.classes?.map((item: any, index: number) => (
+            <Tag
+              className="cursor-pointer"
+              key={index}
+              onClick={() => {
+                setClassId(item.id ?? 0)
+                setOpenModalClass(true)
+                setCourseId(item.courseId)
+              }}
+            >
+              {item.name}
             </Tag>
           )),
         }
       })
 
   return (
-    <Table
-      loading={loading}
-      scroll={{ x: 200, y: 600 }}
-      columns={columns}
-      className="mt-3"
-      bordered
-      dataSource={data}
-      pagination={{
-        total: dataSource?.total * 25,
-        pageSize: 25,
-        current: dataSource?.page,
-        onChange: handleChangePaging,
-      }}
-      // rowClassName={(record, index) => (index % 2 === 0 ? "bg-gray-100" : "")}
-    />
+    <>
+      <ModalClass
+        classId={classId}
+        open={openModalClass}
+        setOpen={setOpenModalClass}
+        courseId={courseId}
+      />
+      <Table
+        loading={loading}
+        scroll={{ x: 200, y: 600 }}
+        columns={columns}
+        className="mt-3"
+        bordered
+        dataSource={data}
+        pagination={{
+          total: dataSource?.total * 25,
+          pageSize: 25,
+          current: dataSource?.page,
+          onChange: handleChangePaging,
+        }}
+        // rowClassName={(record, index) => (index % 2 === 0 ? "bg-gray-100" : "")}
+      />
+    </>
   )
 }
 

@@ -33,7 +33,7 @@ const QuerySelect: React.FC<QuerySelectType> = ({
   className,
   disabled,
 }) => {
-  const { initialParams, linkAPI, formatOption } =
+  const { initialParams, linkAPI, formatOption, isMutiple } =
     querySetting as QuerySettingType
   const [debounceParams, setDebounceParams] = useState<any>({})
   useEffect(() => {
@@ -74,6 +74,7 @@ const QuerySelect: React.FC<QuerySelectType> = ({
         optionFilterProp="children"
         options={options}
         popupMatchSelectWidth={false}
+        mode={isMutiple ? "multiple" : undefined}
       />
     </Form.Item>
   )

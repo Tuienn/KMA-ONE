@@ -58,7 +58,7 @@
     },
     "form": {
       "className": "Class name",
-      "course": "Course",
+      "course": "Course name",
       "batch": "Batch",
       "teacher": "Teacher",
       "placeholderTeacher": "Input teacher name",

@@ -83,14 +83,6 @@ const LayoutBasic: React.FC<Props> = ({ children }) => {
     // })
   }, [])
 
-  // const queryStudentInfo = useQuery({
-  //   queryKey: ["student", authId],
-  //   queryFn: async () => apiService("get", `/student/${authId}`),
-  //   staleTime: Infinity,
-  // })
-
-  // queryStudentInfo.isSuccess && console.log(queryStudentInfo.data)
-
   const userSiderMenu: MenuItem[] = [
     getItem(t("sider.schedule"), 1, <ScheduleOutlined />, [
       getItem(
@@ -133,7 +125,9 @@ const LayoutBasic: React.FC<Props> = ({ children }) => {
     ),
     getItem(t("layoutBasic_user:drawer.source"), "source", <LinkOutlined />, [
       getItem(
-        t("layoutBasic_user:drawer.sourceFrontend"),
+        <a href="https://github.com/Tuienn/KMA-ONE">
+          {t("layoutBasic_user:drawer.sourceFrontend")}
+        </a>,
         "link1",
         <GithubOutlined />,
       ),
