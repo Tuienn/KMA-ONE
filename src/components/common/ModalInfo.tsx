@@ -22,7 +22,7 @@ import {
   apiGetWards,
 } from "../../api/apiProvince"
 import apiService from "../../api/APIService"
-import backgroundInfo from "../../assets/images/background.png"
+import backgroundInfo from "../../assets/images/background.jpg"
 import { formatDateToString, getFirstLetterName } from "../../utils/common"
 import {
   formatOptionsAddress,

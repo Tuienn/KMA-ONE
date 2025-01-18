@@ -13,7 +13,7 @@ import _ from "lodash"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import apiService from "../api/APIService"
-import bgImage from "../assets/images/background.png"
+import bgImage from "../assets/images/background.jpg"
 import logoKMA from "../assets/images/logoKMA.png"
 import { saveDataStorage } from "../utils/handleStorage"
 

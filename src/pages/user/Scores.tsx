@@ -72,7 +72,7 @@ const Scores: React.FC = () => {
           exportButton={
             <ExportButton
               fileName={`${queryScoreByStudent.data?.name} - ${queryScoreByStudent.data?.studentCode}`}
-              dataRows={queryScoreByStudent.data?.dataSource}
+              dataRows={queryScoreByStudent.data?.dataSource.list}
               headers={[
                 t("scores:table.courseName"),
                 t("scores:table.credit"),

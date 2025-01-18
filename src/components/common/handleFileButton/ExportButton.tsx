@@ -39,19 +39,6 @@ const ExportButton: React.FC<Props> = ({
     return widths
   }
 
-  // const exportToExcel = _.debounce(() => {
-  //   if (!formatDataRows.length) return
-
-  //   const worksheet = utils.json_to_sheet(formatDataRows)
-  //   const workbook = utils.book_new()
-  //   utils.book_append_sheet(workbook, worksheet, "export")
-
-  //   utils.sheet_add_aoa(worksheet, [headers], { origin: "A1" })
-
-  //   worksheet["!cols"] = getWidthColumns().map((w: number) => ({ wch: w }))
-
-  //   writeFile(workbook, `${fileName}.xlsx`, { compression: true })
-  // }, 300) // Debounce 300ms để tránh chạy quá nhanh
   const exportToExcel = () => {
     const worksheet = utils.json_to_sheet(formatDataRows)
     const workbook = utils.book_new()
@@ -69,10 +56,15 @@ const ExportButton: React.FC<Props> = ({
       exportToExcel()
     }
     prevLoading.current = loading
-  }, [loading]) // Chạy khi loading thay đổi
+  }, [loading])
 
   return (
-    <Button loading={loading} icon={<UploadOutlined />}>
+    <Button
+      loading={loading}
+      icon={<UploadOutlined />}
+      type="primary"
+      onClick={!loading ? exportToExcel : undefined}
+    >
       Export excel
     </Button>
   )
